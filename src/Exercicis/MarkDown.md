@@ -49,27 +49,6 @@ extret.
 La provincia_id de la taula províncies on el seu codi sigui igual al valor
 extret.
 
-
-**-- VOTS MUNICIPALS --**
-
-Afegim els vots municipals on el municipi_id de la taula municipis i províncies siguin iguals al codi_ine extret del fitxer d'informació.
-
-
-**-- VOTS PROVINCIALS  --**
-
-Afegim els vots provincials on la ID de la província l'extraiem on el codi_ine de la taula de províncies.
-La ID de la candidatura la saquem de la taula candidatures.
-
-
-**-- VOTS AUTONOMICS --**
-
-Afegim els vots autonomics on hem de treure la candidatura_id de la taula candidatures on el seu codi sigui igual al valor
-extret i que la seva elecció sigui 1 i on hem de treure la comunitat_autonoma_id de la taula comunitats_autonomes on el seu codi sigui igual al valor
-extret.
-
-Com els vots provincials i els autonòmics s'extreuen del mateix document, hem de posar un filtre perquè només agafi les dades de les autonomies. El filtre és un _substring_ que iguali a 99 el codi de la comunitat autònoma. Si no és així, seria una província.
-
-
 **-- PROBLEMES --**
 
 
