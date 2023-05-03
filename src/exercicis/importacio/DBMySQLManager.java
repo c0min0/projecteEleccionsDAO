@@ -1,4 +1,4 @@
-package Exercicis.Importacio;
+package exercicis.importacio;
 import java.sql.*;
 
 public class DBMySQLManager {

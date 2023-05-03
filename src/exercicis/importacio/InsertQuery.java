@@ -1,4 +1,4 @@
-package Exercicis.Importacio;
+package exercicis.importacio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

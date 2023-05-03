@@ -1,4 +1,4 @@
-package Exercicis.Taules;
+package exercicis.taules;
 
 public class Provincia {
 }

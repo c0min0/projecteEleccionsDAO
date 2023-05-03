@@ -1,4 +1,4 @@
-package Exercicis.Taules.DAO;
+package exercicis.taules.DAO;
 
 public class CandidatDAO {
 }
