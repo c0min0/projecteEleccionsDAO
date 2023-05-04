@@ -16,7 +16,7 @@ public class MunicipiDAO implements DAODB<Municipi> {
     }
 
     @Override
-    public boolean update(Municipi municipi) {
+    public boolean update(Municipi municipi, String opcio) {
         return false;
     }
 
