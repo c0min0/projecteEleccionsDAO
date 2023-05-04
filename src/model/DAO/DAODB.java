@@ -1,4 +1,4 @@
-package exercicis.taules.DAO;
+package model.DAO;
 
 import java.util.List;
 

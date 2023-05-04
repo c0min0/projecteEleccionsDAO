@@ -1,4 +1,4 @@
-package exercicis.taules;
+package model;
 
 public class Provincia {
     int provincia_id;

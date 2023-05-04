@@ -1,4 +1,4 @@
-package exercicis.taules;
+package model;
 
 public class Municipi {
     int municipi_id;

@@ -1,4 +1,4 @@
-package exercicis.importacio;
+package recursos.exercicisProgBD.importacio;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,6 +1,6 @@
-package exercicis.taules.DAO;
+package model.DAO;
 
-import exercicis.taules.Candidatura;
+import model.Candidatura;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package exercicis.taules;
+package model;
 
 public class Candidatura {
     int candidatura_id;

@@ -1,4 +1,4 @@
-package exercicis.taules;
+package model;
 
 public class Persona {
     int persona_id;

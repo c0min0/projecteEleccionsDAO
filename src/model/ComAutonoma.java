@@ -1,4 +1,4 @@
-package exercicis.taules;
+package model;
 
 public class ComAutonoma {
     int comunitat_aut_id;

@@ -1,6 +1,6 @@
-package exercicis.taules.DAO;
+package model.DAO;
 
-import exercicis.taules.ComAutonoma;
+import model.ComAutonoma;
 
 import java.util.List;
 
