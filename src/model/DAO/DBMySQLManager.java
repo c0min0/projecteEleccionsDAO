@@ -4,25 +4,18 @@ import java.util.List;
 
 import java.sql.Connection;
 
-import java.sql.Statement;
-
 import java.sql.PreparedStatement;
 
 import java.sql.ResultSet;
 
-import java.sql.ResultSetMetaData;
-
 public class DBMySQLManager {
-    //Conexió
-    static String ip = "10.2.179.196";
-
     // Propietats
     private static Connection conn = null;
     private String driver = "com.mysql.cj.jdbc.Driver"; //com.mysql.jdbc.Driver
     private String url;
     private String usuari ="perepi";
     private String contrasenya = "pastanaga";
-    private String host = ip; //IP de qui executi el programa
+    private String host = "10.2.179.196"; //IP de qui executi el programa
     private String base_dades = "eleccions2016"; // PROVA: eleccions2017, BONA: eleccions2016
 
     // Constructors
@@ -55,15 +48,8 @@ public class DBMySQLManager {
         }
     }
 
-    public static List<Object[]> read (String query, String[] ... paramAndType) {
+    public static List<Object[]> read (String query, Object ... params) {
         List<Object[]> result = null;
-
-        for (String[] param : paramAndType) {
-            boolean correctType = param[1].equals("String") || param[1].equals("Int")
-                    || param[1].equals("Double") || param[1].equals("Date");
-
-            if (param.length != 2 && correctType) throw new RuntimeException("Error: parametre incorrecte");
-        }
 
         try {
 
@@ -71,25 +57,19 @@ public class DBMySQLManager {
 
             PreparedStatement ps = con.prepareStatement(query);
 
-            for (int i = 0; i < paramAndType.length; i++) {
+            for (int i = 0; i < params.length; i++) {
 
-                switch (paramAndType[i][1]) {
-                    case "String":
-                        ps.setString(i + 1, paramAndType[i][0]);
-                        break;
-                    case "Int":
-                        ps.setInt(i + 1, Integer.parseInt(paramAndType[i][0]));
-                        break;
-                    case "Double":
-                        ps.setDouble(i + 1, Double.parseDouble(paramAndType[i][0]));
-                        break;
-                    case "Date":
-                        ps.setDate(i + 1, Date.valueOf(paramAndType[i][0]));
-                        break;
+                switch (params[i].getClass().getSimpleName()) {
+                    case "Character" -> ps.setString(i + 1, params[i].toString());
+                    case "String" -> ps.setString(i + 1, (String) params[i]);
+                    case "Integer" -> ps.setInt(i + 1, (Integer) params[i]);
+                    case "Float" -> ps.setFloat(i + 1, (Float) params[i]);
+                    case "Double" -> ps.setDouble(i + 1, (Double) params[i]);
+                    case "Date" -> ps.setDate(i + 1, (Date) params[i]);
                 }
             }
 
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery(); //TODO: provar el .getObject()
 
             int l = rs.getMetaData().getColumnCount();
 
@@ -107,6 +87,48 @@ public class DBMySQLManager {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                DBMySQLManager.closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
+    public static int write (String query, Object ... params) {
+        int result = 0;
+
+        try {
+
+            Connection con = DBMySQLManager.getConnection();
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            for (int i = 0; i < params.length; i++) {
+
+                switch (params[i].getClass().getSimpleName()) {
+                    case "Character" -> ps.setString(i + 1, params[i].toString());
+                    case "String" -> ps.setString(i + 1, (String) params[i]);
+                    case "Integer" -> ps.setInt(i + 1, (Integer) params[i]);
+                    case "Float" -> ps.setFloat(i + 1, (Float) params[i]);
+                    case "Double" -> ps.setDouble(i + 1, (Double) params[i]);
+                    case "Date" -> ps.setDate(i + 1, (Date) params[i]);
+                }
+            }
+
+            result = ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                DBMySQLManager.closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return result;

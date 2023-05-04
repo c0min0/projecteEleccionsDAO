@@ -3,31 +3,35 @@ package model.DAO;
 import model.Persona;
 
 import java.sql.Date;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import static model.DAO.DBMySQLManager.getConnection;
-import static org.apache.tools.ant.util.FileUtils.close;
 
 public class PersonaDAO implements DAODB<Persona> {
     @Override
-    public boolean create(Persona persona) {
-        return false;
+    public boolean create(Persona p) {
+        String query = "INSERT INTO persones (nom,cog1,cog2,sexe,data_naixement,dni) VALUES (?,?,?,?,?,?)";
+        int r = DBMySQLManager.write(query,
+                                        p.getNom(),
+                                        p.getCog1(),
+                                        p.getCog2(),
+                                        p.getSexe(),
+                                        p.getDataNaixement(),
+                                        p.getDni());
+        return r > 0;
     }
 
     @Override
-    public boolean read(Persona p) {
+    public boolean read (Persona p) {
         Persona pr = read(p.getId());
         if (pr == null) return false;
         p.set(pr.getNom(), pr.getCog1(), pr.getCog2(), pr.getSexe(), pr.getDataNaixement(), pr.getDni());
         return true;
     }
 
-    public Persona read(int id) {
+    public Persona read (int id) {
         String query = "SELECT nom,cog1,cog2,sexe,data_naixement,dni FROM persones WHERE id=?";
-        List<Object[]> r = DBMySQLManager.read(query, new String[]{String.valueOf(id), "Int"});
+        List<Object[]> r = DBMySQLManager.read(query, id);
         if (r == null || r.size() != 1) return null;
         Object[] row = r.iterator().next();
         return new Persona(id, (String)row[0], (String)row[1], (String)row[2],
@@ -35,70 +39,83 @@ public class PersonaDAO implements DAODB<Persona> {
     }
 
     @Override
-    public boolean update(Persona persona, String opcio) {
-        String query = "UPDATE persones SET " + opcio + "= ? WHERE persona_id = ?";
-        Connection conn = null;
-        PreparedStatement stmt = null;
+    public boolean update(Persona p) {
+        String query = "UPDATE persones SET nom=?,cog1=?,cog2=?,sexe=?,data_naixement=?,dni=? WHERE id=?";
+        String[] nom = {p.getNom(), "String"};
+        String[] cog1 = {p.getCog1(), "String"};
+        String[] cog2 = {p.getCog2(), "String"};
+        String[] sexe = {String.valueOf(p.getSexe()), "String"};
+        String[] dataNaixement = {p.getDataNaixement().toString(), "Date"};
+        String[] dni = {p.getDni(), "String"};
+        int r = DBMySQLManager.write(query, nom, cog1, cog2, sexe, dataNaixement, dni);
+        return r > 0;
+    }
 
-        try {
-            conn = getConnection();
-            stmt = conn.prepareStatement(query);
-            switch (opcio){
-                case "nom":
-                    if (persona.getNom().length() > 30) {
-                        System.out.println("La llargada ha de ser de menys de 31");
-                    break;
-                    }
-                    stmt.setString(1, persona.getNom());
-                    break;
-                case "cog1":
-                    if (persona.getCog1().length() > 30) {
-                        System.out.println("La llargada ha de ser de menys de 31");
-                    }
-                    stmt.setString(1, persona.getCog1());
-                    break;
-                case "cog2":
-                    if (persona.getCog2().length() > 30) {
-                        System.out.println("La llargada ha de ser de menys de 31");
-                    }
-                    stmt.setString(1, persona.getCog2());
-                    break;
-                case "valueN" :
-                    // secuencia de sentencias.
-                    break;
-                default:
-                    // Default secuencia de sentencias.
+    @Override
+    public boolean update(Persona p, String... camps) {
+        Object[] params = new Object[camps.length + 1];
+
+        StringBuilder query = new StringBuilder("UPDATE persones SET ");
+
+        for (int i = 0; i < camps.length; i++) {
+            query.append(camps[i]).append("=?");
+            if (i < camps.length - 1) query.append(",");
+
+            switch (camps[i]) {
+                case "nom" -> params[i] = p.getNom();
+                case "cog1" -> params[i] = p.getCog1();
+                case "cog2" -> params[i] = p.getCog2();
+                case "sexe" -> params[i] = String.valueOf(p.getSexe());
+                case "data_naixement" -> params[i] = p.getDataNaixement();
+                case "dni" -> params[i] = p.getDni();
+                default -> throw new IllegalArgumentException("El camp " + camps[i] + " no existeix");
             }
 
-            stmt.setInt(1, persona.getId());
-            //return stmt.executeUpdate(); comentado para que no de error y poder hacer Commit & Push
-        } catch (SQLException e) {
-            // e.printStackTrace();
-            throw new RuntimeException(e);
-        } finally {
-            close(stmt);
-            close(conn);
         }
-        return false; //esto está para que no de error el método y poder hacer Commit & Push
+        query.append(" WHERE id=?");
+
+        int r = DBMySQLManager.write(query.toString(), params);
+
+        return r > 0;
     }
 
     @Override
-    public boolean delete(Persona persona) {
-        return false;
+    public boolean delete(Persona p) {
+        String query = "DELETE FROM persones WHERE id=?";
+        int r = DBMySQLManager.write(query, p.getId());
+        return r > 0;
     }
 
     @Override
-    public boolean exists(Persona persona) {
-        return false;
+    public boolean exists(Persona p) {
+        return read(p);
     }
 
     @Override
     public int count() {
-        return 0;
+        String query = "SELECT COUNT(*) FROM persones";
+        List<Object[]> r = DBMySQLManager.read(query);
+
+        if (r == null || r.size() != 1) return -1;
+
+        Object[] o = r.iterator().next();
+
+        return (int)o[0];
     }
 
     @Override
     public List<Persona> all() {
-        return null;
+        List<Persona> l = new LinkedList<>();
+
+        String query = "SELECT id,nom,cog1,cog2,sexe,data_naixement,dni FROM persones";
+        List<Object[]> r = DBMySQLManager.read(query);
+
+        Iterator<Object[]> it = r.iterator();
+        while (it.hasNext()) {
+            Object[] row = it.next();
+            l.add(new Persona((int)row[0], (String)row[1], (String)row[2], (String)row[3],
+                    ((String)row[4]).charAt(0), Date.valueOf((String)row[5]), (String)row[6]));
+        }
+        return l;
     }
 }

@@ -53,7 +53,7 @@ public class Menu {
     private static void updPersonaMenu() {
         String opcio;
         int id;
-        boolean opIncorrecte = false, fi = false;
+        boolean opIncorrecte = false, fi;
 
         do {
             do {
@@ -166,26 +166,6 @@ public class Menu {
 
             //TODO: insert candidatura
 
-        /*
-        try {
-            String sql = "INSERT INTO candidatures (candidatura_id, eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulario_nacional) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, candidatura_id);
-            pstmt.setInt(2, eleccio_id);
-            pstmt.setString(3, codi_candidatura);
-            pstmt.setString(4, nom_curt);
-            pstmt.setString(5, nom_llarg);
-            pstmt.setString(6, codi_acumulacio_provincia);
-            pstmt.setString(7, codi_acumulacio_ca);
-            pstmt.setString(8, codi_acumulario_nacional);
-            pstmt.executeUpdate();
-            System.out.println("Candidatura inserida correctament");
-        } catch (SQLException e) {
-            System.out.println("Error al inserir la candidatura");
-            System.out.println(e.getMessage());
-
-         */
-
             do {
                 System.out.print("\nVols realitzar algun alre insert? (S/N): ");
                 opcio = scan.nextLine().trim().toUpperCase();
@@ -199,5 +179,4 @@ public class Menu {
 
         } while (!fi);
     }
-
 }
