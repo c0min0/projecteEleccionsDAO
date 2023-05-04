@@ -16,10 +16,9 @@ public class ProvinciaDAO implements DAODB<Provincia> {
     }
 
     @Override
-    public boolean update(Provincia provincia) {
+    public boolean update(Provincia provincia, String opcio) {
         return false;
     }
-
     @Override
     public boolean delete(Provincia provincia) {
         return false;

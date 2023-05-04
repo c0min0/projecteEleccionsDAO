@@ -16,9 +16,10 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
     }
 
     @Override
-    public boolean update(ComAutonoma comAutonoma) {
+    public boolean update(ComAutonoma comAutonoma, String opcio) {
         return false;
     }
+
 
     @Override
     public boolean delete(ComAutonoma comAutonoma) {

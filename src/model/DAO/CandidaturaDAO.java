@@ -16,9 +16,10 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
     }
 
     @Override
-    public boolean update(Candidatura candidatura) {
+    public boolean update(Candidatura candidatura, String opcio) {
         return false;
     }
+
 
     @Override
     public boolean delete(Candidatura candidatura) {

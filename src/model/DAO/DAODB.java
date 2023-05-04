@@ -6,7 +6,7 @@ public interface DAODB <T> {
     // CRUD
     boolean create(T t);
     boolean read(T t);
-    boolean update(T t);
+    boolean update(T t,String opcio);
     boolean delete(T t);
 
     // ALTRES
