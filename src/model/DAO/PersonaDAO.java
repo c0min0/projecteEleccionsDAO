@@ -2,6 +2,7 @@ package model.DAO;
 
 import model.Persona;
 
+import java.sql.Date;
 import java.util.List;
 
 public class PersonaDAO implements DAODB<Persona>{
@@ -11,8 +12,20 @@ return false;
     }
 
     @Override
-    public boolean read(Persona persona) {
-        return false;
+    public boolean read(Persona p) {
+        Persona pr = read(p.getId());
+        if (pr == null) return false;
+        p.set(pr.getNom(), pr.getCog1(), pr.getCog2(), pr.getSexe(), pr.getDataNaixement(), pr.getDni());
+        return true;
+    }
+
+    public Persona read(int id) {
+        String query = "SELECT nom,cog1,cog2,sexe,data_naixement,dni FROM persones WHERE id=?";
+        List<Object[]> r = DBMySQLManager.read(query, new String[]{String.valueOf(id), "Int"});
+        if (r == null || r.size() != 1) return null;
+        Object[] row = r.iterator().next();
+        return new Persona(id, (String)row[0], (String)row[1], (String)row[2],
+                ((String)row[3]).charAt(0), Date.valueOf((String)row[4]), (String)row[5]);
     }
 
     @Override

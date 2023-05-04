@@ -1,10 +1,14 @@
 package model;
 
+import java.sql.Date;
+
 public class Persona {
     int persona_id;
     String nom;
     String cog1;
     String cog2;
+    char sexe;
+    Date data_naixement;
 
     /** No és el dni, és una cadena única generada per nosaltres
      * a partir de la informació dels documents, ja que el DNI no
@@ -12,19 +16,31 @@ public class Persona {
      */
     String dni;
 
-    public Persona(int persona_id, String nom, String cog1, String cog2, String dni) {
+
+    public Persona(int persona_id, String nom, String cog1, String cog2, char sexe, Date data_naixement, String dni) {
         this.persona_id = persona_id;
         this.nom = nom;
         this.cog1 = cog1;
         this.cog2 = cog2;
+        this.sexe = sexe;
+        this.data_naixement = data_naixement;
         this.dni = dni;
     }
 
-    public int getPersona_id() {
+    public void set (String nom, String cog1, String cog2, char sexe, Date data_naixement, String dni) {
+        this.nom = nom;
+        this.cog1 = cog1;
+        this.cog2 = cog2;
+        this.sexe = sexe;
+        this.data_naixement = data_naixement;
+        this.dni = dni;
+    }
+
+    public int getId() {
         return persona_id;
     }
 
-    public void setPersona_id(int persona_id) {
+    public void setId(int persona_id) {
         this.persona_id = persona_id;
     }
 
@@ -50,6 +66,22 @@ public class Persona {
 
     public void setCog2(String cog2) {
         this.cog2 = cog2;
+    }
+
+    public char getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(char sexe) {
+        this.sexe = sexe;
+    }
+
+    public Date getDataNaixement() {
+        return data_naixement;
+    }
+
+    public void setDataNaixement(Date data_naixement) {
+        this.data_naixement = data_naixement;
     }
 
     public String getDni() {

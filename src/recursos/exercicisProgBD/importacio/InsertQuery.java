@@ -1,5 +1,7 @@
 package recursos.exercicisProgBD.importacio;
 
+import model.DAO.DBMySQLManager;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
