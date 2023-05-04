@@ -8,7 +8,7 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
     @Override
     public boolean create(Candidatura candidatura) {
         String query = "INSERT INTO candidatures(candidatura_id,eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional) VALUES (?,?,?,?,?,?,?,?)";
-        //int r = SQLRW.write(query, candidatura.getCandidatura_id(), candidatura.getCodi_candidatura(), candidatura.getNom_curt(),candidatura.getNom_llarg(),candidatura.getCodi_acumulacio_provincia(),candidatura.getCodi_acumulacio_ca(),candidatura.getCodi_acumulacio_nacional());
+        //int r = SQLRW.write(query, candidatura.getCandidatura_id(), candidatura.getEleccio_id(), candidatura.getCodi_candidatura(), candidatura.getNom_curt(),candidatura.getNom_llarg(),candidatura.getCodi_acumulacio_provincia(),candidatura.getCodi_acumulacio_ca(),candidatura.getCodi_acumulacio_nacional());
         //return r > 0;
         return false;
     }
