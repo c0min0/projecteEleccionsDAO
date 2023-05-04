@@ -2,7 +2,7 @@ package exercicis.taules;
 
 public class Candidatura {
     int candidatura_id;
-    // int eleccio_id; no cal
+    int eleccio_id;
     String codi_candidatura;
     String nom_curt;
     String nom_llarg;
@@ -10,8 +10,9 @@ public class Candidatura {
     String codi_acumulacio_ca;
     String codi_acumulacio_nacional;
 
-    public Candidatura(int candidatura_id, String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
+    public Candidatura(int candidatura_id, int eleccio_id, String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
         this.candidatura_id = candidatura_id;
+        this.eleccio_id = eleccio_id;
         this.codi_candidatura = codi_candidatura;
         this.nom_curt = nom_curt;
         this.nom_llarg = nom_llarg;
@@ -26,6 +27,14 @@ public class Candidatura {
 
     public void setCandidatura_id(int candidatura_id) {
         this.candidatura_id = candidatura_id;
+    }
+
+    public int getEleccio_id() {
+        return eleccio_id;
+    }
+
+    public void setEleccio_id(int eleccio_id) {
+        this.eleccio_id = eleccio_id;
     }
 
     public String getCodi_candidatura() {
