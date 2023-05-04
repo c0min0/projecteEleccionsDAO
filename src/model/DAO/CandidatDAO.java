@@ -16,7 +16,7 @@ public class CandidatDAO implements DAODB<Candidat> {
     }
 
     @Override
-    public boolean update(Candidat candidat, String opcio) {
+    public int update(Candidat candidat, String opcio) {
         return false;
     }
 
