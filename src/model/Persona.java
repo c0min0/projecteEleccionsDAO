@@ -3,7 +3,7 @@ package model;
 import java.sql.Date;
 
 public class Persona {
-    int persona_id;
+    long persona_id;
     String nom;
     String cog1;
     String cog2;
@@ -17,8 +17,21 @@ public class Persona {
     String dni;
 
 
-    public Persona(int persona_id, String nom, String cog1, String cog2, String sexe, Date data_naixement, String dni) {
+    public Persona(long persona_id, String nom, String cog1, String cog2, String sexe, Date data_naixement, String dni) {
         this.persona_id = persona_id;
+        this.nom = nom;
+        this.cog1 = cog1;
+        this.cog2 = cog2;
+        this.sexe = sexe;
+        this.data_naixement = data_naixement;
+        this.dni = dni;
+    }
+
+    public Persona(long persona_id) {
+        this.persona_id = persona_id;
+    }
+
+    public Persona(String nom, String cog1, String cog2, String sexe, Date data_naixement, String dni) {
         this.nom = nom;
         this.cog1 = cog1;
         this.cog2 = cog2;
@@ -36,11 +49,11 @@ public class Persona {
         this.dni = dni;
     }
 
-    public int getId() {
+    public long getId() {
         return persona_id;
     }
 
-    public void setId(int persona_id) {
+    public void setId(long persona_id) {
         this.persona_id = persona_id;
     }
 

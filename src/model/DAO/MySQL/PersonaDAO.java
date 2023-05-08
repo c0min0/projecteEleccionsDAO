@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PersonaDAO implements DAODB<Persona, Integer> {
+public class PersonaDAO implements DAODB<Persona, Long> {
     @Override
     public boolean create(Persona p) {
         String query = "INSERT INTO persones (nom,cog1,cog2,sexe,data_naixement,dni) VALUES (?,?,?,?,?,?)";
@@ -30,17 +30,17 @@ public class PersonaDAO implements DAODB<Persona, Integer> {
         return true;
     }
 
-    public Persona readById (Integer id) {
+    public Persona readById (Long id) {
         String query = "SELECT nom,cog1,cog2,sexe,data_naixement,dni FROM persones WHERE persona_id=?";
         List<Object[]> r = DBMySQLManager.read(query, id);
-        if (r.size() != 1) return null;
+        if (r.size() != 1L) return null;
         Object[] row = r.iterator().next();
 
         String nom = (String)row[0];
         String cog1 = (String)row[1];
         String cog2 = (String)row[2];
         String sexe = (String)row[3];
-        Date dataNaixement = (row[4] == null ? null : Date.valueOf((String)row[4]));
+        Date dataNaixement = (row[4] == null ? null : (Date) row[4]);
         String dni = (String)row[5];
 
         return new Persona(id, nom, cog1, cog2, sexe, dataNaixement, dni);
@@ -55,7 +55,7 @@ public class PersonaDAO implements DAODB<Persona, Integer> {
         String sexe = String.valueOf(p.getSexe());
         Date dataNaixement = p.getDataNaixement();
         String dni = p.getDni();
-        int persona_id = p.getId();
+        long persona_id = p.getId();
 
         int r = DBMySQLManager.write(query, nom, cog1, cog2, sexe, dataNaixement, dni, persona_id);
         return r > 0;
@@ -90,42 +90,49 @@ public class PersonaDAO implements DAODB<Persona, Integer> {
         return r > 0;
     }
 
-    @Override //TODO: check if this works
+    @Override
     public boolean delete(Persona p) {
         String query = "DELETE FROM persones WHERE persona_id=?";
         int r = DBMySQLManager.write(query, p.getId());
         return r > 0;
     }
 
-    @Override //TODO: check if this works
+    @Override
     public boolean exists(Persona p) {
         return read(p);
     }
 
-    @Override //TODO: check if this works
-    public int count() {
+    @Override
+    public long count() {
         String query = "SELECT COUNT(*) FROM persones";
         List<Object[]> r = DBMySQLManager.read(query);
 
-        if (r == null || r.size() != 1) return -1;
+        if (r.size() != 1) return -1;
 
         Object[] o = r.iterator().next();
 
-        return (int)o[0];
+        return (long)o[0];
     }
 
-    @Override //TODO: check if this works
+    @Override
     public List<Persona> all() {
         List<Persona> l = new LinkedList<>();
 
-        String query = "SELECT id,nom,cog1,cog2,sexe,data_naixement,dni FROM persones";
+        String query = "SELECT persona_id,nom,cog1,cog2,sexe,data_naixement,dni FROM persones";
         List<Object[]> r = DBMySQLManager.read(query);
 
         Iterator<Object[]> it = r.iterator();
         while (it.hasNext()) {
             Object[] row = it.next();
-            l.add(new Persona((int)row[0], (String)row[1], (String)row[2], (String)row[3],
-                    ((String)row[4]), Date.valueOf((String)row[5]), (String)row[6]));
+            long id = (long)row[0];
+            String nom = (String)row[1];
+            String cog1 = (String)row[2];
+            String cog2 = (String)row[3];
+            String sexe = (String)row[4];
+            Date dataNaixement = (row[5] == null ? null : (Date) row[5]);
+            String dni = (String)row[6];
+
+            l.add(new Persona(id, nom, cog1, cog2, sexe, dataNaixement, dni));
         }
         return l;
     }

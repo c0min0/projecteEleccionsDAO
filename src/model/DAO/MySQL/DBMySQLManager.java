@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DBMySQLManager {
-    // ips
+    // Ips
     String ipLocal = "192.168.75.129";
     String ipIsard = "10.2.179.196";
 
@@ -38,6 +38,12 @@ public class DBMySQLManager {
     }
 
     // Mètodes
+
+    /**
+     * Obté la connexió a la base de dades
+     * @return connexió a la base de dades
+     * @throws SQLException si no es pot connectar
+     */
     public static Connection getConnection() throws SQLException {
 
         if (conn == null){
@@ -49,6 +55,10 @@ public class DBMySQLManager {
         return conn;
     }
 
+    /**
+     * Tanca la connexió a la base de dades
+     * @throws SQLException si no es pot tancar
+     */
     public static void closeConnection() throws SQLException {
         if (conn != null) {
             conn.close();
@@ -79,6 +89,7 @@ public class DBMySQLManager {
                     case "Character" -> ps.setString(i + 1, params[i].toString());
                     case "String" -> ps.setString(i + 1, (String) params[i]);
                     case "Integer" -> ps.setInt(i + 1, (Integer) params[i]);
+                    case "Long" -> ps.setLong(i + 1, (Long) params[i]);
                     case "Float" -> ps.setFloat(i + 1, (Float) params[i]);
                     case "Double" -> ps.setDouble(i + 1, (Double) params[i]);
                     case "Date" -> ps.setDate(i + 1, (Date) params[i]);
@@ -111,7 +122,7 @@ public class DBMySQLManager {
             ps.close();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.print("SQL exception: " + e.getMessage());
         } finally {
             try {
                 // Tanquem la connexió
@@ -159,6 +170,7 @@ public class DBMySQLManager {
                         case "Character" -> ps.setString(i + 1, params[i].toString());
                         case "String" -> ps.setString(i + 1, (String) params[i]);
                         case "Integer" -> ps.setInt(i + 1, (Integer) params[i]);
+                        case "Long" -> ps.setLong(i + 1, (Long) params[i]);
                         case "Float" -> ps.setFloat(i + 1, (Float) params[i]);
                         case "Double" -> ps.setDouble(i + 1, (Double) params[i]);
                         case "Date" -> ps.setDate(i + 1, (Date) params[i]);
@@ -169,11 +181,11 @@ public class DBMySQLManager {
             // Executem la consulta
             result = ps.executeUpdate();
 
-            // Tanquem els recursos
+            // Tanquem el PreparedStatement
             ps.close();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.print("SQL exception: " + e.getMessage());
         } finally {
             try {
                 // Tanquem la connexió
