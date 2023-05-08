@@ -1,13 +1,13 @@
 package model;
 
 public class Provincia {
-    int provincia_id;
-    int comunitat_aut_id;
+    long provincia_id;
+    long comunitat_aut_id;
     String nom;
     String codi_ine;
     int num_escons;
 
-    public Provincia(int provincia_id, int comunitat_aut_id, String nom, String codi_ine, int num_escons) {
+    public Provincia(long provincia_id, long comunitat_aut_id, String nom, String codi_ine, int num_escons) {
         this.provincia_id = provincia_id;
         this.comunitat_aut_id = comunitat_aut_id;
         this.nom = nom;
@@ -15,19 +15,19 @@ public class Provincia {
         this.num_escons = num_escons;
     }
 
-    public int getProvincia_id() {
+    public long getProvincia_id() {
         return provincia_id;
     }
 
-    public void setProvincia_id(int provincia_id) {
+    public void setProvincia_id(long provincia_id) {
         this.provincia_id = provincia_id;
     }
 
-    public int getComunitat_aut_id() {
+    public long getComunitat_aut_id() {
         return comunitat_aut_id;
     }
 
-    public void setComunitat_aut_id(int comunitat_aut_id) {
+    public void setComunitat_aut_id(long comunitat_aut_id) {
         this.comunitat_aut_id = comunitat_aut_id;
     }
 

@@ -1,13 +1,13 @@
 package model;
 
 public class Municipi {
-    int municipi_id;
+    long municipi_id;
     String nom;
     String codi_ine;
-    int provincia_id;
+    long provincia_id;
     String districte;
 
-    public Municipi(int municipi_id, String nom, String codi_ine, int provincia_id, String districte) {
+    public Municipi(long municipi_id, String nom, String codi_ine, long provincia_id, String districte) {
         this.municipi_id = municipi_id;
         this.nom = nom;
         this.codi_ine = codi_ine;
@@ -15,11 +15,11 @@ public class Municipi {
         this.districte = districte;
     }
 
-    public int getMunicipi_id() {
+    public long getMunicipi_id() {
         return municipi_id;
     }
 
-    public void setMunicipi_id(int municipi_id) {
+    public void setMunicipi_id(long municipi_id) {
         this.municipi_id = municipi_id;
     }
 
@@ -39,11 +39,11 @@ public class Municipi {
         this.codi_ine = codi_ine;
     }
 
-    public int getProvincia_id() {
+    public long getProvincia_id() {
         return provincia_id;
     }
 
-    public void setProvincia_id(int provincia_id) {
+    public void setProvincia_id(long provincia_id) {
         this.provincia_id = provincia_id;
     }
 

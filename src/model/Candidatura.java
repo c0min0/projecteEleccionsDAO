@@ -1,8 +1,8 @@
 package model;
 
 public class Candidatura {
-    int candidatura_id;
-    int eleccio_id;
+    long candidatura_id;
+    long eleccio_id;
     String codi_candidatura;
     String nom_curt;
     String nom_llarg;
@@ -10,7 +10,7 @@ public class Candidatura {
     String codi_acumulacio_ca;
     String codi_acumulacio_nacional;
 
-    public Candidatura(int candidatura_id, int eleccio_id, String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
+    public Candidatura(long candidatura_id, long eleccio_id, String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
         this.candidatura_id = candidatura_id;
         this.eleccio_id = eleccio_id;
         this.codi_candidatura = codi_candidatura;
@@ -21,19 +21,19 @@ public class Candidatura {
         this.codi_acumulacio_nacional = codi_acumulacio_nacional;
     }
 
-    public int getCandidatura_id() {
+    public long getCandidatura_id() {
         return candidatura_id;
     }
 
-    public void setCandidatura_id(int candidatura_id) {
+    public void setCandidatura_id(long candidatura_id) {
         this.candidatura_id = candidatura_id;
     }
 
-    public int getEleccio_id() {
+    public long getEleccio_id() {
         return eleccio_id;
     }
 
-    public void setEleccio_id(int eleccio_id) {
+    public void setEleccio_id(long eleccio_id) {
         this.eleccio_id = eleccio_id;
     }
 
