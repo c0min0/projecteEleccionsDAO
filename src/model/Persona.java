@@ -7,17 +7,17 @@ public class Persona {
     String nom;
     String cog1;
     String cog2;
-    char sexe;
+    String sexe;
     Date data_naixement;
 
     /** No és el dni, és una cadena única generada per nosaltres
      * a partir de la informació dels documents, ja que el DNI no
-     * es pot emmagatzemar segons la llei.
+     * es pot emmagatzemar segons la llei (CHAR(8)).
      */
     String dni;
 
 
-    public Persona(int persona_id, String nom, String cog1, String cog2, char sexe, Date data_naixement, String dni) {
+    public Persona(int persona_id, String nom, String cog1, String cog2, String sexe, Date data_naixement, String dni) {
         this.persona_id = persona_id;
         this.nom = nom;
         this.cog1 = cog1;
@@ -27,7 +27,7 @@ public class Persona {
         this.dni = dni;
     }
 
-    public void set (String nom, String cog1, String cog2, char sexe, Date data_naixement, String dni) {
+    public void set (String nom, String cog1, String cog2, String sexe, Date data_naixement, String dni) {
         this.nom = nom;
         this.cog1 = cog1;
         this.cog2 = cog2;
@@ -68,11 +68,11 @@ public class Persona {
         this.cog2 = cog2;
     }
 
-    public char getSexe() {
+    public String getSexe() {
         return sexe;
     }
 
-    public void setSexe(char sexe) {
+    public void setSexe(String sexe) {
         this.sexe = sexe;
     }
 
@@ -90,5 +90,18 @@ public class Persona {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "persona_id=" + persona_id +
+                ", nom='" + nom + '\'' +
+                ", cog1='" + cog1 + '\'' +
+                ", cog2='" + cog2 + '\'' +
+                ", sexe=" + sexe +
+                ", data_naixement=" + data_naixement +
+                ", dni='" + dni + '\'' +
+                '}';
     }
 }
