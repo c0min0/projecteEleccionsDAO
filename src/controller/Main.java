@@ -1,18 +1,60 @@
 package controller;
 
+import controller.DAO.MySQL.CandidaturaDAO;
+import controller.DAO.MySQL.DBMySQLManager;
+import controller.DAO.MySQL.PersonaDAO;
+import model.Candidatura;
+import model.Persona;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class Main {
     public static void main(String[] args) {
         //Menu.initMenu();
-        prova();
+        //provaPersones();
+        provaCandidatures();
     }
+    private static void provaCandidatures() {
+        // INSERT
 
-    private static void prova() {
-        /*Persona p = new Persona(null, null, null, null, null, "99999999");
+        try {
+            Connection conn = DBMySQLManager.getConnection();
+            Candidatura c = new Candidatura(1,null,null,null, null, null, null);
 
-        PersonaDAO pDAO = new PersonaDAO();
-        if (pDAO.create(p)) System.out.println("OK!");
-        else System.out.println("KO!");
-        */
+            CandidaturaDAO cDAO = new CandidaturaDAO();
+            if (cDAO.create(c)) System.out.println("OK!");
+            else System.out.println("KO!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        // UPDATE
+        try {
+            Connection conn = DBMySQLManager.getConnection();
+            String eleccio_id = "eleccio_id";
+            String nom_curt = "nom_curt";
+            Candidatura c = new Candidatura(82,3,"1211212","Benito",null, null, null, null);
+
+            CandidaturaDAO cDAO = new CandidaturaDAO();
+            if (cDAO.update(c,eleccio_id,nom_curt)) System.out.println("OK!");
+            else System.out.println("KO!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private static void provaPersones() {
+        try{
+            Connection conn = DBMySQLManager.getConnection();
+            Persona p = new Persona(null, null, null, null, null, "88818888");
+
+            PersonaDAO pDAO = new PersonaDAO();
+            if (pDAO.create(p)) System.out.println("OK!");
+            else System.out.println("KO!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
 
 
         /*PersonaDAO pDAO = new PersonaDAO();

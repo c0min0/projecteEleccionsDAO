@@ -11,7 +11,7 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
     @Override
     public boolean create(Candidatura c) {
         // INSERT SQL
-        String query = "INSERT INTO candidats (eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO candidatures (eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional) VALUES (?,?,?,?,?,?,?)";
 
         // Escrivim a la BD amb els valors de la candidatura passada per paràmetres
         int r = DBMySQLManager.write(query,

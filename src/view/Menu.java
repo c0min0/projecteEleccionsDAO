@@ -3,6 +3,7 @@ package view;
 import controller.DAO.MySQL.PersonaDAO;
 import model.Persona;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Menu {
@@ -173,6 +174,7 @@ public class Menu {
             codi_acumulario_nacional = scan.nextLine();
 
             //TODO: insert candidatura
+            System.out.println("Insert de candidatures");
 
             do {
                 System.out.print("\nVols realitzar algun alre insert? (S/N): ");
