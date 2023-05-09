@@ -1,4 +1,4 @@
-package model.DAO.MySQL;
+package controller.DAO.MySQL;
 
 import model.DAO.DAODB;
 import model.Persona;
