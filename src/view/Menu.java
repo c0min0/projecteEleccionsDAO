@@ -1,4 +1,4 @@
-package viewAndController;
+package view;
 
 import java.util.Scanner;
 

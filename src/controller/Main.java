@@ -1,9 +1,4 @@
-package viewAndController;
-
-import model.DAO.MySQL.PersonaDAO;
-import model.Persona;
-
-import java.util.List;
+package controller;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package model.DAO.MySQL;
+package controller.DAO.MySQL;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 
 public class DBMySQLManager {
     // Ips
-    String ipLocal = "192.168.75.129";
+    String ipLocalVic = "192.168.75.129";
     String ipIsard = "10.2.179.196";
 
     // Propietats
@@ -20,7 +20,7 @@ public class DBMySQLManager {
     private String url;
     private String usuari ="perepi";
     private String contrasenya = "pastanaga";
-    private String host = ipLocal; //IP de qui executi el programa
+    private String host = ipLocalVic; //IP de qui executi el programa
     private String base_dades = "practicaDAO_VicBen"; // PROVA: eleccions2017, BONA: eleccions2016
 
     // Constructors

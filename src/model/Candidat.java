@@ -17,43 +17,43 @@ public class Candidat {
         this.tipus = tipus;
     }
 
-    public long getCandidat_id() {
+    public long getId() {
         return candidat_id;
     }
 
-    public void setCandidat_id(long candidat_id) {
+    public void setId(long candidat_id) {
         this.candidat_id = candidat_id;
     }
 
-    public long getCandidatura_id() {
+    public long getCandidaturaId() {
         return candidatura_id;
     }
 
-    public void setCandidatura_id(long candidatura_id) {
+    public void setCandidaturaId(long candidatura_id) {
         this.candidatura_id = candidatura_id;
     }
 
-    public long getPersona_id() {
+    public long getPersonaId() {
         return persona_id;
     }
 
-    public void setPersona_id(long persona_id) {
+    public void setPersonaId(long persona_id) {
         this.persona_id = persona_id;
     }
 
-    public long getProvincia_id() {
+    public long getProvinciaId() {
         return provincia_id;
     }
 
-    public void setProvincia_id(long provincia_id) {
+    public void setProvinciaId(long provincia_id) {
         this.provincia_id = provincia_id;
     }
 
-    public int getNum_ordre() {
+    public int getNumOrdre() {
         return num_ordre;
     }
 
-    public void setNum_ordre(int num_ordre) {
+    public void setNumOrdre(int num_ordre) {
         this.num_ordre = num_ordre;
     }
 
