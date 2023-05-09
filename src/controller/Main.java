@@ -1,5 +1,10 @@
 package controller;
 
+import controller.DAO.MySQL.PersonaDAO;
+import model.Persona;
+
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         //Menu.initMenu();
@@ -49,12 +54,12 @@ public class Main {
 
 
 
-        /*PersonaDAO pDAO = new PersonaDAO();
+        PersonaDAO pDAO = new PersonaDAO();
         List<Persona> llista = pDAO.all();
 
         for (Persona p : llista) {
             System.out.println(p);
-        }*/
+        }
 
 
 

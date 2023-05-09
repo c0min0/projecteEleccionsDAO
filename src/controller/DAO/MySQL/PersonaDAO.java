@@ -4,7 +4,6 @@ import model.DAO.DAODB;
 import model.Persona;
 
 import java.sql.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
