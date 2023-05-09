@@ -174,24 +174,22 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
 
         // Executem la query
         List<Object[]> r = DBMySQLManager.read(query);
-        Iterator<Object[]> it = r.iterator();
 
         // Per cada registre
-        while (it.hasNext()) {
-            Object[] row = it.next();
+        for (Object[] row : r) {
 
             // Obtenim les dades de la candidatura
-            long id = (long)row[0];
+            long id = (long) row[0];
             long eleccio_id = (Long) row[1];
-            String codi_candidatura = (String)row[2];
-            String nom_curt = (String)row[3];
-            String nom_llarg = (String)row[4];
-            String codi_acumulacio_provincia = (String)row[5];
-            String codi_acumulacio_ca = (String)row[6];
-            String codi_acumulacio_nacional = (String)row[7];
+            String codi_candidatura = (String) row[2];
+            String nom_curt = (String) row[3];
+            String nom_llarg = (String) row[4];
+            String codi_acumulacio_provincia = (String) row[5];
+            String codi_acumulacio_ca = (String) row[6];
+            String codi_acumulacio_nacional = (String) row[7];
 
             // Afegim la candidatura a la llista
-            l.add(new Candidatura(id, eleccio_id, codi_candidatura ,nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca,codi_acumulacio_nacional));
+            l.add(new Candidatura(id, eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional));
         }
 
         // Retornem la llista

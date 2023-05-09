@@ -168,20 +168,18 @@ public class PersonaDAO implements DAODB<Persona, Long> {
 
         // Executem la query
         List<Object[]> r = DBMySQLManager.read(query);
-        Iterator<Object[]> it = r.iterator();
 
         // Per cada registre
-        while (it.hasNext()) {
-            Object[] row = it.next();
+        for (Object[] row : r) {
 
             // Obtenim les dades de la persona
-            long id = (long)row[0];
-            String nom = (String)row[1];
-            String cog1 = (String)row[2];
-            String cog2 = (String)row[3];
-            String sexe = (String)row[4];
+            long id = (long) row[0];
+            String nom = (String) row[1];
+            String cog1 = (String) row[2];
+            String cog2 = (String) row[3];
+            String sexe = (String) row[4];
             Date dataNaixement = (Date) row[5];
-            String dni = (String)row[6];
+            String dni = (String) row[6];
 
             // Afegim la persona a la llista
             l.add(new Persona(id, nom, cog1, cog2, sexe, dataNaixement, dni));
