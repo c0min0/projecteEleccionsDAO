@@ -1,7 +1,6 @@
 package controller.DAO.MySQL;
 
 import model.DAO.DAODB;
-import model.Candidatura;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -144,6 +143,7 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
 
     @Override
     public boolean exists(Candidatura c) {
+        //Retornem
         return read(c);
     }
 
