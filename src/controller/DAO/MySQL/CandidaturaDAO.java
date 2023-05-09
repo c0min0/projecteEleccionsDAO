@@ -1,10 +1,8 @@
 package controller.DAO.MySQL;
 
-import model.Candidatura;
 import model.DAO.DAODB;
 import model.Candidatura;
 
-import java.sql.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -137,8 +135,10 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
         // DELETE SQL
         String query = "DELETE FROM candidatures WHERE candidatura_id=?";
 
+        // Eliminem de la BD la candidatura passada per paràmetres
         int r = DBMySQLManager.write(query, c.getId());
-        //
+
+        // Si s'ha eliminat alguna fila, retornem true
         return r > 0;
     }
 
@@ -149,30 +149,37 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
 
     @Override
     public long count() {
-        // SELECT SQL
+        // Query per comptar el nombre de files de la taula
         String query = "SELECT COUNT(*) FROM candidatures";
 
-        //
+        // Executem la query
         List<Object[]> r = DBMySQLManager.read(query);
 
-        // Si la llargada no es 1, retornem -1
+        // Si la llista no te un sol element, retornem -1 (s'ha produit un error)
         if (r.size() != 1) return -1;
 
+        // Retornem el nombre de files de la taula
         Object[] o = r.iterator().next();
-
         return (long)o[0];
     }
 
     @Override
     public List<Candidatura> all() {
+        // Creem una llista buida de persones
         List<Candidatura> l = new LinkedList<>();
 
+        // Query per obtenir totes les candidatures
         String query = "SELECT candidatura_id, eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional FROM candidatures";
-        List<Object[]> r = DBMySQLManager.read(query);
 
+        // Executem la query
+        List<Object[]> r = DBMySQLManager.read(query);
         Iterator<Object[]> it = r.iterator();
+
+        // Per cada registre
         while (it.hasNext()) {
             Object[] row = it.next();
+
+            // Obtenim les dades de la candidatura
             long id = (long)row[0];
             long eleccio_id = (Long) row[1];
             String codi_candidatura = (String)row[2];
@@ -182,10 +189,11 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
             String codi_acumulacio_ca = (String)row[6];
             String codi_acumulacio_nacional = (String)row[7];
 
-
+            // Afegim la candidatura a la llista
             l.add(new Candidatura(id, eleccio_id, codi_candidatura ,nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca,codi_acumulacio_nacional));
         }
-        // Retornem
+
+        // Retornem la llista
         return l;
     }
 }
