@@ -2,9 +2,7 @@ package controller.DAO.MySQL;
 
 import model.Candidatura;
 import model.DAO.DAODB;
-import model.Candidatura;
 
-import java.sql.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -144,6 +142,7 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
 
     @Override
     public boolean exists(Candidatura c) {
+        //Retornem
         return read(c);
     }
 

@@ -1,5 +1,8 @@
 package view;
 
+import controller.DAO.MySQL.PersonaDAO;
+import model.Persona;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -89,18 +92,23 @@ public class Menu {
             switch (opcio) {
                 case "1":
                     //TODO: update nom
+                    System.out.println("Opcio amb el nom");
                     break;
                 case "2":
                     //TODO: update cog1
+                    System.out.println("Opcio amb el cognom1");
                     break;
                 case "3":
                     //TODO: update cog2
+                    System.out.println("Opcio amb el cognom2");
                     break;
                 case "4":
                     //TODO: update sexe
+                    System.out.println("Opcio amb el sexe");
                     break;
                 case "5":
                     //TODO: update data_naixement
+                    System.out.println("Opcio amb la data de naixement");
                     break;
                 case "0":
                     return;
