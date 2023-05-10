@@ -1,13 +1,13 @@
 package controller.DAO.MySQL;
 
-import model.DAO.DAODB;
+import controller.DAO.DAODB;
 import model.Persona;
 
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PersonaDAO implements DAODB<Persona, Long> {
+public class PersonaDAO implements DAODB<Persona> {
     @Override
     public boolean create(Persona p) {
         // INSERT SQL
@@ -41,7 +41,7 @@ public class PersonaDAO implements DAODB<Persona, Long> {
         return true;
     }
 
-    public Persona readById (Long id) {
+    public Persona readById (long id) {
         // SELECT SQL
         String query = "SELECT nom,cog1,cog2,sexe,data_naixement,dni FROM persones WHERE persona_id=?";
 

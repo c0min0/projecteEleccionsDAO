@@ -17,8 +17,9 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
         //Menu.initMenu();
-        //provaPersones();
-        provaCandidatures();
+        provaPersones();
+        //provaCandidatures();
+        provaReadPersones();
     }
     private static void provaCandidatures() {
         // INSERT
@@ -46,9 +47,12 @@ public class Main {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
+
     }
     private static void provaPersones() {
-        try{
+        /*try {
             Connection conn = DBMySQLManager.getConnection();
             Persona p = new Persona(null, null, null, null, null, "88818888");
 
@@ -59,25 +63,58 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+         */
+        // READ
+        CandidaturaDAO cDAO = new CandidaturaDAO();
+
+        Candidatura c = new Candidatura(1L);
+        System.out.println(cDAO.count());
+        CandidaturaDAO pDAO3 = new CandidaturaDAO();
+        if (pDAO3.exists(c)){
+            System.out.println("PERFECTO");
+        }
+
+        if (cDAO.read(c)) {
+            System.out.println("READ COMPLETADO");
+            System.out.println(c);
+        }
+        else System.out.println("KO!");
 
 
 
-        /*PersonaDAO pDAO = new PersonaDAO();
+// READBYID
+        /*CandidaturaDAO cDAO2 = new CandidaturaDAO();
+        Candidatura c2 = cDAO2.readById(1);
+
+        c2.setNomCurt("Prueba");
+        c2.setNomLlarg("superada");
+
+        cDAO2.update(c2);
+        System.out.println("READBYID I UPDATE COMPLETADO");
+
+
+         */
+
+    }
+    private static void provaReadPersones(){
+
+        PersonaDAO pDAO = new PersonaDAO();
 
         Persona p = new Persona(1);
 
         if (pDAO.read(p)) System.out.println(p);
-        else System.out.println("KO!");*/
+        else System.out.println("KO!");
 
 
 
 
-        /*int i = 0;
+        System.out.println(pDAO.count());
+        int i = 0;
         Object[] o = new Object[1];
         o[0] = i;
 
         if (o[0] == null) System.out.println("null");
-        else System.out.println("no null");*/
+        else System.out.println("no null");
 
 
 
@@ -85,28 +122,34 @@ public class Main {
         /*PersonaDAO pDAO = new PersonaDAO();
         Persona p = pDAO.readById(1);
 
-        p.setNom("Hola");
-        p.setCog1("ke ase");
+        p.setNom("Prueba");
+        p.setCog1("superada");
 
-        pDAO.update(p);*/
+        pDAO.update(p);
 
-
-
-        //pDAO.delete(p);
+         */
 
 
 
-        PersonaDAO pDAO = new PersonaDAO();
-        List<Persona> llista = pDAO.all();
+       // pDAO.delete(p);
 
-        for (Persona p : llista) {
-            System.out.println(p);
+
+
+
+        CandidaturaDAO pDAO2 = new CandidaturaDAO();
+        List<Candidatura> llista = pDAO2.all();
+
+        for (Candidatura p2 : llista) {
+            System.out.println(p2);
+
         }
 
 
 
-        /*Persona p = new PersonaDAO().readById(999999L);
 
-        System.out.println(p);*/
+
+        /*Persona p3 = new PersonaDAO().readById(1);
+        System.out.println(p3);
+         */
     }
 }

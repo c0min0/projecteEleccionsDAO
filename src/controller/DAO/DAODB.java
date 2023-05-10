@@ -1,17 +1,17 @@
-package model.DAO;
+package controller.DAO;
 
 import model.Persona;
 
 import java.util.List;
 
-public interface DAODB <T, K> {
+public interface DAODB <T> {
 
     // CRUD
     boolean create(T t);
 
     boolean read(T t);
 
-    T readById (K id); // read by key (id)
+    T readById (long id); // read by key (id)
 
     boolean update (T t);
 
