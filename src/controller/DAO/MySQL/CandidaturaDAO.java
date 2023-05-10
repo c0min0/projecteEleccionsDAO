@@ -2,11 +2,13 @@ package controller.DAO.MySQL;
 
 import model.DAO.DAODB;
 import model.Candidatura;
+import model.Persona;
 
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CandidaturaDAO implements DAODB<Candidatura, Long> {
+public class CandidaturaDAO implements DAODB<Candidatura> {
     @Override
     public boolean create(Candidatura c) {
         // INSERT SQL
@@ -43,7 +45,7 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
     }
 
     @Override
-    public Candidatura readById(Long id) {
+    public Candidatura readById(long id) {
         // SELECT SQL
         String query = "SELECT eleccio_id, codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional FROM candidatures WHERE candidatura_id=?";
 
@@ -141,6 +143,38 @@ public class CandidaturaDAO implements DAODB<Candidatura, Long> {
         return r > 0;
     }
 
+    //TODO: prvar mètode
+    @Override
+    public List<Candidatura> search(String camp, Object valor) {
+        // Creem una llista buida de Candidatures
+        List<Candidatura> l = new LinkedList<>();
+
+        // Query per obtenir totes les candidatures amb el valor del camp passat per paràmetres
+        String query = "SELECT * FROM candidatures WHERE " + camp + "=?";
+
+        // Executem la query
+        List<Object[]> r = DBMySQLManager.read(query, valor);
+
+        // Per cada registre
+        for (Object[] row : r) {
+
+            // Obtenim les dades de la candidatura
+            long id = (long) row[0];
+            long eleccio_id = (Long) row[1];
+            String codi_candidatura = (String) row[2];
+            String nom_curt = (String) row[3];
+            String nom_llarg = (String) row[4];
+            String codi_acumulacio_provincia = (String) row[5];
+            String codi_acumulacio_ca = (String) row[6];
+            String codi_acumulacio_nacional = (String) row[7];
+
+            // Afegim la candidatura a la llista
+            l.add(new Candidatura(id, eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional));
+        }
+
+        // Retornem la llista
+        return l;
+    }
     @Override
     public boolean exists(Candidatura c) {
         //Retornem

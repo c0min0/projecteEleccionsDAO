@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PersonaDAO implements DAODB<Persona, Long> {
+public class PersonaDAO implements DAODB<Persona> {
     @Override
     public boolean create(Persona p) {
         // INSERT SQL
@@ -41,7 +41,8 @@ public class PersonaDAO implements DAODB<Persona, Long> {
         return true;
     }
 
-    public Persona readById (Long id) {
+    @Override
+    public Persona readById (long id) {
         // SELECT SQL
         String query = "SELECT nom,cog1,cog2,sexe,data_naixement,dni FROM persones WHERE persona_id=?";
 
@@ -134,6 +135,40 @@ public class PersonaDAO implements DAODB<Persona, Long> {
 
         // Si s'ha eliminat alguna fila, retornem true
         return r > 0;
+    }
+
+    //TODO: provar mètode
+    @Override
+    public List<Persona> search (String camp, Object valor) {
+        // Creem una llista buida de persones
+        List<Persona> l = new LinkedList<>();
+
+        // Query per obtenir totes les persones aamb el valor del camp passat per paràmetres
+        String query = "SELECT * FROM persones WHERE " + camp + "=?";
+
+        // Executem la query
+        List<Object[]> r = DBMySQLManager.read(query, valor);
+
+        // Per cada resultat obtingut
+        for (Object[] row : r) {
+            // Obtenim els valors dels camps de la persona
+            long id = (long)row[0];
+            String nom = (String)row[1];
+            String cog1 = (String)row[2];
+            String cog2 = (String)row[3];
+            String sexe = (String)row[4];
+            Date dataNaixement = (Date) row[5];
+            String dni = (String)row[6];
+
+            // Creem una nova persona amb els valors obtinguts
+            Persona p = new Persona(id, nom, cog1, cog2, sexe, dataNaixement, dni);
+
+            // Afegim la persona a la llista
+            l.add(p);
+        }
+
+        // Retornem la llista de persones
+        return l;
     }
 
     @Override

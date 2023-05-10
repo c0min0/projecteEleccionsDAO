@@ -1,190 +1,290 @@
 package view;
 
-import controller.DAO.MySQL.PersonaDAO;
-import model.Persona;
+import controller.PersonaController;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Menu {
     static Scanner scan = new Scanner(System.in);
-    static void initMenu() {
-        String opcio;
-        boolean opIncorrecte, fi = false;
+
+    /**
+     * Constant que conté el missatge d'error quan l'usuari introdueix una opció incorrecta
+     */
+    static final String OP_INCORRECTE = "Opció incorrecte, torna a provar-ho.\n";
+
+
+    /**
+     * Mètode que genera un menú amb les opcions passades per paràmetre
+     * i retorna l'opció triada per l'usuari
+     *
+     * @param pregunta Pregunta a fer
+     * @param opcio    Opcions a mostrar
+     * @return Opció triada per l'usuari
+     */
+    public static int generateMenu(String pregunta, String escape, String... opcio) {
+
+        String opTriada;
 
         do {
-            do {
-                System.out.println("1. Canviar dades a la taula persones");
-                System.out.println("2. Afegir nous registres a la taula candidatures");
-                System.out.println("0. Sortir");
-                System.out.print("\nTria una opció: ");
 
-                opcio = scan.nextLine().trim();
+            // Fem la pregunta i mostrem les opcions
+            System.out.println("\n" + pregunta);
+            for (int i = 0; i < opcio.length; i++) {
+                System.out.println((i + 1) + ". " + opcio[i]);
+            }
+            System.out.println("0. " + escape);
 
-                opIncorrecte = !opcio.equals("1") && !opcio.equals("2") && !opcio.equals("0");
+            // Demanem opcio a l'usuari
+            System.out.print("\nTria una opció: ");
 
-                if (opIncorrecte) System.out.println("Opció incorrecte, torna a provar-ho.\n");
+            opTriada = scan.nextLine().trim();
 
-            } while (opIncorrecte);
-
-            switch (opcio) {
-                case "1":
-                    updPersonaMenu();
-                    break;
-                case "2":
-                    insCandidaturaMenu();
-                    break;
-                case "0":
-                    return;
+            // Retornem l'opció triada
+            for (int i = 0; i < opcio.length; i++) {
+                if (opTriada.equals(String.valueOf(i))) return i;
             }
 
-            do {
-                System.out.print("\nVols realitzar alguna opció més (S/N): ");
-                opcio = scan.nextLine().trim().toUpperCase();
+            // Si no és cap de les opcions, tornem a fer el bucle
+            System.out.println(OP_INCORRECTE);
 
-                opIncorrecte = !opcio.equals("S") && !opcio.equals("N");
+        } while (true);
+    }
 
-                if (opIncorrecte) System.out.println("Opció incorrecte, torna a provar-ho.\n");
-            } while (opIncorrecte);
+    /**
+     * Demana una pregunta i retorna la resposta
+     *
+     * @param pregunta Pregunta a fer
+     * @return Resposta de l'usuari
+     */
+    public static String generatePregunta(String pregunta) {
+        System.out.print("\n" + pregunta);
+        return scan.nextLine().trim();
+    }
 
-            fi = opcio.equals("N");
+    /**
+     * Demana una pregunta booleana i retorna la resposta
+     * o repeteix la pregunta fins que la resposta sigui correcta
+     *
+     * @param pregunta Pregunta a fer
+     * @return Resposta de l'usuari
+     */
+    public static boolean generatePreguntaSN(String pregunta) {
+        String opcio;
 
-        } while (!fi);
+        do {
+            // Passem pregunta i obtenim la resposta
+            opcio = generatePregunta(pregunta);
+
+            // Si és S o N, retornem 1 o 0 respectivament
+            if (opcio.equals("S")) return true;
+            else if (opcio.equals("N")) return false;
+
+                // Si no és cap de les opcions, tornem a fer el bucle
+            else System.out.println(OP_INCORRECTE);
+
+        } while (true);
+    }
+
+    /**
+     * Menú inicial que pregunta sobre quina taula volem actuar
+     */
+    static void initMenu() {
+
+        final String PREGUNTA = "Sobre quina taula vols actuar?";
+        final String OP1 = "Persones";
+        final String OP2 = "Candidatures";
+        final String OP3 = "Comunitats autònomes";
+        final String ESCAPE = "Sortir";
+
+        do {
+
+            switch (generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3)) {
+                case 1 -> menuPersones();
+                //TODO: case 2 -> menuCandidatures();
+                //TODO: case 3 -> menuComunitatsAutonomes();
+                case 0 -> {
+                    return;
+                }
+            }
+
+        } while (generatePreguntaSN("Vols actuar sobre alguna altra taula (S/N)?: "));
 
         System.out.println("Adeu!");
     }
 
-    private static void updPersonaMenu() {
-        String opcio;
-        int id;
-        boolean opIncorrecte = false, fi;
+    /**
+     * Crea el menú estàndard per a les operacions CRUD
+     *
+     * @return Opció triada per l'usuari
+     */
+    static int generateMenuCRUD() {
+        final String PREGUNTA = "Quina acció vols realitzar?";
+        final String INSERIR = "Inserir";
+        final String MODIFICAR = "Modificar";
+        final String ELIMINAR = "Eliminar";
+        final String LLISTAR = "Llistar";
+        final String CERCAR = "Cercar";
+        final String FER_RECOMPTE = "Fer recompte";
+        final String ESCAPE = "Tornar al menú principal";
 
-        do {
-            do {
-                System.out.print("Intodruïu l'id de la persona que vols modificar: ");
-                opcio = scan.nextLine().trim();
-
-                try {
-                    id = Integer.parseInt(opcio);
-                } catch (Exception e) {
-                    System.out.println("Opció incorrecte, torna a provar-ho.\n");
-                    opIncorrecte = true;
-                }
-
-            } while (opIncorrecte);
-
-            do {
-                System.out.println("\nQuin camp vols modificar?");
-                System.out.println("1. nom VARCHAR(30)");
-                System.out.println("2. cog1 VARCHAR(30)");
-                System.out.println("3. cog2 VARCHAR(30)");
-                System.out.println("4. sexe ENUM('M','F')");
-                System.out.println("5. data_naixement DATE");
-                System.out.println("0. Tornar al menú principal");
-                System.out.print("Triar camp: ");
-
-                opcio = scan.nextLine().trim();
-
-                opIncorrecte = !opcio.equals("1") && !opcio.equals("2")
-                        && !opcio.equals("3") && !opcio.equals("4") && !opcio.equals("5");
-
-            } while (opIncorrecte);
-
-            switch (opcio) {
-                case "1":
-                    //TODO: update nom
-                    System.out.println("Opcio amb el nom");
-                    break;
-                case "2":
-                    //TODO: update cog1
-                    System.out.println("Opcio amb el cognom1");
-                    break;
-                case "3":
-                    //TODO: update cog2
-                    System.out.println("Opcio amb el cognom2");
-                    break;
-                case "4":
-                    //TODO: update sexe
-                    System.out.println("Opcio amb el sexe");
-                    break;
-                case "5":
-                    //TODO: update data_naixement
-                    System.out.println("Opcio amb la data de naixement");
-                    break;
-                case "0":
-                    return;
-            }
-
-            do {
-                System.out.print("\nVols realitzar algun update més sobre aquest registre? (S/N): ");
-                opcio = scan.nextLine().trim().toUpperCase();
-
-                opIncorrecte = !opcio.equals("S") && !opcio.equals("N");
-
-                if (opIncorrecte) System.out.println("Opció incorrecte, torna a provar-ho.\n");
-            } while (opIncorrecte);
-
-            fi = opcio.equals("N");
-
-        } while (!fi);
+        return generateMenu(PREGUNTA, ESCAPE, INSERIR, MODIFICAR, ELIMINAR, LLISTAR, CERCAR, FER_RECOMPTE);
     }
 
-    private static void insCandidaturaMenu() {
-        String opcio;
-        boolean opIncorrecte = false, fi = false;
+    /**
+     * Executa el menú CRUD de la taula persones
+     */
+    private static void menuPersones() {
 
         do {
-            int candidatura_id, eleccio_id;
-            String codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulario_nacional;
-            System.out.println("La taula candidatures consta dels següents camps:");
-            System.out.println("`candidatura_id` INT UNSIGNED NOT NULL AUTO_INCREMENT");
-            System.out.println("`eleccio_id` TINYINT UNSIGNED NOT NULL");
-            System.out.println("`codi_candidatura` CHAR(6) NULL");
-            System.out.println("`nom_curt` VARCHAR(50) NULL COMMENT 'Sigles de la candidatura'");
-            System.out.println("`nom_llarg` VARCHAR(150) NULL COMMENT 'Nom llarg de la candidatura (denominació)'");
-            System.out.println("`codi_acumulacio_provincia` CHAR(6) NULL COMMENT 'Codi de la candidatura d'acumulació a nivell provincial.'");
-            System.out.println("`codi_acumulacio_ca` CHAR(6) NULL COMMENT 'Codi de la candidatura d'acumulació a nivell de comunitat autònoma'");
-            System.out.println("`codi_acumulario_nacional` CHAR(6) NULL");
-            System.out.println("`codi_acumulacio_provincia` CHAR(6) NULL COMMENT 'Codi de la candidatura d'acumulació a nivell provincial.'");
 
-            System.out.print("\nIntrodueïu la candidatura_id: ");
-            candidatura_id = scan.nextInt();
-            scan.nextLine();
+            switch (generateMenuCRUD()) {
+                case 1 -> PersonaController.insertPersona();
+                case 2 -> PersonaController.updPersona();
+                //TODO: case 3 -> delPersonaMenu();
+                //TODO: case 4 -> llistarPersonesMenu();
+                case 5 -> PersonaController.searchPersona();
+                //TODO: case 6 -> recomptePersonesMenu();
+                case 0 -> {
+                    return;
+                }
+            }
 
-            System.out.print("\nIntrodueïu la eleccio_id: ");
-            eleccio_id = scan.nextInt();
-            scan.nextLine();
+        } while (generatePreguntaSN("Vols realitzar alguna tasca més sobre la taula persones (S/N)?: "));
 
-            System.out.print("\nIntrodueïu el codi_candidatura: ");
-            codi_candidatura = scan.nextLine();
+        System.out.println("Adeu!");
 
-            System.out.print("\nIntrodueïu el nom_curt: ");
-            nom_curt = scan.nextLine();
+    }
 
-            System.out.print("\nIntrodueïu el nom_llarg: ");
-            nom_llarg = scan.nextLine();
+    /**
+     * Executa el menú de modificació de camps de la taula persones
+     *
+     * @return HashMap amb els camps a modificar i els seus valors
+     */
+    public static HashMap<String, String> menuPersonesUpdCampsAModificar() {
+        HashMap<String, String> camps = new HashMap<>();
 
-            System.out.print("\nIntrodueïu el codi_acumulacio_provincia: ");
-            codi_acumulacio_provincia = scan.nextLine();
+        final String PREGUNTA = "Quin camp vols modificar?";
+        final String OP1 = "nom VARCHAR(30)";
+        final String OP2 = "cog1 VARCHAR(30)";
+        final String OP3 = "cog2 VARCHAR(30)";
+        final String OP4 = "sexe ENUM('M','F')";
+        final String OP5 = "data_naixement DATE";
+        final String OP6 = "dni CHAR(8)";
+        final String OP7 = "Tots els camps";
+        final String ESCAPE = "Surt";
 
-            System.out.print("\nIntrodueïu el codi_acumulacio_ca: ");
-            codi_acumulacio_ca = scan.nextLine();
+        do {
 
-            System.out.print("\nIntrodueïu el codi_acumulario_nacional: ");
-            codi_acumulario_nacional = scan.nextLine();
+            switch (generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6, OP7)) {
+                case 1 -> {
+                    camps.put("nom", generatePregunta("Introdueix el nou nom: "));
+                }
+                case 2 -> {
+                    camps.put("cog1", generatePregunta("Introdueix el nou cognom1: "));
+                }
+                case 3 -> {
+                    camps.put("cog2", generatePregunta("Introdueix el nou cognom2: "));
+                }
+                case 4 -> {
+                    String resposta = generatePregunta("Introdueix el nou sexe (M/F): ");
+                    boolean sexeIncorrecte;
+                    do {
+                        sexeIncorrecte = false;
 
-            //TODO: insert candidatura
+                        if (PersonaController.isSexe(resposta)) camps.put("sexe", resposta);
 
-            do {
-                System.out.print("\nVols realitzar algun alre insert? (S/N): ");
-                opcio = scan.nextLine().trim().toUpperCase();
+                        else {
+                            sexeIncorrecte = true;
+                            System.out.println(OP_INCORRECTE);
+                        }
 
-                opIncorrecte = !opcio.equals("S") && !opcio.equals("N");
+                    } while (sexeIncorrecte);
+                }
+                case 5 -> {
+                    String resposta = generatePregunta("Introdueix la nova data de naixement (dd/mm/aaaa): ");
+                    boolean dataIncorrecte;
+                    do {
+                        dataIncorrecte = false;
 
-                if (opIncorrecte) System.out.println("Opció incorrecte, torna a provar-ho.\n");
-            } while (opIncorrecte);
+                        if (PersonaController.isDate(resposta)) camps.put("data_naixement", resposta);
 
-            fi = opcio.equals("N");
+                        else {
+                            dataIncorrecte = true;
+                            System.out.println(OP_INCORRECTE);
+                        }
 
-        } while (!fi);
+                    } while (dataIncorrecte);
+                }
+                case 6 -> {
+                    String resposta = generatePregunta("Introdueix el nou DNI (8 caràcters): ");
+                    boolean dniIncorrecte;
+                    do {
+                        dniIncorrecte = false;
+
+                        if (PersonaController.isDNI(resposta)) camps.put("dni", resposta);
+
+                        else {
+                            dniIncorrecte = true;
+                            System.out.println(OP_INCORRECTE);
+                        }
+
+                    } while (dniIncorrecte);
+                }
+                case 7 -> {
+                    camps.put("nom", generatePregunta("Introdueix el nou nom: "));
+                    camps.put("cog1", generatePregunta("Introdueix el nou cognom1: "));
+                    camps.put("cog2", generatePregunta("Introdueix el nou cognom2: "));
+
+                    String respSexe = generatePregunta("Introdueix el nou sexe (M/F): ");
+                    boolean sexeIncorrecte;
+                    do {
+                        sexeIncorrecte = false;
+
+                        if (PersonaController.isSexe(respSexe)) camps.put("sexe", respSexe);
+
+                        else {
+                            sexeIncorrecte = true;
+                            System.out.println(OP_INCORRECTE);
+                        }
+
+                    } while (sexeIncorrecte);
+
+                    String respDataNaix = generatePregunta("Introdueix la nova data de naixement (dd/mm/aaaa): ");
+                    boolean dataIncorrecte;
+                    do {
+                        dataIncorrecte = false;
+
+                        if (PersonaController.isDate(respDataNaix)) camps.put("data_naixement", respDataNaix);
+
+                        else {
+                            dataIncorrecte = true;
+                            System.out.println(OP_INCORRECTE);
+                        }
+
+                    } while (dataIncorrecte);
+
+                    String respDNI = generatePregunta("Introdueix el nou DNI (8 caràcters): ");
+                    boolean dniIncorrecte;
+                    do {
+                        dniIncorrecte = false;
+
+                        if (PersonaController.isDNI(respDNI)) camps.put("dni", respDNI);
+
+                        else {
+                            dniIncorrecte = true;
+                            System.out.println(OP_INCORRECTE);
+                        }
+
+                    } while (dniIncorrecte);
+                }
+                case 0 -> {
+                    return null;
+                }
+            }
+
+        } while (generatePreguntaSN("\nVols actualitzar algún camp més sobre aquest registre? (S/N): "));
+
+        return camps;
     }
 }
