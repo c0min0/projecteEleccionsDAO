@@ -2,9 +2,7 @@ package controller.DAO.MySQL;
 
 import controller.DAO.DAODB;
 import model.Candidatura;
-import model.Persona;
 
-import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
