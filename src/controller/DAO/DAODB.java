@@ -1,7 +1,4 @@
-package model.DAO;
-
-import model.Candidatura;
-import model.Persona;
+package controller.DAO;
 
 import java.util.List;
 
