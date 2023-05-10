@@ -4,7 +4,6 @@ import model.DAO.DAODB;
 import model.Persona;
 
 import java.sql.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class PersonaDAO implements DAODB<Persona, Long> {
 
     @Override
     public boolean read (Persona p) {
-        // Obtenim una persona de la BD amb el mateix id que la persona passada per paràmetres
+        // Obtenim una candidatura de la BD amb el mateix id que la candidatura passada per paràmetres
         Persona pr = readById(p.getId());
 
         // Si no existeix, retornem false
@@ -59,7 +58,7 @@ public class PersonaDAO implements DAODB<Persona, Long> {
         String cog1 = (String)row[1];
         String cog2 = (String)row[2];
         String sexe = (String)row[3];
-        Date dataNaixement = (row[4] == null ? null : (Date) row[4]);
+        Date dataNaixement = (Date) row[4];
         String dni = (String)row[5];
 
         return new Persona(id, nom, cog1, cog2, sexe, dataNaixement, dni);
@@ -93,10 +92,10 @@ public class PersonaDAO implements DAODB<Persona, Long> {
         // Construïm la query
         StringBuilder query = new StringBuilder("UPDATE persones SET ");
 
-        // Per cada camp
+        // Per cada camp,
         for (int i = 0; i < camps.length; i++) {
 
-            // afegim el camp a la query
+            // Afegim el camp a la query
             query.append(camps[i]).append("=?");
 
             // i una coma si no és l'últim camp
@@ -112,8 +111,8 @@ public class PersonaDAO implements DAODB<Persona, Long> {
                 case "dni" -> params[i] = p.getDni();
                 default -> throw new IllegalArgumentException("El camp " + camps[i] + " no existeix");
             }
-
         }
+
         // Afegim l'id al final de la query
         query.append(" WHERE persona_id=?");
         params[params.length - 1] = p.getId();
@@ -130,8 +129,10 @@ public class PersonaDAO implements DAODB<Persona, Long> {
         // DELETE SQL
         String query = "DELETE FROM persones WHERE persona_id=?";
 
+        // Eliminem de la BD la persona passada per paràmetres
         int r = DBMySQLManager.write(query, p.getId());
-        //
+
+        // Si s'ha eliminat alguna fila, retornem true
         return r > 0;
     }
 
@@ -142,36 +143,48 @@ public class PersonaDAO implements DAODB<Persona, Long> {
 
     @Override
     public long count() {
+        // Query per comptar el nombre de files de la taula
         String query = "SELECT COUNT(*) FROM persones";
+
+        // Executem la query
         List<Object[]> r = DBMySQLManager.read(query);
 
+        // Si la llista no te un sol element, retornem -1 (s'ha produit un error)
         if (r.size() != 1) return -1;
 
+        // Retornem el nombre de files de la taula
         Object[] o = r.iterator().next();
-
         return (long)o[0];
     }
 
     @Override
     public List<Persona> all() {
+        // Creem una llista buida de persones
         List<Persona> l = new LinkedList<>();
 
+        // Query per obtenir totes les persones
         String query = "SELECT persona_id,nom,cog1,cog2,sexe,data_naixement,dni FROM persones";
+
+        // Executem la query
         List<Object[]> r = DBMySQLManager.read(query);
 
-        Iterator<Object[]> it = r.iterator();
-        while (it.hasNext()) {
-            Object[] row = it.next();
-            long id = (long)row[0];
-            String nom = (String)row[1];
-            String cog1 = (String)row[2];
-            String cog2 = (String)row[3];
-            String sexe = (String)row[4];
-            Date dataNaixement = (row[5] == null ? null : (Date) row[5]);
-            String dni = (String)row[6];
+        // Per cada registre
+        for (Object[] row : r) {
 
+            // Obtenim les dades de la persona
+            long id = (long) row[0];
+            String nom = (String) row[1];
+            String cog1 = (String) row[2];
+            String cog2 = (String) row[3];
+            String sexe = (String) row[4];
+            Date dataNaixement = (Date) row[5];
+            String dni = (String) row[6];
+
+            // Afegim la persona a la llista
             l.add(new Persona(id, nom, cog1, cog2, sexe, dataNaixement, dni));
         }
+
+        // Retornem la llista
         return l;
     }
 }
