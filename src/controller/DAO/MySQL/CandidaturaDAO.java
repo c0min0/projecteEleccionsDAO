@@ -1,6 +1,6 @@
 package controller.DAO.MySQL;
 
-import model.DAO.DAODB;
+import controller.DAO.DAODB;
 import model.Candidatura;
 import model.Persona;
 
@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CandidaturaDAO implements DAODB<Candidatura> {
+public class CandidaturaDAO implements DAODB <Candidatura> {
     @Override
     public boolean create(Candidatura c) {
         // INSERT SQL

@@ -1,6 +1,6 @@
 package controller.DAO.MySQL;
 
-import model.DAO.DAODB;
+import controller.DAO.DAODB;
 import model.Persona;
 
 import java.sql.Date;
@@ -139,7 +139,7 @@ public class PersonaDAO implements DAODB<Persona> {
 
     //TODO: provar mètode
     @Override
-    public List<Persona> search (String camp, Object valor) {
+    public List<Persona> search(String camp, Object valor) {
         // Creem una llista buida de persones
         List<Persona> l = new LinkedList<>();
 
