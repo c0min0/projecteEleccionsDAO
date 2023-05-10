@@ -17,9 +17,9 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
         //Menu.initMenu();
-        provaPersones();
-        //provaCandidatures();
-        provaReadPersones();
+        //provaPersones();
+        provaCandidatures();
+        //provaReadPersones();
     }
     private static void provaCandidatures() {
         // INSERT
@@ -37,6 +37,7 @@ public class Main {
         // UPDATE
         try {
             Connection conn = DBMySQLManager.getConnection();
+            /*
             String eleccio_id = "eleccio_id";
             String nom_curt = "nom_curt";
             Candidatura c = new Candidatura(82,3,"1211212","Benito",null, null, null, null);
@@ -44,6 +45,13 @@ public class Main {
             CandidaturaDAO cDAO = new CandidaturaDAO();
             if (cDAO.update(c,eleccio_id,nom_curt)) System.out.println("OK!");
             else System.out.println("KO!");
+           */
+            Candidatura c = new Candidatura(82,3,"1212","Benito","MARTINEZFLORIDO", "1", "1", "1");
+            CandidaturaDAO cDAO = new CandidaturaDAO();
+            if (cDAO.update(c)) System.out.println("OK");
+            Persona p = new Persona(1,"CAMBIO","CORRECTO","HOOLA","M",null,"12312323");
+            PersonaDAO pDAO = new PersonaDAO();
+            if (pDAO.update(p)) System.out.println("OK, bien");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

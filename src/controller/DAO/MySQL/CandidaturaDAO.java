@@ -52,8 +52,8 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
 
         // Si no existeix, retornem null
         if (r.size() != 1L) return null;
-
-        // Si existeix, retornem la candidatura
+        //
+        //        // Si existeix, retornem la candidatura
         Object[] row = r.iterator().next();
 
         int eleccio_id = (int)row[0];
