@@ -11,6 +11,20 @@ public class ComAutonoma {
         this.codi_ine = codi_ine;
     }
 
+    public ComAutonoma(long comunitat_aut_id) {
+        this.comunitat_aut_id = comunitat_aut_id;
+    }
+
+    public ComAutonoma(String nom, String codi_ine) {
+        this.nom = nom;
+        this.codi_ine = codi_ine;
+    }
+
+    public void set(String nom, String codi_ine) {
+        this.nom = nom;
+        this.codi_ine = codi_ine;
+    }
+
     public long getComunitat_aut_id() {
         return comunitat_aut_id;
     }
@@ -33,5 +47,14 @@ public class ComAutonoma {
 
     public void setCodi_ine(String codi_ine) {
         this.codi_ine = codi_ine;
+    }
+
+    @Override
+    public String toString() {
+        return "ComAutonoma{" +
+                "comunitat_aut_id=" + comunitat_aut_id +
+                ", nom='" + nom + '\'' +
+                ", codi_ine='" + codi_ine + '\'' +
+                '}';
     }
 }

@@ -6,11 +6,11 @@ import model.Candidatura;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CandidaturaDAO implements DAODB <Candidatura> {
+public class CandidaturaDAO implements DAODB<Candidatura> {
     @Override
     public boolean create(Candidatura c) {
         // INSERT SQL
-        String query = "INSERT INTO candidats (eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO candidatures (eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional) VALUES (?,?,?,?,?,?,?)";
 
         // Escrivim a la BD amb els valors de la candidatura passada per paràmetres
         int r = DBMySQLManager.write(query,
@@ -56,7 +56,7 @@ public class CandidaturaDAO implements DAODB <Candidatura> {
         // Si existeix, retornem la candidatura
         Object[] row = r.iterator().next();
 
-        Long eleccio_id = (Long)row[0];
+        int eleccio_id = (int)row[0];
         String codi_candidatura = (String)row[1];
         String nom_curt = (String)row[2];
         String nom_llarg = (String)row[3];
@@ -211,7 +211,7 @@ public class CandidaturaDAO implements DAODB <Candidatura> {
 
             // Obtenim les dades de la candidatura
             long id = (long) row[0];
-            long eleccio_id = (Long) row[1];
+            int eleccio_id = (int) row[1];
             String codi_candidatura = (String) row[2];
             String nom_curt = (String) row[3];
             String nom_llarg = (String) row[4];
