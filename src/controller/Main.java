@@ -5,6 +5,7 @@ import view.Menu;
 import static view.Print.println;
 
 //TODO: Revisar funcionalitats persona
+//TODO: Mirar i pensar com fer lo dels camps nulls
 
 //TODO: Acabar d'implementar CandidaturaDAO
 //TODO: Fer menú candidatures
