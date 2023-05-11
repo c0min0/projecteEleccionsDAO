@@ -89,7 +89,7 @@ public class Menu {
     /**
      * Menú inicial que pregunta sobre quina taula volem actuar
      */
-    static void initMenu() {
+    public static void initMenu() {
 
         final String PREGUNTA = "Sobre quina taula vols actuar?";
         final String OP1 = "Persones";
@@ -283,7 +283,7 @@ public class Menu {
                 }
             }
 
-        } while (generatePreguntaSN("\nVols actualitzar algún camp més sobre aquest registre? (S/N): "));
+        } while (generatePreguntaSN("Vols actualitzar algún camp més sobre aquest registre? (S/N): "));
 
         return camps;
     }

@@ -10,13 +10,14 @@ import controller.DAO.MySQL.DBMySQLManager;
 import controller.DAO.MySQL.PersonaDAO;
 import model.Candidatura;
 import model.Persona;
+import view.Menu;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        //Menu.initMenu();
+        Menu.initMenu();
         //provaPersones();
         //provaCandidatures();
         provaReadPersones();

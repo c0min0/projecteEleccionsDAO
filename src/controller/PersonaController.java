@@ -275,12 +275,25 @@ public class PersonaController extends Controller {
             resultatIncorrecte = false;
             resultatCerca = searchPersona();
 
+            // Comprovem si el resultat està buit
             if (resultatCerca == null || resultatCerca.size() == 0) {
                 System.out.println("No hi ha cap persona definida per actualitzar.");
                 resultatIncorrecte = true;
             }
 
-            if (!generatePreguntaSN("Vols tornar a cercar? (S/N): ")) return;
+            // Preguntem si volen tornar a cercar
+            if (!generatePreguntaSN("Vols tornar a cercar? (S/N): ")) {
+                // Si no volen tornar a cercar i el resultat està buit, sortim
+                if (resultatIncorrecte) {
+                    return;
+                }
+                // Si no volen tornar a cercar i el resultat no està buit, continuem
+                else break;
+            }
+            // Si volen tornar a cercar, repetim el procés
+            else {
+                resultatIncorrecte = true;
+            }
 
         } while (resultatIncorrecte);
 
@@ -312,7 +325,7 @@ public class PersonaController extends Controller {
         }
 
         // Mostrem missatge d'èxit
-        if (updCorrecte) System.out.println("S'han actualitzat correctament les persones.");
+        if (updCorrecte) System.out.println("\nS'han actualitzat correctament les persones.");
     }
 
     /**
