@@ -21,7 +21,7 @@ public class DBMySQLManager {
     private String url;
     private String usuari ="perepi";
     private String contrasenya = "pastanaga";
-    private String host = getIpLocalBen; //IP de qui executi el programa
+    private String host = ipLocalVic; //IP de qui executi el programa
     private String base_dades = "practicaDAO_VicBen"; // PROVA: eleccions2017, BONA: eleccions2016
 
     // Constructors

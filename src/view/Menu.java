@@ -283,7 +283,7 @@ public class Menu {
                 }
             }
 
-        } while (generatePreguntaSN("\nVols actualitzar algún camp més sobre aquest registre? (S/N): "));
+        } while (generatePreguntaSN("Vols actualitzar algún camp més sobre aquest registre? (S/N): "));
 
         return camps;
     }
