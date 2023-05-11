@@ -62,6 +62,7 @@ public class ControllerPersona extends Controller {
         return dni.length() == 8;
     }
 
+    //TODO: provar
     /**
      * Executa el procés de cerca de la taula persones.
      * @return Llista de persones trobades amb la cerca.
@@ -166,11 +167,8 @@ public class ControllerPersona extends Controller {
         // Construïm l'objecte persona amb les dades introduïdes
         Persona p = new Persona(nom, cog1, cog2, sexe, data_naixement, dni);
 
-        // Creem l'objecte DAO per a poder fer la inserció
-        PersonaDAO pDAO = new PersonaDAO();
-
         // Inserim la persona a la base de dades
-        if (pDAO.create(p)) Print.println("Persona afegida amb èxit!");
+        if (new PersonaDAO().create(p)) Print.println("Persona afegida amb èxit!");
         else Print.println("\nNo s'ha pogut afegir la persona.");
     }
 
@@ -265,6 +263,7 @@ public class ControllerPersona extends Controller {
         if (updCorrecte) Print.println("\nS'han actualitzat correctament les persones.");
     }
 
+    //TODO: provar amb valors incorrectes (fallava el bucle)
     /**
      * Executa el menú de modificació de camps de la taula persones
      * @return HashMap amb els camps a modificar i els seus valors
