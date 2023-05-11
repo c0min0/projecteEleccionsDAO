@@ -18,8 +18,8 @@ public class Main {
     public static void main(String[] args) {
         //Menu.initMenu();
         //provaPersones();
-        provaCandidatures();
-        //provaReadPersones();
+        //provaCandidatures();
+        provaReadPersones();
     }
     private static void provaCandidatures() {
         // INSERT
@@ -144,20 +144,35 @@ public class Main {
 
 
 
-        CandidaturaDAO pDAO2 = new CandidaturaDAO();
+        /*CandidaturaDAO pDAO2 = new CandidaturaDAO();
         List<Candidatura> llista = pDAO2.all();
 
-        for (Candidatura p2 : llista) {
+         */
+
+     /*   for (Candidatura p2 : llista) {
             System.out.println(p2);
 
         }
 
+      */
 
+        PersonaDAO cDAO2 = new PersonaDAO();
+        List<Persona> llista = cDAO2.search("nom","Benito");
+        for (Persona p2 : llista) {
+            System.out.println(p2);
 
+        }
+        CandidaturaDAO candidaturaDAO = new CandidaturaDAO();
+        List<Candidatura> lista = candidaturaDAO.search("codi_acumulacio_ca","000014");
+        for (Candidatura c2 : lista) {
+            System.out.println(c2);
 
+        }
 
-        /*Persona p3 = new PersonaDAO().readById(1);
+    /*    Persona p3 = new PersonaDAO().readById(7);
         System.out.println(p3);
-         */
+
+
+     */
     }
 }

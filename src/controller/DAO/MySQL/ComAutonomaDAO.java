@@ -86,6 +86,11 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
     }
 
     @Override
+    public List<ComAutonoma> search(String camp, Object valor) {
+        return null;
+    }
+
+    @Override
     public boolean exists(ComAutonoma comAutonoma) {
         return false;
     }

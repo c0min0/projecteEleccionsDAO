@@ -3,6 +3,7 @@ package controller.DAO.MySQL;
 import controller.DAO.DAODB;
 import model.Persona;
 
+
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -157,8 +158,8 @@ public class PersonaDAO implements DAODB<Persona> {
             String cog1 = (String)row[2];
             String cog2 = (String)row[3];
             String sexe = (String)row[4];
-            Date dataNaixement = (Date) row[5];
-            String dni = (String)row[6];
+            String dni = (String)row[5];
+            Date dataNaixement = (Date) row[6];
 
             // Creem una nova persona amb els valors obtinguts
             Persona p = new Persona(id, nom, cog1, cog2, sexe, dataNaixement, dni);
