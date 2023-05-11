@@ -189,7 +189,7 @@ public class Menu {
                     camps.put("cog2", generatePregunta("Introdueix el nou cognom2: "));
                 }
                 case 4 -> {
-                    String resposta = generatePregunta("Introdueix el nou sexe (M/F): ");
+                    String resposta = generatePregunta("Introdueix el nou sexe (M/F): ").trim().toUpperCase();
                     boolean sexeIncorrecte;
                     do {
                         sexeIncorrecte = false;
@@ -238,10 +238,13 @@ public class Menu {
                     camps.put("cog1", generatePregunta("Introdueix el nou cognom1: "));
                     camps.put("cog2", generatePregunta("Introdueix el nou cognom2: "));
 
-                    String respSexe = generatePregunta("Introdueix el nou sexe (M/F): ");
+                    //TODO: copiar aquesta estructura per cada case del switch que necessiti validació
+                    String respSexe;
                     boolean sexeIncorrecte;
                     do {
                         sexeIncorrecte = false;
+
+                        respSexe = generatePregunta("Introdueix el nou sexe (M/F): ").trim().toUpperCase();
 
                         if (PersonaController.isSexe(respSexe)) camps.put("sexe", respSexe);
 
