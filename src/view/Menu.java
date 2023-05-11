@@ -141,10 +141,10 @@ public class Menu {
             switch (generateMenuCRUD()) {
                 case 1 -> PersonaController.insertPersona();
                 case 2 -> PersonaController.updPersona();
-                //TODO: case 3 -> delPersonaMenu();
-                //TODO: case 4 -> llistarPersonesMenu();
+                case 3 -> PersonaController.delPersona();
+                case 4 -> PersonaController.llistarPersones();
                 case 5 -> PersonaController.searchPersona();
-                //TODO: case 6 -> recomptePersonesMenu();
+                case 6 -> PersonaController.ferRecompte();
                 case 0 -> {
                     return;
                 }

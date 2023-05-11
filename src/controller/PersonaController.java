@@ -314,4 +314,59 @@ public class PersonaController extends Controller {
         // Mostrem missatge d'èxit
         if (updCorrecte) System.out.println("S'han actualitzat correctament les persones.");
     }
+
+    /**
+     *
+     */
+    public static void delPersona() {
+        // Cerquem persones a eliminar
+        List<Persona> resultatCerca;
+        boolean resultatIncorrecte;
+        do {
+            resultatIncorrecte = false;
+            resultatCerca = searchPersona();
+
+            if (resultatCerca == null || resultatCerca.size() == 0) {
+                System.out.println("No hi ha cap persona definida per eliminar.");
+                resultatIncorrecte = true;
+            }
+
+            if (!generatePreguntaSN("Vols tornar a cercar? (S/N): ")) return;
+
+        } while (resultatIncorrecte);
+
+        // Eliminem persones de la BD
+        boolean delCorrecte = true;
+        for (Persona p : resultatCerca) {
+            if (!new PersonaDAO().delete(p)) {
+                delCorrecte = false;
+                System.out.println("No s'ha pogut eliminar la persona amb id " + p.getId() + ".");
+            }
+        }
+
+        // Mostrem missatge d'èxit
+        if (delCorrecte) System.out.println("S'han eliminat correctament les persones.");
+    }
+
+    /**
+     * Executa el procés per llistar els registres de la taula persones
+     */
+    public static void llistarPersones() {
+        List<Persona> resultat = new PersonaDAO().all();
+        if (resultat.size() > 0) {
+            System.out.println("S'han trobat " + resultat.size() + " persones:");
+            for (Persona p : resultat) {
+                System.out.println(p);
+            }
+        } else System.out.println("No s'ha trobat cap persona.");
+    }
+
+
+    /**
+     * Executa el procés per mostrar el recompte de la taula persones
+     */
+    public static void ferRecompte() {
+        long recompte = new PersonaDAO().count();
+        System.out.println("Hi ha " + recompte + " persones a la base de dades.");
+    }
 }
