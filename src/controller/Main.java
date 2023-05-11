@@ -20,7 +20,7 @@ public class Main {
         Menu.initMenu();
         //provaPersones();
         //provaCandidatures();
-        provaReadPersones();
+        //provaReadPersones();
     }
     private static void provaCandidatures() {
         // INSERT

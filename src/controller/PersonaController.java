@@ -93,7 +93,7 @@ public class PersonaController extends Controller {
         int dia = Integer.parseInt(parts[0]);
         int mes = Integer.parseInt(parts[1]);
         int any = Integer.parseInt(parts[2]);
-        return new Date(any, mes, dia);
+        return new Date(any - 1900, mes - 1, dia);
     }
 
     /**

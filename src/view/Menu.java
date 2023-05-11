@@ -89,7 +89,7 @@ public class Menu {
     /**
      * Menú inicial que pregunta sobre quina taula volem actuar
      */
-    public static void initMenu() {
+     public static void initMenu() {
 
         final String PREGUNTA = "Sobre quina taula vols actuar?";
         final String OP1 = "Persones";
