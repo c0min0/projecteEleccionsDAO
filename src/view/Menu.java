@@ -45,6 +45,8 @@ public class Menu {
                 if (opTriada.equals(String.valueOf(i))) return i;
             }
 
+            if (opTriada.equals("0")) return 0;
+
             // Si no és cap de les opcions, tornem a fer el bucle
             System.out.println(OP_INCORRECTE);
 
