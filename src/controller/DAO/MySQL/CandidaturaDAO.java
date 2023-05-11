@@ -158,7 +158,7 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
 
             // Obtenim les dades de la candidatura
             long id = (long) row[0];
-            long eleccio_id = (Long) row[1];
+            int eleccio_id = (int) row[1];
             String codi_candidatura = (String) row[2];
             String nom_curt = (String) row[3];
             String nom_llarg = (String) row[4];
