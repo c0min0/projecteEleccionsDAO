@@ -1,3 +1,4 @@
 - Com vam parlar implementem només els DAO de les classes que es poden utilitzar al menú.
 - Hem modificat les FK de la BD perquè siguin ON DELETE CASCADE.
 - Qualsevol excepció SQL emesa per la BD es captura i es mostra per consola en Java.
+- Hem canviat el DDL de la base de dades de la taula candidats on totes les foreigns keys siguin ON DELETE CASCADE
