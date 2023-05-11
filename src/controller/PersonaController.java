@@ -4,6 +4,7 @@ import controller.DAO.MySQL.PersonaDAO;
 import model.Persona;
 
 import java.sql.Date;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +81,10 @@ public class PersonaController extends Controller {
      * @return True si la data té el format dd/mm/aaaa, false si no.
      */
     public static boolean isDate(String data) {
-        return data.matches("([0-2][0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)[0-9]{2}");
+        //return data.matches("([0-2][0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)[0-9]{2}");
+        System.out.println(data);
+        return data.matches("(19|20)[0-9]{2}/(0[0-9]|1[0-2])/[0-2][0-9]|3[0-1]");
+
     }
 
     /**
@@ -93,7 +97,7 @@ public class PersonaController extends Controller {
         int dia = Integer.parseInt(parts[0]);
         int mes = Integer.parseInt(parts[1]);
         int any = Integer.parseInt(parts[2]);
-        return new Date(any, mes, dia);
+        return new Date(any - 1900, mes - 1, dia);
     }
 
     /**
@@ -107,7 +111,6 @@ public class PersonaController extends Controller {
         String dni = demanarDniValid();
         String sexe = demanarSexeValid();
         Date data_naixement = demanarValidarDataNaix();
-
         // Construïm l'objecte persona amb les dades introduïdes
         Persona p = new Persona(nom, cog1, cog2, sexe, data_naixement, dni);
 
@@ -280,7 +283,7 @@ public class PersonaController extends Controller {
                 resultatIncorrecte = true;
             }
 
-            if (!generatePreguntaSN("Vols tornar a cercar? (S/N): ")) return;
+            if (generatePreguntaSN("Vols tornar a cercar? (S/N): ")) return;
 
         } while (resultatIncorrecte);
 
@@ -331,7 +334,7 @@ public class PersonaController extends Controller {
                 resultatIncorrecte = true;
             }
 
-            if (!generatePreguntaSN("Vols tornar a cercar? (S/N): ")) return;
+            if (generatePreguntaSN("Vols tornar a cercar? (S/N): ")) return;
 
         } while (resultatIncorrecte);
 
