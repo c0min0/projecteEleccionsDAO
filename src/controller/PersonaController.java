@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static view.Menu.*;
-
+//TODO: Fer que tot el que es demani per pantalla es demani a través de la classe Menu.
 public class PersonaController extends Controller {
     /**
      * Demana un DNI i el valida.
@@ -43,7 +43,7 @@ public class PersonaController extends Controller {
         String sexe;
 
         do {
-            sexe = generatePregunta("Quin és el sexe de la persona? (M/F): ");
+            sexe = generatePregunta("Quin és el sexe de la persona? (M/F): ").trim().toUpperCase();
             if (!isSexe(sexe)) System.out.println("Sexe incorrecte, torna a provar-ho.");
         } while (!isSexe(sexe));
 
@@ -116,7 +116,7 @@ public class PersonaController extends Controller {
 
         // Inserim la persona a la base de dades
         if (pDAO.create(p)) System.out.println("Persona afegida amb èxit!");
-        else System.out.println("No s'ha pogut afegir la persona.");
+        else System.out.println("\nNo s'ha pogut afegir la persona.");
     }
 
     /**

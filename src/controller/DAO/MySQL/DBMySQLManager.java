@@ -123,7 +123,7 @@ public class DBMySQLManager {
             ps.close();
 
         } catch (SQLException e) {
-            System.out.print("SQL exception: " + e.getMessage());
+            System.out.println("SQL exception: " + e.getMessage());
         } finally {
             try {
                 // Tanquem la connexió
@@ -186,7 +186,7 @@ public class DBMySQLManager {
             ps.close();
 
         } catch (SQLException e) {
-            System.out.print("SQL exception: " + e.getMessage());
+            System.out.println("SQL exception: " + e.getMessage());
         } finally {
             try {
                 // Tanquem la connexió
