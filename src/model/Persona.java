@@ -2,6 +2,8 @@ package model;
 
 import java.sql.Date;
 
+import static controller.Controller.isLong;
+
 public class Persona {
     long persona_id;
     String nom;
@@ -62,6 +64,7 @@ public class Persona {
     }
 
     public void setNom(String nom) {
+
         this.nom = nom;
     }
 

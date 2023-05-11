@@ -17,10 +17,10 @@ public interface DAODB <T> {
 
     boolean delete(T t);
 
+    // ALTRES
+
     List<T> search(String camp, Object valor);
 
-
-    // ALTRES
     boolean exists(T t);
 
     long count();
