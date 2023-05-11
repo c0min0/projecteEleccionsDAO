@@ -41,7 +41,7 @@ public class Menu {
             opTriada = scan.nextLine().trim();
 
             // Retornem l'opció triada
-            for (int i = 0; i < opcio.length; i++) {
+            for (int i = 1; i <= opcio.length; i++) {
                 if (opTriada.equals(String.valueOf(i))) return i;
             }
 
@@ -74,7 +74,7 @@ public class Menu {
 
         do {
             // Passem pregunta i obtenim la resposta
-            opcio = generatePregunta(pregunta);
+            opcio = generatePregunta(pregunta).trim().toUpperCase();
 
             // Si és S o N, retornem 1 o 0 respectivament
             if (opcio.equals("S")) return true;

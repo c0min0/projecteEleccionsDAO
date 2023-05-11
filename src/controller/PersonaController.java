@@ -269,33 +269,13 @@ public class PersonaController extends Controller {
      */
     public static void updPersona() {
         // Cerquem persones a modificar
-        List<Persona> resultatCerca;
-        boolean resultatIncorrecte;
-        do {
-            resultatIncorrecte = false;
-            resultatCerca = searchPersona();
+        List<Persona> resultatCerca = searchPersona();
 
-            // Comprovem si el resultat està buit
-            if (resultatCerca == null || resultatCerca.size() == 0) {
-                System.out.println("No hi ha cap persona definida per actualitzar.");
-                resultatIncorrecte = true;
-            }
-
-            // Preguntem si volen tornar a cercar
-            if (!generatePreguntaSN("Vols tornar a cercar? (S/N): ")) {
-                // Si no volen tornar a cercar i el resultat està buit, sortim
-                if (resultatIncorrecte) {
-                    return;
-                }
-                // Si no volen tornar a cercar i el resultat no està buit, continuem
-                else break;
-            }
-            // Si volen tornar a cercar, repetim el procés
-            else {
-                resultatIncorrecte = true;
-            }
-
-        } while (resultatIncorrecte);
+        // Comprovem si el resultat està buit
+        if (resultatCerca == null || resultatCerca.size() == 0) {
+            System.out.println("Sense resultat de cerca no es pot actualitzar cap persona.");
+            return;
+        }
 
         // Modifiquem camps dels objectes Persona
         HashMap <String,String> camps = menuPersonesUpdCampsAModificar();
@@ -333,33 +313,13 @@ public class PersonaController extends Controller {
      */
     public static void delPersona() {
         // Cerquem persones a eliminar
-        List<Persona> resultatCerca;
-        boolean resultatIncorrecte;
-        do {
-            resultatIncorrecte = false;
-            resultatCerca = searchPersona();
+        List<Persona> resultatCerca = searchPersona();
 
-            // Comprovem si el codi està buit
-            if (resultatCerca == null || resultatCerca.size() == 0) {
-                System.out.println("No hi ha cap persona definida per eliminar.");
-                resultatIncorrecte = true;
-            }
-
-            // Preguntem si volen tornar a cercar
-            if (!generatePreguntaSN("Vols tornar a cercar? (S/N): ")) {
-                // Si no volen tornar a cercar i el resultat està buit, sortim
-                if (resultatIncorrecte) {
-                    return;
-                }
-                // Si no volen tornar a cercar i el resultat no està buit, continuem
-                else break;
-            }
-            // Si volen tornar a cercar, repetim el procés
-            else {
-                resultatIncorrecte = true;
-            }
-
-        } while (resultatIncorrecte);
+        // Comprovem si el codi està buit
+        if (resultatCerca == null || resultatCerca.size() == 0) {
+            System.out.println("Sense resultat de cera no es pot eliminar.");
+            return;
+        }
 
         // Eliminem persones de la BD
         boolean delCorrecte = true;
