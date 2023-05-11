@@ -99,7 +99,6 @@ public class DBMySQLManager {
 
             // Executem la consulta
             ResultSet rs = ps.executeQuery();
-            //TODO: provar el .getObject()
 
             // Obtenim el número de columnes
             int l = rs.getMetaData().getColumnCount();

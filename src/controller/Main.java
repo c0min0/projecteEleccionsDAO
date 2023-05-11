@@ -15,15 +15,21 @@ import view.Menu;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static view.Print.println;
+
 public class Main {
     public static void main(String[] args) {
-        Menu.initMenu();
+        try {
+            Menu.initMenu();
+        } catch (Exception e) {
+            println("Error: " + e.getMessage());
+        }
         //provaPersones();
         //provaCandidatures();
         //provaReadPersones();
     }
     private static void provaCandidatures() {
-        // INSERT
+        /*// INSERT
 
         try {
             Connection conn = DBMySQLManager.getConnection();
@@ -38,7 +44,7 @@ public class Main {
         // UPDATE
         try {
             Connection conn = DBMySQLManager.getConnection();
-            /*
+            *//*
             String eleccio_id = "eleccio_id";
             String nom_curt = "nom_curt";
             Candidatura c = new Candidatura(82,3,"1211212","Benito",null, null, null, null);
@@ -46,7 +52,7 @@ public class Main {
             CandidaturaDAO cDAO = new CandidaturaDAO();
             if (cDAO.update(c,eleccio_id,nom_curt)) System.out.println("OK!");
             else System.out.println("KO!");
-           */
+           *//*
             Candidatura c = new Candidatura(82,3,"1212","Benito","MARTINEZFLORIDO", "1", "1", "1");
             CandidaturaDAO cDAO = new CandidaturaDAO();
             if (cDAO.update(c)) System.out.println("OK");
@@ -56,7 +62,7 @@ public class Main {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+*/
 
 
     }

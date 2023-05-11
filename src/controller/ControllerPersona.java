@@ -8,7 +8,6 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
-//TODO: Fer que tot el que es demani per pantalla es demani a través de la classe Menu.
 public class ControllerPersona extends Controller {
     // Missatges d'error pels camps de Persona mal introduïts.
     private static final String ERR_MSG_NOM = "El nom ha de tenir menys de 30 caràcters.";

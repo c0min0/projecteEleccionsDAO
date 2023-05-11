@@ -141,7 +141,6 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
         return r > 0;
     }
 
-    //TODO: prvar mètode
     @Override
     public List<Candidatura> search(String camp, Object valor) {
         // Creem una llista buida de Candidatures

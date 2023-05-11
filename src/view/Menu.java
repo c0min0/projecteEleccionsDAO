@@ -2,6 +2,8 @@ package view;
 
 import controller.ControllerPersona;
 
+import static view.Print.*;
+
 public class Menu {
     /**
      * Menú inicial que pregunta sobre quina taula volem actuar
@@ -14,9 +16,11 @@ public class Menu {
         final String OP3 = "Comunitats autònomes";
         final String ESCAPE = "Sortir";
 
+        println("Benvingut al programa per gestionar la base de dades de les eleccions!\n");
+
         do {
 
-            switch (Print.generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3)) {
+            switch (generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3)) {
                 case 1 -> menuPersones();
                 //TODO: case 2 -> menuCandidatures();
                 //TODO: case 3 -> menuComunitatsAutonomes();
@@ -25,9 +29,9 @@ public class Menu {
                 }
             }
 
-        } while (Print.generatePreguntaSN("Vols actuar sobre alguna altra taula (S/N)?: "));
+        } while (generatePreguntaSN("Vols actuar sobre alguna altra taula (S/N)?: "));
 
-        Print.println("Adeu!");
+        println("Fins la propera!");
     }
 
     /**
@@ -49,9 +53,7 @@ public class Menu {
                 }
             }
 
-        } while (Print.generatePreguntaSN("Vols realitzar alguna tasca més sobre la taula persones (S/N)?: "));
-
-        Print.println("Adeu!");
+        } while (generatePreguntaSN("Vols realitzar alguna tasca més sobre la taula persones (S/N)?: "));
 
     }
 
@@ -70,7 +72,7 @@ public class Menu {
         final String FER_RECOMPTE = "Fer recompte";
         final String ESCAPE = "Tornar al menú principal";
 
-        return Print.generateMenu(PREGUNTA, ESCAPE, CERCAR, INSERIR, MODIFICAR, ELIMINAR, LLISTAR, FER_RECOMPTE);
+        return generateMenu(PREGUNTA, ESCAPE, CERCAR, INSERIR, MODIFICAR, ELIMINAR, LLISTAR, FER_RECOMPTE);
     }
 
 }
