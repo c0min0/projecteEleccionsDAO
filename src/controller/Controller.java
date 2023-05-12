@@ -1,90 +1,23 @@
 package controller;
 
+import controller.Persona.ControllerPersona;
 import view.Print;
 
-import java.sql.Date;
 import java.util.Scanner;
 
+import static controller.Missatges.MSG_INIT;
+import static controller.Missatges.MSG_REPEAT_TAULA;
+import static controller.Persona.ControllerPersona.menuCRUDPersones;
+import static view.Print.*;
 import static view.Print.println;
 
+/**
+ * Classe que conté els mètodes de control auxiliars comuns i els menús genèrics de l'aplicació
+ */
 public class Controller {
-    /**
-     * Scanner per llegir dades introduïdes per l'usuari
-     */
     static Scanner scan = new Scanner(System.in);
 
-    /**
-     * Constant que conté el missatge d'error quan l'usuari introdueix una opció incorrecta
-     */
-    public static final String ERR_MSG_OP = "Opció incorrecte, torna a provar-ho.";
-
-    /**
-     * Constant que conté el missatge d'error quan l'usuari introdueix un id incorrecte
-     */
-    public static final String ERR_MSG_ID = "L'id ha de ser un número enter positiu.";
-
-    /**
-     * Comprova si un String és un long.
-     * @param str String a comprovar.
-     * @return True si és un long, false si no ho és.
-     */
-    public static boolean isLong(String str) {
-        try {
-            Long.parseLong(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Comprova si un String és un VARCHAR(30).
-     * @param str String a comprovar.
-     * @return True si és un VARCHAR(30), false si no ho és.
-     */
-    public static boolean isVarchar30(String str) {
-        return str.length() <= 30;
-    }
-
-    /**
-     * Comprova si un String és un id vàlid.
-     * @param str String a comprovar.
-     * @return True si és un id vàlid, false si no ho és.
-     */
-    public static boolean isId(String str) {
-        return isLong(str);
-    }
-
-    /**
-     * Valida una data comprovant que tingui el format dd/mm/aaaa.
-     * @param data Data a validar.
-     * @return True si la data té el format dd/mm/aaaa, false si no.
-     */
-    public static boolean isDate(String data) {
-        return data.matches("([0-2][0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)[0-9]{2}");
-    }
-
-    /**
-     * Converteix una data en format String (dd/mm/aaa) a un objecte Date.
-     * @param data Data en format (dd/mm/aaaa).
-     * @return Data en format Date.
-     */
-    public static Date convertToDate(String data) {
-        String[] parts = data.split("/");
-        int dia = Integer.parseInt(parts[0]);
-        int mes = Integer.parseInt(parts[1]);
-        int any = Integer.parseInt(parts[2]);
-        return new Date(any - 1900, mes - 1, dia);
-    }
-
-    /**
-     * Converteix una data en format Date a un String (dd/mm/aaaa).
-     * @param data Data en format Date.
-     * @return Data en format String (dd/mm/aaaa).
-     */
-    public static String convertToString(Date data) {
-        return data.getDate() + "/" + (data.getMonth() + 1) + "/" + (data.getYear() + 1900);
-    }
+    // MÈTODES AUXILIARS
 
     /**
      * Demana una pregunta i retorna l'String de la resposta
@@ -92,7 +25,7 @@ public class Controller {
      * @return Resposta de l'usuari
      */
     public static String obtenirResposta(String pregunta) {
-        Print.print(pregunta);
+        print(pregunta);
         return scan.nextLine().trim();
     }
 
@@ -104,17 +37,16 @@ public class Controller {
      */
     public static boolean obtenirRespostaSN(String pregunta) {
         String opcio;
-
         do {
             // Passem pregunta i obtenim la resposta
             opcio = obtenirResposta(pregunta).trim().toUpperCase();
 
-            // Si és S o N, retornem 1 o 0 respectivament
+            // Si és S o N, retornem TRUE o FALSE respectivament
             if (opcio.equals("S")) return true;
             else if (opcio.equals("N")) return false;
 
             // Si no és cap de les opcions, tornem a fer el bucle
-            else println(ERR_MSG_OP);
+            else Print.println(Missatges.MSG_ERR_OP);
 
         } while (true);
     }
@@ -133,15 +65,17 @@ public class Controller {
 
         do {
 
-            // Fem la pregunta i mostrem les opcions
+            // Fem la pregunta
             println(pregunta);
+
+            // Mostrem les opcions
             for (int i = 0; i < opcio.length; i++) {
-                Print.print((i + 1) + ". " + opcio[i]);
+                print((i + 1) + ". " + opcio[i]);
             }
-            Print.print("0. " + escape);
+            print("0. " + escape);
 
             // Demanem opcio a l'usuari
-            Print.print("\nTria una opció: ");
+            print("\nTria una opció: ");
 
             opTriada = scan.nextLine().trim();
 
@@ -153,8 +87,65 @@ public class Controller {
             if (opTriada.equals("0")) return 0;
 
             // Si no és cap de les opcions, tornem a fer el bucle
-            println(ERR_MSG_OP);
+            Print.println(Missatges.MSG_ERR_OP);
 
         } while (true);
+    }
+
+    // MENÚS
+
+    /**
+     * Demana a l'usuari sobre quina taula vol actuar
+     * @return Opció triada per l'usuari
+     */
+    private static int obtenirOpMenuInicial() {
+        final String PREGUNTA = "Sobre quina taula vols actuar?";
+        final String OP1 = "Persones";
+        final String OP2 = "Candidatures";
+        final String OP3 = "Comunitats autònomes";
+        final String ESCAPE = "Sortir";
+
+        return obtenirOpMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3);
+    }
+
+    /**
+     * Executa el menú inicial que pregunta sobre quina taula volem actuar
+     */
+    static void menuInicial() {
+
+        println(MSG_INIT);
+
+        do {
+
+            switch (obtenirOpMenuInicial()) {
+                case 1 -> menuCRUDPersones();
+                //TODO: case 2 -> menuCRUDCandidatures();
+                //TODO: case 3 -> menuCRUDComunitatsAutonomes();
+                case 0 -> {
+                    println("Fins la propera!");
+                    return;
+                }
+            }
+
+        } while (obtenirRespostaSN(MSG_REPEAT_TAULA));
+
+        println("Fins la propera!");
+    }
+
+    /**
+     * Crea el menú estàndard per a les operacions CRUD
+     * @return Opció triada per l'usuari
+     */
+    public static int obtenirOpMenuCRUD() {
+        final String PREGUNTA = "Quina acció vols realitzar?";
+        final String CERCAR = "Cercar";
+        final String INSERIR = "Inserir";
+        final String MODIFICAR = "Modificar";
+        final String ELIMINAR = "Eliminar";
+        final String LLISTAR = "Llistar";
+        final String FER_RECOMPTE = "Fer recompte";
+        final String ESCAPE = "Torna enrere";
+
+        return obtenirOpMenu(PREGUNTA, ESCAPE, CERCAR, INSERIR, MODIFICAR, ELIMINAR, LLISTAR, FER_RECOMPTE);
     }
 }

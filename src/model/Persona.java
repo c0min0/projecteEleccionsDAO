@@ -1,8 +1,8 @@
 package model;
 
-import java.sql.Date;
+import controller.DataConverter;
 
-import static controller.Controller.convertToString;
+import java.sql.Date;
 
 public class Persona {
     long persona_id;
@@ -11,7 +11,6 @@ public class Persona {
     String cog2;
     String sexe;
     Date data_naixement;
-
     /** No és el dni, és una cadena única generada per nosaltres
      * a partir de la informació dels documents, ja que el DNI no
      * es pot emmagatzemar segons la llei (CHAR(8)).
@@ -64,7 +63,6 @@ public class Persona {
     }
 
     public void setNom(String nom) {
-
         this.nom = nom;
     }
 
@@ -116,7 +114,7 @@ public class Persona {
                 ", cog1='" + cog1+ '\'' +
                 ", cog2='" + cog2 + '\'' +
                 ", sexe=" + sexe +
-                ", data_naixement=" + (data_naixement == null ? "null" : convertToString(data_naixement)) +
+                ", data_naixement=" + (data_naixement == null ? "null" : DataConverter.toString(data_naixement)) +
                 ", dni='" + dni + '\'' +
                 '}';
     }

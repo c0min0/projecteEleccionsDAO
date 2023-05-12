@@ -20,12 +20,4 @@ public class Print {
     public static void println(String text) {
         System.out.println("\n" + text);
     }
-
-    /**
-     * Mètode que imprimeix per pantalla la persona passada per paràmetre amb salts de línia
-     */
-    public static void println(Persona p) {
-        System.out.println("\n" + p);
-    }
-
 }
