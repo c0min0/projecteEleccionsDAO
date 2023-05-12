@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static view.Print.*;
+
 public class ControllerPersona extends Controller {
     // Missatges d'error pels camps de Persona mal introduïts.
     private static final String ERR_MSG_NOM = "El nom ha de tenir menys de 30 caràcters.";
@@ -50,7 +52,7 @@ public class ControllerPersona extends Controller {
      * @return True si el sexe és M o F, false si no.
      */
     private static boolean isSexe(String sexe) {
-        return sexe.equals("M") || sexe.equals("F");
+        return sexe.equals("M") || sexe.equals("F") || sexe.equals("m") || sexe.equals("f");
     }
 
     /**
@@ -62,7 +64,56 @@ public class ControllerPersona extends Controller {
         return dni.length() == 8;
     }
 
-    //TODO: provar
+    /**
+     * Demana el camp passat per paràmetre i retorna la resposta de l'usuari
+     * si aquesta és vàlida, si no, torna a demanar una resposta vàlida fins que ho sigui.
+     * @param camp Camp que es demana a l'usuari
+     * @return Resposta vàlida de l'usuari
+     */
+    private static String demanarCampValid(String camp, String accio) {
+        String resposta = null, errorMsg = null;
+        boolean condicio = false;
+        do {
+            switch (camp) {
+                case "nom" -> {
+                    resposta = generatePregunta("Introdueix el nom de la persona que vols " + accio +": ").trim();
+                    condicio = isNom(resposta);
+                    errorMsg = ERR_MSG_NOM;
+                }
+                case "cog1" -> {
+                    resposta = generatePregunta("Introdueix el primer cognom de la persona que vols " + accio +": ").trim();
+                    condicio = isCog1(resposta);
+                    errorMsg = ERR_MSG_COG1;
+                }
+                case "cog2" -> {
+                    resposta = generatePregunta("Introdueix el segon cognom de la persona que vols " + accio +": ").trim();
+                    condicio = isCog2(resposta);
+                    errorMsg = ERR_MSG_COG2;
+                }
+                case "sexe" -> {
+                    resposta = generatePregunta("Introdueix el sexe de la persona que vols " + accio + " (M/F): ").trim();
+                    condicio = isSexe(resposta);
+                    errorMsg = ERR_MSG_SEXE;
+                }
+                case "data_naixement" -> {
+                    resposta = generatePregunta("Introdueix la data de naixement de la persona que vols " + accio + " (dd/mm/aaaa): ").trim();
+                    condicio = isDate(resposta);
+                    errorMsg = ERR_MSG_DATA_NAIX;
+                }
+                case "dni" -> {
+                    resposta = generatePregunta("Introdueix el dni de la persona que vols " + accio + ": ").trim();
+                    condicio = isDNI(resposta);
+                    errorMsg = ERR_MSG_DNI;
+                }
+            }
+
+            if (!condicio) println(errorMsg);
+
+        } while (!condicio);
+
+        return resposta;
+    }
+
     /**
      * Executa el procés de cerca de la taula persones.
      * @return Llista de persones trobades amb la cerca.
@@ -81,71 +132,50 @@ public class ControllerPersona extends Controller {
         final String ESCAPE = "Torna enrrere";
 
 
-        String camp = null, resposta = null, errorMsg = null;
-        boolean condicio = false;
+        String accio = "cercar", camp = null, resposta = null;
 
         do {
-            do {
-                switch (Print.generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6, OP7)) {
-                    case 1 -> {
-                        camp = "persona_id";
-                        resposta = Print.generatePregunta("Introdueix l'id de la persona que vols cercar: ");
-                        condicio = isLong(resposta);
-                        errorMsg = ERR_MSG_ID;
-                    }
-                    case 2 -> {
-                        camp = "nom";
-                        resposta = Print.generatePregunta("Introdueix el nom de la persona que vols cercar: ");
-                        condicio = isNom(resposta);
-                        errorMsg = ERR_MSG_NOM;
-                    }
-                    case 3 -> {
-                        camp = "cog1";
-                        resposta = Print.generatePregunta("Introdueix el primer cognom de la persona que vols cercar: ");
-                        condicio = isCog1(resposta);
-                        errorMsg = ERR_MSG_COG1;
-                    }
-                    case 4 -> {
-                        camp = "cog2";
-                        resposta = Print.generatePregunta("Introdueix el segon cognom de la persona que vols cercar: ");
-                        condicio = isCog2(resposta);
-                        errorMsg = ERR_MSG_COG2;
-                    }
-                    case 5 -> {
-                        camp = "sexe";
-                        resposta = Print.generatePregunta("Introdueix el sexe de la persona que vols cercar (M/F): ");
-                        condicio = isSexe(resposta);
-                        errorMsg = ERR_MSG_SEXE;
-                    }
-                    case 6 -> {
-                        camp = "data_naixement";
-                        resposta = Print.generatePregunta("Introdueix la data de naixement de la persona que vols cercar (dd/mm/aaaa): ");
-                        condicio = isDate(resposta);
-                        errorMsg = ERR_MSG_DATA_NAIX;
-                    }
-                    case 7 -> {
-                        camp = "dni";
-                        resposta = Print.generatePregunta("Introdueix el dni de la persona que vols cercar: ");
-                        condicio = isDNI(resposta);
-                        errorMsg = ERR_MSG_DNI;
-                    }
-                    case 0 -> {
-                        return resultat;
-                    }
+            switch (Print.generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6, OP7)) {
+                case 1 -> {
+                    camp = "persona_id";
+                    resposta = demanarCampValid(camp, accio);
                 }
-
-                if (condicio) {
-                    resultat = new PersonaDAO().search(camp, resposta);
-                    if (resultat.size() > 0) {
-                        Print.println("S'han trobat " + resultat.size() + " persones amb aquest " + camp + ":");
-                        for (Persona p : resultat) {
-                            Print.println(p);
-                        }
-                    } else Print.println("No s'ha trobat cap persona amb aquest " + camp + ".");
+                case 2 -> {
+                    camp = "nom";
+                    resposta = demanarCampValid(camp, accio);
                 }
-                else Print.println(errorMsg);
+                case 3 -> {
+                    camp = "cog1";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 4 -> {
+                    camp = "cog2";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 5 -> {
+                    camp = "sexe";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 6 -> {
+                    camp = "data_naixement";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 7 -> {
+                    camp = "dni";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 0 -> {
+                    return resultat;
+                }
+            }
 
-            } while (!condicio);
+            resultat = new PersonaDAO().search(camp, resposta);
+            if (resultat.size() > 0) {
+                for (Persona p : resultat) {
+                    Print.println(">> " + p);
+                }
+                Print.println("S'han trobat " + resultat.size() + " persones amb aquest " + camp + ".");
+            } else Print.println("No s'ha trobat cap persona amb aquest " + camp + ".");
 
         } while (Print.generatePreguntaSN("Vols trobar unes altres persones? (S/N): "));
 
@@ -156,65 +186,34 @@ public class ControllerPersona extends Controller {
      * Executa el procés d'inserció de persones
      */
     public static void inserir() {
+        String accio = "inserir";
+        boolean dadesCorrectes = false;
+        String nom, cog1, cog2, dni, sexe;
+        Date data_naixement;
+
         // Demanem a l'usuari les dades de la persona
-        String nom = Print.generatePregunta("Quin és el nom de la persona?: ");
-        String cog1 = Print.generatePregunta("Quin és el primer cognom de la persona?: ");
-        String cog2 = Print.generatePregunta("Quin és el segon cognom de la persona?: ");
-        String dni = demanarDniValid();
-        String sexe = demanarSexeValid();
-        Date data_naixement = demanarDataNaixValida();
-
-        // Construïm l'objecte persona amb les dades introduïdes
-        Persona p = new Persona(nom, cog1, cog2, sexe, data_naixement, dni);
-
-        // Inserim la persona a la base de dades
-        if (new PersonaDAO().create(p)) Print.println("Persona afegida amb èxit!");
-        else Print.println("\nNo s'ha pogut afegir la persona.");
-    }
-
-    /**
-     * Demana un sexe i el valida.
-     * @return Sexe validat.
-     */
-    private static String demanarSexeValid() {
-        String sexe;
-
         do {
-            sexe = Print.generatePregunta("Quin és el sexe de la persona? (M/F): ").trim().toUpperCase();
-            if (!isSexe(sexe)) Print.println("Sexe incorrecte, torna a provar-ho.");
-        } while (!isSexe(sexe));
+            if (!dadesCorrectes) println("Tornem-les a introduïr!");
 
-        return sexe;
-    }
+            nom = demanarCampValid("nom", accio);
+            cog1 = demanarCampValid("cog1", accio);
+            cog2 = demanarCampValid("cog2", accio);
+            dni = demanarCampValid("dni", accio);
+            sexe = demanarCampValid("sexe", accio);
+            data_naixement = convertToDate(demanarCampValid("data_naixement", accio));
 
-    /**
-     * Demana un DNI i el valida.
-     * @return DNI validat.
-     */
-    private static String demanarDniValid() {
-        String dni;
+            dadesCorrectes = generatePreguntaSN("Són correctes les dades introduïdes? (S/N): ");
 
-        do {
-            dni = Print.generatePregunta("Quin és el DNI de la persona? (Introdueix una referència de 8 caràcters): ");
-            if (!isDNI(dni)) Print.println("DNI incorrecte, torna a provar-ho.");
-        } while (!isDNI(dni));
+        } while (!dadesCorrectes);
 
-        return dni;
-    }
+        if (generatePreguntaSN("Estàs segur que vols inserir aquesta persona? (S/N): ")) {
+            // Construïm l'objecte persona amb les dades introduïdes
+            Persona p = new Persona(nom, cog1, cog2, sexe, data_naixement, dni);
 
-    /**
-     * Demana una data de naixement i la valida.
-     * @return Data de naixement validada.
-     */
-    private static Date demanarDataNaixValida() {
-        String dataNaix;
-
-        do {
-            dataNaix = Print.generatePregunta("Quina és la data de naixement de la persona? (dd/mm/aaaa): ");
-            if (!isDate(dataNaix)) Print.println("Data incorrecte, torna a provar-ho.");
-        } while (!isDate(dataNaix));
-
-        return convertirData(dataNaix);
+            // Inserim la persona a la base de dades
+            if (new PersonaDAO().create(p)) Print.println("Persona afegida amb èxit!");
+            else Print.println("\nNo s'ha pogut afegir la persona.");
+        }
     }
 
     /**
@@ -242,7 +241,7 @@ public class ControllerPersona extends Controller {
                     case "cog1" -> p.setCog1(campsModificats.get(camp));
                     case "cog2" -> p.setCog2(campsModificats.get(camp));
                     case "sexe" -> p.setSexe(campsModificats.get(camp));
-                    case "data_naixement" -> p.setDataNaixement(convertirData(campsModificats.get(camp)));
+                    case "data_naixement" -> p.setDataNaixement(convertToDate(campsModificats.get(camp)));
                     case "dni" -> p.setDni(campsModificats.get(camp));
                 }
             }
@@ -251,24 +250,24 @@ public class ControllerPersona extends Controller {
         // Actualitzem persones a la BD
         boolean updCorrecte = true;
 
-        String[] campsAModificar = campsModificats.keySet().toArray(new String[0]);
+        String[] campsAfegtats = campsModificats.keySet().toArray(new String[0]);
 
         for (Persona p : resultatCerca) {
-            if (!new PersonaDAO().update(p, campsAModificar)) {
+            if (!new PersonaDAO().update(p, campsAfegtats)) {
                 updCorrecte = false;
-                Print.println("No s'ha pogut actualitzar la persona amb id " + p.getId() + ".");
+                println("No s'ha pogut actualitzar la persona amb id " + p.getId() + ".");
             }
         }
 
-        if (updCorrecte) Print.println("\nS'han actualitzat correctament les persones.");
+        if (updCorrecte) println("\nS'han actualitzat correctament les persones.");
     }
 
-    //TODO: provar amb valors incorrectes (fallava el bucle)
     /**
      * Executa el menú de modificació de camps de la taula persones
      * @return HashMap amb els camps a modificar i els seus valors
      */
     private static HashMap<String, String> modificarCamps() {
+
         HashMap<String, String> camps = new HashMap<>();
 
         final String PREGUNTA = "Quin camp vols modificar?";
@@ -280,46 +279,77 @@ public class ControllerPersona extends Controller {
         final String OP6 = "dni CHAR(8)";
         final String ESCAPE = "Surt";
 
-        String camp = null, resposta = null, errorMsg = null;
-        boolean condicio = false;
+        String accio = "modificar", camp = null, resposta = null;
 
         do {
+            switch (Print.generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6)) {
+                case 1 -> {
+                    camp = "nom";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 2 -> {
+                    camp = "cog1";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 3 -> {
+                    camp = "cog2";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 4 -> {
+                    camp = "sexe";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 5 -> {
+                    camp = "data_naixement";
+                    resposta = demanarCampValid(camp, accio);
+                }
+                case 6 -> {
+                    camp = "dni";
+                    resposta = demanarCampValid(camp, accio);
+                }
+            }
+
+            camps.put(camp, resposta);
+
+        } while (Print.generatePreguntaSN("Vols modificar algun altre camp (S/N)?: "));
+
+        /*do {
             do {
                 switch (Print.generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6)) {
                     case 1 -> {
                         camp = "nom";
-                        resposta = Print.generatePregunta("Introdueix el nou nom: ");
+                        resposta = generatePregunta("Introdueix el nou nom: ");
                         condicio = isNom(resposta);
                         errorMsg = ERR_MSG_NOM;
 
                     }
                     case 2 -> {
                         camp = "cog1";
-                        resposta = Print.generatePregunta("Introdueix el nou primer cognom: ");
+                        resposta = generatePregunta("Introdueix el nou primer cognom: ");
                         condicio = isCog1(resposta);
                         errorMsg = ERR_MSG_COG1;
                     }
                     case 3 -> {
                         camp = "cog2";
-                        resposta = Print.generatePregunta("Introdueix el nou segon cognom: ");
+                        resposta = generatePregunta("Introdueix el nou segon cognom: ");
                         condicio = isCog2(resposta);
                         errorMsg = ERR_MSG_COG2;
                     }
                     case 4 -> {
                         camp = "sexe";
-                        resposta = Print.generatePregunta("Introdueix el nou sexe (M/F): ");
+                        resposta = generatePregunta("Introdueix el nou sexe (M/F): ");
                         condicio = isDate(resposta);
                         errorMsg = ERR_MSG_SEXE;
                     }
                     case 5 -> {
                         camp = "data_naixement";
-                        resposta = Print.generatePregunta("Introdueix la nova data de naixement (dd/mm/aaaa): ");
+                        resposta = generatePregunta("Introdueix la nova data de naixement (dd/mm/aaaa): ");
                         condicio = isDate(resposta);
                         errorMsg = ERR_MSG_DATA_NAIX;
                     }
                     case 6 -> {
                         camp = "dni";
-                        resposta = Print.generatePregunta("Introdueix el nou dni: ");
+                        resposta = generatePregunta("Introdueix el nou dni: ");
                         condicio = isDNI(resposta);
                         errorMsg = ERR_MSG_DNI;
                     }
@@ -330,7 +360,7 @@ public class ControllerPersona extends Controller {
 
             } while (!condicio);
 
-        } while (Print.generatePreguntaSN("Vols modificar algun altre camp (S/N)?: "));
+        } while (Print.generatePreguntaSN("Vols modificar algun altre camp (S/N)?: "));*/
 
         return camps;
     }
@@ -348,17 +378,19 @@ public class ControllerPersona extends Controller {
             return;
         }
 
-        // Eliminem persones de la BD
-        boolean delCorrecte = true;
-        for (Persona p : resultatCerca) {
-            if (!new PersonaDAO().delete(p)) {
-                delCorrecte = false;
-                Print.println("No s'ha pogut eliminar la persona amb id " + p.getId() + ".");
+        if (generatePreguntaSN("Estàs segur que vols eliminar les persones trobades (S/N)?: ")) {
+            // Eliminem persones de la BD
+            boolean delCorrecte = true;
+            for (Persona p : resultatCerca) {
+                if (!new PersonaDAO().delete(p)) {
+                    delCorrecte = false;
+                    Print.println("No s'ha pogut eliminar la persona amb id " + p.getId() + ".");
+                }
             }
+            // Mostrem missatge d'èxit
+            if (delCorrecte) Print.println("S'han eliminat correctament les persones.");
         }
 
-        // Mostrem missatge d'èxit
-        if (delCorrecte) Print.println("S'han eliminat correctament les persones.");
     }
 
     /**
@@ -367,10 +399,10 @@ public class ControllerPersona extends Controller {
     public static void llistar() {
         List<Persona> resultat = new PersonaDAO().all();
         if (resultat.size() > 0) {
-            Print.println("S'han trobat " + resultat.size() + " persones:");
             for (Persona p : resultat) {
-                Print.println(p);
+                Print.println(">> " + p);
             }
+            Print.println("S'han trobat " + resultat.size() + " persones.");
         } else Print.println("No s'ha trobat cap persona.");
     }
 

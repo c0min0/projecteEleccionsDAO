@@ -36,12 +36,16 @@ public class Controller {
      * @param data Data en format (dd/mm/aaaa).
      * @return Data en format Date.
      */
-    public static Date convertirData(String data) {
+    public static Date convertToDate(String data) {
         String[] parts = data.split("/");
         int dia = Integer.parseInt(parts[0]);
         int mes = Integer.parseInt(parts[1]);
         int any = Integer.parseInt(parts[2]);
         return new Date(any - 1900, mes - 1, dia);
+    }
+
+    public static String convertDateToString(Date data) {
+        return data.getDate() + "/" + (data.getMonth() + 1) + "/" + (data.getYear() + 1900);
     }
 
     /**

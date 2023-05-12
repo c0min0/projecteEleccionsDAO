@@ -4,6 +4,9 @@ import model.Persona;
 
 import java.util.Scanner;
 
+/**
+ * Classe que conté els mètodes per imprimir per pantalla
+ */
 public class Print {
     /**
      * Scanner per llegir dades introduïdes per l'usuari
@@ -65,7 +68,7 @@ public class Print {
             if (opcio.equals("S")) return true;
             else if (opcio.equals("N")) return false;
 
-                // Si no és cap de les opcions, tornem a fer el bucle
+            // Si no és cap de les opcions, tornem a fer el bucle
             else println(OP_INCORRECTE);
 
         } while (true);

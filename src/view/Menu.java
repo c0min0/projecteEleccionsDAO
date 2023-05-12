@@ -4,6 +4,9 @@ import controller.ControllerPersona;
 
 import static view.Print.*;
 
+/**
+ * Classe que conté els menús de l'aplicació
+ */
 public class Menu {
     /**
      * Menú inicial que pregunta sobre quina taula volem actuar
@@ -19,17 +22,16 @@ public class Menu {
         println("Benvingut al programa per gestionar la base de dades de les eleccions!\n");
 
         do {
-
             switch (generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3)) {
                 case 1 -> menuPersones();
                 //TODO: case 2 -> menuCandidatures();
                 //TODO: case 3 -> menuComunitatsAutonomes();
                 case 0 -> {
+                    println("Fins la propera!");
                     return;
                 }
             }
-
-        } while (generatePreguntaSN("Vols actuar sobre alguna altra taula (S/N)?: "));
+        } while (generatePreguntaSN("Vols realitzar alguna tasca més sobre una altra taula (S/N)?: "));
 
         println("Fins la propera!");
     }
@@ -70,7 +72,7 @@ public class Menu {
         final String ELIMINAR = "Eliminar";
         final String LLISTAR = "Llistar";
         final String FER_RECOMPTE = "Fer recompte";
-        final String ESCAPE = "Tornar al menú principal";
+        final String ESCAPE = "Torna enrere";
 
         return generateMenu(PREGUNTA, ESCAPE, CERCAR, INSERIR, MODIFICAR, ELIMINAR, LLISTAR, FER_RECOMPTE);
     }
