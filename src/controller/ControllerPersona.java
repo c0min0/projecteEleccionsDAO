@@ -132,42 +132,23 @@ public class ControllerPersona extends Controller {
         final String ESCAPE = "Torna enrrere";
 
 
-        String accio = "cercar", camp = null, resposta = null;
+        String camp = null;
 
         do {
             switch (Print.generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6, OP7)) {
-                case 1 -> {
-                    camp = "persona_id";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 2 -> {
-                    camp = "nom";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 3 -> {
-                    camp = "cog1";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 4 -> {
-                    camp = "cog2";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 5 -> {
-                    camp = "sexe";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 6 -> {
-                    camp = "data_naixement";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 7 -> {
-                    camp = "dni";
-                    resposta = demanarCampValid(camp, accio);
-                }
+
+                case 1 -> camp = "persona_id";
+                case 2 -> camp = "nom";
+                case 3 -> camp = "cog1";
+                case 4 -> camp = "cog2";
+                case 5 -> camp = "sexe";
+                case 6 -> camp = "data_naixement";
+                case 7 -> camp = "dni";
                 case 0 -> {
                     return resultat;
                 }
             }
+            String resposta = demanarCampValid(camp, "cercar");
 
             resultat = new PersonaDAO().search(camp, resposta);
             if (resultat.size() > 0) {
@@ -259,7 +240,7 @@ public class ControllerPersona extends Controller {
             }
         }
 
-        if (updCorrecte) println("\nS'han actualitzat correctament les persones.");
+        if (updCorrecte) println("S'han actualitzat correctament les persones.");
     }
 
     /**
@@ -279,88 +260,26 @@ public class ControllerPersona extends Controller {
         final String OP6 = "dni CHAR(8)";
         final String ESCAPE = "Surt";
 
-        String accio = "modificar", camp = null, resposta = null;
+        String camp = null;
 
         do {
             switch (Print.generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6)) {
-                case 1 -> {
-                    camp = "nom";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 2 -> {
-                    camp = "cog1";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 3 -> {
-                    camp = "cog2";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 4 -> {
-                    camp = "sexe";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 5 -> {
-                    camp = "data_naixement";
-                    resposta = demanarCampValid(camp, accio);
-                }
-                case 6 -> {
-                    camp = "dni";
-                    resposta = demanarCampValid(camp, accio);
+                case 1 -> camp = "nom";
+                case 2 -> camp = "cog1";
+                case 3 -> camp = "cog2";
+                case 4 -> camp = "sexe";
+                case 5 -> camp = "data_naixement";
+                case 6 -> camp = "dni";
+                case 0 -> {
+                    Print.println("No s'ha modificat cap camp.");
+                    return null;
                 }
             }
 
+            String resposta = demanarCampValid(camp, "modificar");
             camps.put(camp, resposta);
 
         } while (Print.generatePreguntaSN("Vols modificar algun altre camp (S/N)?: "));
-
-        /*do {
-            do {
-                switch (Print.generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6)) {
-                    case 1 -> {
-                        camp = "nom";
-                        resposta = generatePregunta("Introdueix el nou nom: ");
-                        condicio = isNom(resposta);
-                        errorMsg = ERR_MSG_NOM;
-
-                    }
-                    case 2 -> {
-                        camp = "cog1";
-                        resposta = generatePregunta("Introdueix el nou primer cognom: ");
-                        condicio = isCog1(resposta);
-                        errorMsg = ERR_MSG_COG1;
-                    }
-                    case 3 -> {
-                        camp = "cog2";
-                        resposta = generatePregunta("Introdueix el nou segon cognom: ");
-                        condicio = isCog2(resposta);
-                        errorMsg = ERR_MSG_COG2;
-                    }
-                    case 4 -> {
-                        camp = "sexe";
-                        resposta = generatePregunta("Introdueix el nou sexe (M/F): ");
-                        condicio = isDate(resposta);
-                        errorMsg = ERR_MSG_SEXE;
-                    }
-                    case 5 -> {
-                        camp = "data_naixement";
-                        resposta = generatePregunta("Introdueix la nova data de naixement (dd/mm/aaaa): ");
-                        condicio = isDate(resposta);
-                        errorMsg = ERR_MSG_DATA_NAIX;
-                    }
-                    case 6 -> {
-                        camp = "dni";
-                        resposta = generatePregunta("Introdueix el nou dni: ");
-                        condicio = isDNI(resposta);
-                        errorMsg = ERR_MSG_DNI;
-                    }
-                }
-
-                if (condicio) camps.put(camp, resposta);
-                else Print.println(errorMsg);
-
-            } while (!condicio);
-
-        } while (Print.generatePreguntaSN("Vols modificar algun altre camp (S/N)?: "));*/
 
         return camps;
     }
