@@ -1,7 +1,9 @@
 package view;
 
+import controller.Controller;
 import controller.ControllerPersona;
 
+import static controller.Controller.obtenirOpMenu;
 import static view.Print.*;
 
 /**
@@ -22,7 +24,7 @@ public class Menu {
         println("Benvingut al programa per gestionar la base de dades de les eleccions!\n");
 
         do {
-            switch (generateMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3)) {
+            switch (obtenirOpMenu(PREGUNTA, ESCAPE, OP1, OP2, OP3)) {
                 case 1 -> menuPersones();
                 //TODO: case 2 -> menuCandidatures();
                 //TODO: case 3 -> menuComunitatsAutonomes();
@@ -31,7 +33,7 @@ public class Menu {
                     return;
                 }
             }
-        } while (generatePreguntaSN("Vols realitzar alguna tasca més sobre una altra taula (S/N)?: "));
+        } while (Controller.obtenirRespostaSN("Vols realitzar alguna tasca més sobre una altra taula (S/N)?: "));
 
         println("Fins la propera!");
     }
@@ -55,7 +57,7 @@ public class Menu {
                 }
             }
 
-        } while (generatePreguntaSN("Vols realitzar alguna tasca més sobre la taula persones (S/N)?: "));
+        } while (Controller.obtenirRespostaSN("Vols realitzar alguna tasca més sobre la taula persones (S/N)?: "));
 
     }
 
@@ -74,7 +76,26 @@ public class Menu {
         final String FER_RECOMPTE = "Fer recompte";
         final String ESCAPE = "Torna enrere";
 
-        return generateMenu(PREGUNTA, ESCAPE, CERCAR, INSERIR, MODIFICAR, ELIMINAR, LLISTAR, FER_RECOMPTE);
+        return obtenirOpMenu(PREGUNTA, ESCAPE, CERCAR, INSERIR, MODIFICAR, ELIMINAR, LLISTAR, FER_RECOMPTE);
+    }
+
+
+    public static int generateMenuCamps (String accio) {
+        String pregunta;
+
+        if (accio.equals("cercar")) pregunta = "Sobre quin camp vols cercar la o les persona/es?";
+        else pregunta = "Quin camp vols " + accio + "?";
+
+        final String OP1 = "persona_id INT UNSIGNED";
+        final String OP2 = "nom VARCHAR(30)";
+        final String OP3 = "cog1 VARCHAR(30)";
+        final String OP4 = "cog2 VARCHAR(30)";
+        final String OP5 = "sexe ENUM('M','F')";
+        final String OP6 = "data_naixement DATE";
+        final String OP7 = "dni VARCHAR(8)";
+        final String ESCAPE = "Torna enrrere";
+
+        return  obtenirOpMenu(pregunta, ESCAPE, OP1, OP2, OP3, OP4, OP5, OP6, OP7);
     }
 
 }

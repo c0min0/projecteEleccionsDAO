@@ -2,8 +2,7 @@ package model;
 
 import java.sql.Date;
 
-import static controller.Controller.convertDateToString;
-import static controller.Controller.convertToDate;
+import static controller.Controller.convertToString;
 
 public class Persona {
     long persona_id;
@@ -117,7 +116,7 @@ public class Persona {
                 ", cog1='" + cog1+ '\'' +
                 ", cog2='" + cog2 + '\'' +
                 ", sexe=" + sexe +
-                ", data_naixement=" + (data_naixement == null ? "null" : convertDateToString(data_naixement)) +
+                ", data_naixement=" + (data_naixement == null ? "null" : convertToString(data_naixement)) +
                 ", dni='" + dni + '\'' +
                 '}';
     }
