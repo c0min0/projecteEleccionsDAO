@@ -1,10 +1,8 @@
-package controller.DAO.MySQL;
+package controller.DAO.mySQL;
 
 import controller.DAO.DAODB;
-import model.Candidatura;
 import model.ComAutonoma;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class ComAutonomaDAO implements DAODB<ComAutonoma> {

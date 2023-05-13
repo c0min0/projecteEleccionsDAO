@@ -1,4 +1,4 @@
-package controller.DAO.MySQL;
+package controller.DAO.mySQL;
 
 import controller.DAO.DAODB;
 import model.Persona;
@@ -138,7 +138,6 @@ public class PersonaDAO implements DAODB<Persona> {
         return r > 0;
     }
 
-    //TODO: provar mètode
     @Override
     public List<Persona> search(String camp, Object valor) {
         // Creem una llista buida de persones
@@ -169,7 +168,7 @@ public class PersonaDAO implements DAODB<Persona> {
         }
 
         // Retornem la llista de persones
-        return l;
+        return l.size() > 0 ? l : null;
     }
 
     @Override
@@ -221,6 +220,6 @@ public class PersonaDAO implements DAODB<Persona> {
         }
 
         // Retornem la llista
-        return l;
+        return l.size() > 0 ? l : null;
     }
 }

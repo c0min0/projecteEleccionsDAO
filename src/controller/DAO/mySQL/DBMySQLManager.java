@@ -1,4 +1,4 @@
-package controller.DAO.MySQL;
+package controller.DAO.mySQL;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import java.sql.ResultSet;
+
+import static view.Print.println;
 
 public class DBMySQLManager {
     // Ips
@@ -122,7 +124,7 @@ public class DBMySQLManager {
             ps.close();
 
         } catch (SQLException e) {
-            System.out.println("SQL exception: " + e.getMessage());
+            println("SQL exception: " + e.getMessage());
         } finally {
             try {
                 // Tanquem la connexió
@@ -185,7 +187,7 @@ public class DBMySQLManager {
             ps.close();
 
         } catch (SQLException e) {
-            System.out.println("SQL exception: " + e.getMessage());
+            println("SQL exception: " + e.getMessage());
         } finally {
             try {
                 // Tanquem la connexió

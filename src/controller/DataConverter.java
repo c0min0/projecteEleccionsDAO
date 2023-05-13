@@ -12,6 +12,7 @@ public class DataConverter {
      * @return Data en format Date.
      */
     public static Date toDate(String data) {
+        if (data == null) return null;
         String[] parts = data.split("/");
         int dia = Integer.parseInt(parts[0]);
         int mes = Integer.parseInt(parts[1]);

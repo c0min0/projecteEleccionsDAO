@@ -6,17 +6,16 @@ import java.sql.Date;
 
 public class Persona {
     long persona_id;
-    String nom;
-    String cog1;
-    String cog2;
-    String sexe;
-    Date data_naixement;
+    String nom = null;
+    String cog1 = null;
+    String cog2 = null;
+    String sexe = null;
+    Date data_naixement = null;
     /** No és el dni, és una cadena única generada per nosaltres
      * a partir de la informació dels documents, ja que el DNI no
      * es pot emmagatzemar segons la llei (CHAR(8)).
      */
     String dni;
-
 
     public Persona(long persona_id, String nom, String cog1, String cog2, String sexe, Date data_naixement, String dni) {
         this.persona_id = persona_id;

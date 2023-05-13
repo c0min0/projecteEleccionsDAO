@@ -1,13 +1,12 @@
 package controller;
 
-import controller.Persona.ControllerPersona;
 import view.Print;
 
 import java.util.Scanner;
 
 import static controller.Missatges.MSG_INIT;
 import static controller.Missatges.MSG_REPEAT_TAULA;
-import static controller.Persona.ControllerPersona.menuCRUDPersones;
+import static controller.persona.ControllerPersona.menuCRUDPersones;
 import static view.Print.*;
 import static view.Print.println;
 
@@ -46,7 +45,7 @@ public class Controller {
             else if (opcio.equals("N")) return false;
 
             // Si no és cap de les opcions, tornem a fer el bucle
-            else Print.println(Missatges.MSG_ERR_OP);
+            else println(Missatges.MSG_ERR_OP);
 
         } while (true);
     }

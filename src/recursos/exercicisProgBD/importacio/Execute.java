@@ -1,6 +1,6 @@
 package recursos.exercicisProgBD.importacio;
 
-import controller.DAO.MySQL.DBMySQLManager;
+import controller.DAO.mySQL.DBMySQLManager;
 
 import java.sql.SQLException;
 

@@ -1,4 +1,4 @@
-package controller.Persona;
+package controller.persona;
 
 import controller.DataValidator;
 
