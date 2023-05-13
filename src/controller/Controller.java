@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import static controller.Missatges.MSG_INIT;
 import static controller.Missatges.MSG_REPEAT_TAULA;
+import static controller.candidatura.ControllerCandidatura.menuCRUDCandidatures;
 import static controller.persona.ControllerPersona.menuCRUDPersones;
 import static view.Print.*;
 import static view.Print.println;
@@ -118,7 +119,7 @@ public class Controller {
 
             switch (obtenirOpMenuInicial()) {
                 case 1 -> menuCRUDPersones();
-                //TODO: case 2 -> menuCRUDCandidatures();
+                case 2 -> menuCRUDCandidatures();
                 //TODO: case 3 -> menuCRUDComunitatsAutonomes();
                 case 0 -> {
                     println("Fins la propera!");
