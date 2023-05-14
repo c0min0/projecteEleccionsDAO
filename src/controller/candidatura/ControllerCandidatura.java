@@ -27,10 +27,10 @@ public class ControllerCandidatura extends Controller {
             switch (obtenirOpMenuCRUD()) {
                 case 1 -> cercar();
                 case 2 -> inserir();
-                //case 3 -> modificar();
-                //case 4 -> eliminar();
-                //case 5 -> llistar();
-                //case 6 -> ferRecompte();
+                case 3 -> modificar();
+                case 4 -> eliminar();
+                case 5 -> llistar();
+                case 6 -> ferRecompte();
                 case 0 -> {
                     return;
                 }
@@ -81,14 +81,14 @@ public class ControllerCandidatura extends Controller {
         if (accio.equals("cercar")) pregunta = "Sobre quin camp vols cercar la o les candidatura/es?";
         else pregunta = "Quin camp vols " + accio + "?";
 
-        final String OP1 = "verdadero INT UNSIGNED";
-        final String OP2 = "nom VARCHAR(30)";
-        final String OP3 = "cog1 VARCHAR(30)";
-        final String OP4 = "cog2 VARCHAR(30)";
-        final String OP5 = "sexe ENUM('M','F')";
-        final String OP6 = "data_naixement DATE";
-        final String OP7 = "dni VARCHAR(8)";
-        final String OP8 = "nacional VARCHAR(8)";
+        final String OP1 = "candidatura_id INT UNSIGNED";
+        final String OP2 = "eleccio_id INT UNSIGNED";
+        final String OP3 = "codi_candidatura CHAR(6)";
+        final String OP4 = "nom_curt CHAR(30)";
+        final String OP5 = "nom_llarg CHAR(30)";
+        final String OP6 = "codi_candidatura_provincia CHAR(6)";
+        final String OP7 = "codi_candidatura_ca CHAR(6)";
+        final String OP8 = "codi_candidatura_nacional CHAR(6)";
         final String ESCAPE = "Torna enrrere";
 
         // Demanem el camp sobre el qual es vol realitzar l'acció
@@ -237,6 +237,125 @@ public class ControllerCandidatura extends Controller {
 
         // Retornem el HashMap amb els camps a modificar i els nous valors o null si no n'hi han
         return camps.size() > 0 ? camps : null;
+    }
+    static void modificar() {
+
+        // Cerquem persones a modificar
+        List<Candidatura> resultatCerca = cercar();
+
+        // Comprovem si el resultat està buit
+        if (resultatCerca == null) {
+            println("Sense resultat de cerca no es pot actualitzar cap candidatura.");
+            return;
+        }
+
+        // Demanem quins camps es volen modificar
+        HashMap <String,String> campsModificats = obtenirCampsIValors("modificar");
+
+        // Comprovem si s'ha cancel·lat l'acció
+        if (campsModificats == null) return;
+
+        // Modifiquem els camps de les persones trobades amb la cerca
+        for (Candidatura c : resultatCerca) {
+
+            for (String camp : campsModificats.keySet()) {
+
+                switch (camp) {
+                    case "eleccio_id" -> c.setEleccioId(Long.parseLong(campsModificats.get(camp)));
+                    case "codi_candidatura" -> c.setCodiCandidatura(campsModificats.get(camp));
+                    case "nom_curt" -> c.setNomCurt(campsModificats.get(camp));
+                    case "nom_llarg" -> c.setNomLlarg(campsModificats.get(camp));
+                    case "codi_acumulacio_provincia" -> c.setCodiAcumulacioProvincia(campsModificats.get(camp));
+                    case "codi_acumulacio_ca" -> c.setCodiAcumulacioCA(campsModificats.get(camp));
+                    case "codi_acumulacio_nacional" -> c.setCodiAcumulacioNacional(campsModificats.get(camp));
+                }
+            }
+        }
+
+        // Mostrem les dades introduïdes a l'usuari
+        println("Les dades introduïdes són les següents:");
+        for (String camp : campsModificats.keySet()) {
+            print(camp + ": " + campsModificats.get(camp));
+        }
+        print("");
+
+        // Missatge de confirmació
+        if (obtenirRespostaSN("ESTÀS SEGUR que vols actualitzar aquesta/es candidatura/es amb les dades introduïdes? (S/N): ")) {
+
+            // Obtenim els camps a modificar
+            String[] campsAfectats = campsModificats.keySet().toArray(new String[0]);
+
+            // Actualitzem les persones a la base de dadesc
+            boolean updCorrecte = true;
+
+            for (Candidatura c : resultatCerca) {
+                // Si no s'ha pogut actualitzar la persona, mostrem el missatge
+                if (!new CandidaturaDAO().update(c, campsAfectats)) {
+                    updCorrecte = false;
+                    println("No s'ha pogut actualitzar la candidatura amb id " + c.getId() + ".");
+                }
+            }
+
+            // Si s'han actualitzat correctament totes les persones, mostrem el missatge
+            if (updCorrecte) println("S'han actualitzat correctament totes les candidatures.");
+        }
+    }
+    static void eliminar() {
+
+        // Demanem les persones a eliminar
+        List<Candidatura> resultatCerca = cercar();
+
+        // Comprovem si el codi està buit
+        if (resultatCerca == null) {
+            println("Sense resultat de cera no es pot eliminar.");
+            return;
+        }
+
+        // Demanem confirmació per eliminar les persones
+        if (obtenirRespostaSN("Estàs segur que vols eliminar la/es candidatura/es trobada/es (S/N)?: ")) {
+
+            // Eliminem persones de la BD
+            boolean delCorrecte = true;
+
+            for (Candidatura c : resultatCerca) {
+
+                // Si no s'ha pogut eliminar la persona, mostrem el missatge
+                if (!new CandidaturaDAO().delete(c)) {
+                    delCorrecte = false;
+                    println("No s'ha pogut eliminar la candidatura amb id " + c.getId() + ".");
+                }
+            }
+
+            // Si s'han eliminat correctament totes les persones, mostrem el missatge
+            if (delCorrecte) println("S'han eliminat correctament les candidatures.");
+        }
+
+    }
+    static void llistar() {
+
+        // Obtenim totes les persones de la base de dades
+        List<Candidatura> resultat = new CandidaturaDAO().all();
+
+        // Si la taula conté registres,
+        if (resultat.size() != 0) {
+
+            // Mostrem els registres
+            for (Candidatura c : resultat) println(">> " + c);
+
+            // Mostrem el total de registres
+            println("S'han trobat " + resultat.size() + " candidatures.");
+
+        }
+        // Si la taula està buida, mostrem el missatge
+        else println("No s'ha trobat cap candidatura.");
+    }
+    static void ferRecompte() {
+
+        // Obtenim el recompte de persones de la base de dades
+        long recompte = new CandidaturaDAO().count();
+
+        // Mostrem el recompte
+        println("Hi ha " + recompte + " candidatures a la base de dades.");
     }
 
 
