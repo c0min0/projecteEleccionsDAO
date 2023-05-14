@@ -2,15 +2,9 @@ package controller.candidatura;
 
 import controller.Controller;
 
-import controller.Controller;
 import controller.DAO.mySQL.CandidaturaDAO;
-import controller.DAO.mySQL.PersonaDAO;
-import controller.DataConverter;
-import controller.Missatges;
 import model.Candidatura;
-import model.Persona;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +13,9 @@ import static controller.Missatges.*;
 import static controller.candidatura.DataValidatorCandidatura.*;
 import static controller.candidatura.MissatgesCandidatura.*;
 import static view.Print.*;
+
+//TODO: el orden de los métodos para que sea igual que el de personas debería ser: menú, métodos auxiliares, métodos CRUD
+//TODO: todos los comentarios hablan de personas, no de candidaturas
 public class ControllerCandidatura extends Controller {
     public static void menuCRUDCandidatures() {
 
@@ -129,41 +126,48 @@ public class ControllerCandidatura extends Controller {
             // Construïm el missatge d'error
             // i comprovem que el valor sigui vàlid
             // depenent del camp
+            //TODO: el missatge d'error ha de ser específic de cada camp i extret de la classe MissatgesCandidatura
             switch (camp) {
+                //TODO: isId está bien porque como es un atributo que tienen todas las tablas lo hemos puesto en DataValidator (la clase de validación común)
                 case "candidatura_id" -> {
                     condicio = isId(resposta);
                     errorMsg = ID_CONDITION;
                 }
+                //TODO: esto tiene que ser isId
                 case "eleccio_id" -> {
                     condicio = isLong(resposta);
                     errorMsg += ID_CONDITION;
                 }
+                //TODO: esto tiene que ser isCodiCandidatura
                 case "codi_candidatura" -> {
                     condicio = isChar6(resposta);
                     errorMsg += ID_CONDITION;
                 }
+                //TODO: esto tiene que ser isNomCurt
                 case "nom_curt" -> {
                     condicio = isNomCurt(resposta);
                     errorMsg += NOM_CONDITION2;
                 }
+                //TODO: esto tiene que ser isNomLlarg
                 case "nom_llarg" -> {
                     condicio = isNomLlarg(resposta);
                     errorMsg += NOM_CONDITION2;
                 }
+                //TODO: esto tiene que ser isCodiAcumulacioProvincia
                 case "codi_acumulacio_provincia" -> {
                     condicio = isChar6(resposta);
                     errorMsg += ID_CONDITION;
                 }
+                //TODO: esto tiene que ser isCodiAcumulacioCA
                 case "codi_acumulacio_ca" -> {
                     condicio = isChar6(resposta);
                     errorMsg += ID_CONDITION;
                 }
+                //TODO: esto tiene que ser isCodiAcumulacioNacional
                 case "codi_acumulacio_nacional" -> {
                     condicio = isChar6(resposta);
                     errorMsg += ID_CONDITION;
                 }
-
-
             }
 
             // Si el valor no és vàlid, mostrem el missatge d'error
@@ -178,11 +182,18 @@ public class ControllerCandidatura extends Controller {
 
     static void inserir() {
 
+        //TODO: aquí teben ir los campos obligatorios que se pediran al principio de la inserción,
+        // en el caso de candidatures, son el id y la eleccio id, pero el id se añade automaticamente, así que no cal,
+        // y yo pondría aunque pueda ser null en la tabla, el nom curt, porque ya que es identificatorio de cada registro
+        // (igual hasta cambiaría el DDL de la tabla para hacerlo not null)
+
         // Camps obligatoris
         String dni;
 
         // HashMap amb els camps i valors que s'introduiran a la BD
         HashMap<String, String> campsInserits = new HashMap<>();
+
+        // TODO: Primer introduïm els camps obligatoris
 
         // Demanem si vol inserir els camps opcionals o modificar els que ha introduït
         if (obtenirRespostaSN("Vols inserir algun camp més o modificar els que has introduït? (S/N): ")) {
@@ -220,6 +231,8 @@ public class ControllerCandidatura extends Controller {
         }
     }
 
+    //TODO: hay que agrupar todos los métodos auxiliares, que quede el codigo ordenado y limpio
+    //TODO: tambien parece que este método es común a todos las tablas, así que igual lo podemos hacer común
     private static HashMap<String, String> obtenirCampsIValors(String accio) {
 
         HashMap<String, String> camps = new HashMap<>();
@@ -251,12 +264,12 @@ public class ControllerCandidatura extends Controller {
 
         // Comprovem si el resultat està buit
         if (resultatCerca == null) {
-            println("Sense resultat de cerca no es pot actualitzar cap candidatura.");
+            println("Sense resultat de cerca no es pot actualitzar cap candidatura."); //TODO: se puede hacer mensage común para todas las clases
             return;
         }
 
         // Demanem quins camps es volen modificar
-        HashMap<String, String> campsModificats = obtenirCampsIValors("modificar");
+        HashMap<String,String> campsModificats = obtenirCampsIValors("modificar");
 
         // Comprovem si s'ha cancel·lat l'acció
         if (campsModificats == null) return;
@@ -298,12 +311,12 @@ public class ControllerCandidatura extends Controller {
                 // Si no s'ha pogut actualitzar la persona, mostrem el missatge
                 if (!new CandidaturaDAO().update(c, campsAfectats)) {
                     updCorrecte = false;
-                    println("No s'ha pogut actualitzar la candidatura amb id " + c.getId() + ".");
+                    println("No s'ha pogut actualitzar la candidatura amb id " + c.getId() + "."); //TODO: potser es pot fer missatge comú per aquests errors a la classe MissatgesCandidatura
                 }
             }
 
             // Si s'han actualitzat correctament totes les persones, mostrem el missatge
-            if (updCorrecte) println("S'han actualitzat correctament totes les candidatures.");
+            if (updCorrecte) println("S'han actualitzat correctament totes les candidatures."); //TODO: potser es pot fer missatge comú per a les confirmacions
         }
     }
 

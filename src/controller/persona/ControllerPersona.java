@@ -354,7 +354,7 @@ public class ControllerPersona extends Controller {
         }
 
         // Demanem confirmació per eliminar les persones
-        if (obtenirRespostaSN("Estàs segur que vols eliminar la/es persona/es trobada/es (S/N)?: ")) {
+        if (obtenirRespostaSN("Estàs segur que vols eliminar la/es persona/es trobada/es (S/N)?: ")) { //TODO: explicar també que s'eliminaran els candidats associats. Amb els updates també passa?
 
             // Eliminem persones de la BD
             boolean delCorrecte = true;

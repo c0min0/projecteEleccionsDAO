@@ -26,8 +26,14 @@ public class DataValidator {
     public static boolean isVarchar30(String str) {
         return str.length() <= 30;
     }
+
+    /**
+     * Comprova si un String és un CHAR(6).
+     * @param str
+     * @return
+     */
     public static boolean isChar6(String str) {
-        return str.length() <= 6;
+        return str.length() == 6;
     }
 
     /**
