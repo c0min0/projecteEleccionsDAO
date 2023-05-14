@@ -8,7 +8,6 @@ import model.Persona;
 import java.util.HashMap;
 import java.util.List;
 
-import static controller.DataValidator.isId;
 import static controller.Missatges.*;
 import static controller.persona.DataValidatorPersona.*;
 import static controller.persona.MissatgesPersona.*;
@@ -106,7 +105,7 @@ public class ControllerPersona extends Controller {
             // depenent del camp
             switch (camp) {
                 case "persona_id" -> {
-                    condicio = isId(resposta);
+                    condicio = isPersonaId(resposta);
                     errorMsg = ID_CONDITION;
                 }
                 case "nom" -> {

@@ -1,5 +1,7 @@
 package controller.DAO;
 
+import model.Candidatura;
+
 import java.util.List;
 
 public interface DAODB <T> {
@@ -9,7 +11,7 @@ public interface DAODB <T> {
 
     boolean read(T t);
 
-    T readById (long id); // read by key (id)
+    T readById (Object ... ids); // read by key (id)
 
     boolean update (T t);
 

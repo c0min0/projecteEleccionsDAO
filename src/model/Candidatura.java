@@ -4,11 +4,11 @@ public class Candidatura {
     long candidatura_id;
     long eleccio_id;
     String codi_candidatura;
-    String nom_curt;
-    String nom_llarg;
-    String codi_acumulacio_provincia;
-    String codi_acumulacio_ca;
-    String codi_acumulacio_nacional;
+    String nom_curt = null;
+    String nom_llarg = null;
+    String codi_acumulacio_provincia = null;
+    String codi_acumulacio_ca = null;
+    String codi_acumulacio_nacional = null;
 
     public Candidatura(long candidatura_id, long eleccio_id, String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
         this.candidatura_id = candidatura_id;
@@ -21,20 +21,11 @@ public class Candidatura {
         this.codi_acumulacio_nacional = codi_acumulacio_nacional;
     }
 
-    public Candidatura(long candidatura_id) {
+    public Candidatura(long candidatura_id, int eleccio_id) {
         this.candidatura_id = candidatura_id;
-    }
-
-
-    public void set(long eleccio_id,String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
         this.eleccio_id = eleccio_id;
-        this.codi_candidatura = codi_candidatura;
-        this.nom_curt = nom_curt;
-        this.nom_llarg = nom_llarg;
-        this.codi_acumulacio_provincia = codi_acumulacio_provincia;
-        this.codi_acumulacio_ca = codi_acumulacio_ca;
-        this.codi_acumulacio_nacional = codi_acumulacio_nacional;
     }
+
     public Candidatura(long eleccio_id,String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
         this.eleccio_id = eleccio_id;
         this.codi_candidatura = codi_candidatura;
@@ -45,6 +36,15 @@ public class Candidatura {
         this.codi_acumulacio_nacional = codi_acumulacio_nacional;
     }
 
+    public void set(long eleccio_id,String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
+        this.eleccio_id = eleccio_id;
+        this.codi_candidatura = codi_candidatura;
+        this.nom_curt = nom_curt;
+        this.nom_llarg = nom_llarg;
+        this.codi_acumulacio_provincia = codi_acumulacio_provincia;
+        this.codi_acumulacio_ca = codi_acumulacio_ca;
+        this.codi_acumulacio_nacional = codi_acumulacio_nacional;
+    }
 
     public long getId() {
         return candidatura_id;

@@ -8,8 +8,17 @@ import controller.DataValidator;
 public class DataValidatorCandidatura extends DataValidator {
 
     /**
+     * Comprova si un String és un valor vàlid pel camp candidatura_id de la taula candidatures.
+     * @param candidatura_id String a comprovar.
+     * @return True si és un valor vàlid pel camp id, false si no ho és.
+     */
+    static boolean isCandidaturaId(String candidatura_id) {
+        return isLong(candidatura_id);
+    }
+
+    /**
      * Comprova si un String és un valor vàlid pel camp eleccio_id de la taula candidatures.
-     * És l'únic id de la base de dades que no és INT UNSIGNED, sinó TINYINT UNSIGNED
+     * És un id de la base de dades que no és INT UNSIGNED, sinó TINYINT UNSIGNED
      * @param eleccio_id String a comprovar.
      * @return True si és un valor vàlid pel camp eleccio_id, false si no ho és.
      */

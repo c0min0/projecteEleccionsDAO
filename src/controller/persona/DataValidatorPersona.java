@@ -8,6 +8,15 @@ import controller.DataValidator;
 public class DataValidatorPersona extends DataValidator {
 
     /**
+     * Comprova si un String és un valor vàlid pel camp persona_id de la taula persones.
+     * @param persona_id String a comprovar.
+     * @return True si és un valor vàlid pel camp id, false si no ho és.
+     */
+    static boolean isPersonaId(String persona_id) {
+        return isLong(persona_id);
+    }
+
+    /**
      * Comprova si un String és un valor vàlid pel camp nom de la taula persones.
      * @param nom String a comprovar.
      * @return True si és un valor vàlid pel camp nom, false si no ho és.
