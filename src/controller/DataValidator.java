@@ -86,14 +86,4 @@ public class DataValidator {
     public static boolean isDate(String data) {
         return data.matches("([0-2][0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)[0-9]{2}");
     }
-
-    /**
-     * Comprova si un String és un id vàlid.
-     * @param str String a comprovar.
-     * @return True si és un id vàlid, false si no ho és.
-     */
-    public static boolean isId(String str) {
-        return isLong(str);
-    }
-
 }

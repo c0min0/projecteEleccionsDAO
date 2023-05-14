@@ -14,12 +14,13 @@ import static controller.persona.MissatgesPersona.*;
 import static view.Print.*;
 
 public class ControllerPersona extends Controller {
+
     // MENÚ
 
     /**
      * Executa el menú CRUD de la taula persones
      */
-    public static void menuCRUDPersones() {
+    public static void menuCRUD() {
 
         do {
 
@@ -41,9 +42,9 @@ public class ControllerPersona extends Controller {
     // MÈTODES AUXILIARS
 
     /**
-     * Demana a l'usuari el camp sobre el què vol realitzar l'acció passada per paràmetres.
+     * Demana a l'usuari el camp sobre el qual vol realitzar l'acció passada per paràmetres.
      * @param accio Acció que es vol realitzar
-     * @return Camp sobre el què es vol realitzar l'acció
+     * @return Camp sobre el qual es vol realitzar l'acció
      */
     private static String obtenirCamp (String accio) {
 
@@ -100,13 +101,12 @@ public class ControllerPersona extends Controller {
 
             String errorMsg = "El " + camp + " ha de ";
 
-            // Construïm el missatge d'error
-            // i comprovem que el valor sigui vàlid
-            // depenent del camp
+            // Construïm el missatge d'error i comprovem
+            // que el valor sigui vàlid depenent del camp
             switch (camp) {
                 case "persona_id" -> {
                     condicio = isPersonaId(resposta);
-                    errorMsg = ID_CONDITION;
+                    errorMsg = PERSONA_ID_CONDITION;
                 }
                 case "nom" -> {
                     condicio = isNom(resposta);
@@ -192,6 +192,7 @@ public class ControllerPersona extends Controller {
 
             // Demanem el valor del camp
             String resposta = obtenirValorDelCamp(camp, "cercar");
+            if (resposta == null) return null;
 
             // Cerquem les persones amb el camp i valor especificats
             resultat = new PersonaDAO().search(camp, resposta);
@@ -273,7 +274,7 @@ public class ControllerPersona extends Controller {
     }
 
     /**
-     * Executa el procés de modificació de persones
+     * Executa el procés de modificació de persones.
      */
     static void modificar() {
 
@@ -282,7 +283,7 @@ public class ControllerPersona extends Controller {
 
         // Comprovem si el resultat està buit
         if (resultatCerca == null) {
-            println("Sense resultat de cerca no es pot actualitzar cap persona.");
+            println(MSG_NO_RESULT);
             return;
         }
 
@@ -373,7 +374,7 @@ public class ControllerPersona extends Controller {
     }
 
     /**
-     * Executa el procés per llistar els registres de la taula persones
+     * Executa el procés per llistar els registres de la taula persones.
      */
     static void llistar() {
 

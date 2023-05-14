@@ -1,13 +1,13 @@
 package controller;
 
+import controller.candidatura.ControllerCandidatura;
+import controller.persona.ControllerPersona;
 import view.Print;
 
 import java.util.Scanner;
 
 import static controller.Missatges.MSG_INIT;
 import static controller.Missatges.MSG_REPEAT_TAULA;
-import static controller.candidatura.ControllerCandidatura.menuCRUDCandidatures;
-import static controller.persona.ControllerPersona.menuCRUDPersones;
 import static view.Print.*;
 import static view.Print.println;
 
@@ -118,8 +118,8 @@ public class Controller {
         do {
 
             switch (obtenirOpMenuInicial()) {
-                case 1 -> menuCRUDPersones();
-                case 2 -> menuCRUDCandidatures();
+                case 1 -> ControllerPersona.menuCRUD();
+                case 2 -> ControllerCandidatura.menuCRUD();
                 //TODO: case 3 -> menuCRUDComunitatsAutonomes();
                 case 0 -> {
                     println("Fins la propera!");
@@ -136,7 +136,7 @@ public class Controller {
      * Crea el menú estàndard per a les operacions CRUD
      * @return Opció triada per l'usuari
      */
-    public static int obtenirOpMenuCRUD() {
+    protected static int obtenirOpMenuCRUD() {
         final String PREGUNTA = "Quina acció vols realitzar?";
         final String CERCAR = "Cercar";
         final String INSERIR = "Inserir";

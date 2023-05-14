@@ -58,7 +58,7 @@ public class DataValidatorCandidatura extends DataValidator {
      * @param codiAcProvincia String a comprovar.
      * @return True si és un valor vàlid pel camp codi_acumulacio_provincia, false si no ho és.
      */
-    static boolean isCodiAcProvincia(String codiAcProvincia) {
+    static boolean isCodiAcProv(String codiAcProvincia) {
         return isChar6(codiAcProvincia);
     }
 

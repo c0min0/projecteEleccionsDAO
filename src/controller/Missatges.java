@@ -14,11 +14,17 @@ public class Missatges {
     public static final String MSG_REPEAT_TAULA = "Vols realitzar alguna tasca més sobre una altra TAULA (S/N)?: ";
     public static final String MSG_REPEAT_CRUD = "Vols realitzar alguna tasca més sobre la taula ";
 
-    // Condicions genèriques
-    public static final String VARCHAR30_CONDITION = "ser un text de màxim 30 caràcters.";
+    //Missatge per avisar qeu sense resultat de cerca no es pot fer l'acció
+    public static final String MSG_NO_RESULT = "Sense resultat de cerca no es pot actualitzar cap persona.";
 
-    public static final String NOM_CONDITION2 = "ser un text.";
-    public static final String ID_CONDITION = "ser un número enter positiu.";
+    // Condicions genèriques
+    public static final String INT_CONDITION = "ser un número enter positiu.";
+    public static final String LONG_CONDITION = INT_CONDITION;
+    public static final String VARCHAR30_CONDITION = "ser un text de màxim 30 caràcters.";
+    public static final String VARCHAR50_CONDITION = "ser un text de màxim 50 caràcters.";
+    public static final String VARCHAR150_CONDITION = "ser un text de màxim 150 caràcters.";
+    public static final String CHAR6_CONDITION = "ser un text de 6 caràcters.";
+    public static final String CHAR8_CONDITION = "ser un text de 8 caràcters.";
     public static final String DATE_CONDITION = "ser una data amb el format dd/mm/aaaa.";
 
 }

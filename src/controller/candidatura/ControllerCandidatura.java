@@ -8,16 +8,19 @@ import model.Candidatura;
 import java.util.HashMap;
 import java.util.List;
 
-import static controller.DataValidator.isId;
 import static controller.Missatges.*;
 import static controller.candidatura.DataValidatorCandidatura.*;
 import static controller.candidatura.MissatgesCandidatura.*;
 import static view.Print.*;
 
-//TODO: el orden de los métodos para que sea igual que el de personas debería ser: menú, métodos auxiliares, métodos CRUD
-//TODO: todos los comentarios hablan de personas, no de candidaturas
 public class ControllerCandidatura extends Controller {
-    public static void menuCRUDCandidatures() {
+
+    // MENÚ
+
+    /**
+     * Executa el menú CRUD de la taula candidatures
+     */
+    public static void menuCRUD() {
 
         do {
 
@@ -36,42 +39,13 @@ public class ControllerCandidatura extends Controller {
         } while (obtenirRespostaSN(MSG_REPEAT_CANDIDATURES));
     }
 
-    static List<Candidatura> cercar() {
+    // MÈTODES AUXILIARS
 
-        List<Candidatura> resultat;
-
-        do {
-            // Demanem el camp sobre el qual es vol cercar
-            String camp = obtenirCamp("cercar");
-            if (camp == null) return null;
-
-            // Demanem el valor del camp
-            String resposta = obtenirValorDelCamp(camp, "cercar");
-
-            // Cerquem les persones amb el camp i valor especificats
-            resultat = new CandidaturaDAO().search(camp, resposta);
-
-            // Mostrem el resultat de la cerca
-            if (resultat != null) {
-
-                // Mostrem les persones trobades
-                for (Candidatura c : resultat) println(">> " + c);
-
-                // Mostrem el recompte de persones trobades
-                println("S'han trobat " + resultat.size() + " candidatures amb aquest " + camp + ".");
-            }
-
-            // Si no s'ha trobat cap persona, informem a l'usuari
-            else println("No s'ha trobat cap candidatura amb aquest " + camp + ".");
-
-            // Preguntem a l'usuari si vol cercar unes altres persones
-        } while (obtenirRespostaSN("Vols CERCAR unes altres candidatures? (S/N): "));
-
-        // Retornem el resultat de la cerca
-        // (per quan es cridi des d'altres mètodes que necessitin el resultat)
-        return resultat;
-    }
-
+    /**
+     * Demana a l'usuari el camp sobre el qual vol realitzar l'acció passada per paràmetres.
+     * @param accio Acció que es vol realitzar
+     * @return Camp sobre el qual es vol realitzar l'acció
+     */
     private static String obtenirCamp(String accio) {
 
         String pregunta, resposta = null;
@@ -81,10 +55,10 @@ public class ControllerCandidatura extends Controller {
         else pregunta = "Quin camp vols " + accio + "?";
 
         final String OP1 = "candidatura_id INT UNSIGNED";
-        final String OP2 = "eleccio_id INT UNSIGNED";
+        final String OP2 = "eleccio_id TINYINT UNSIGNED";
         final String OP3 = "codi_candidatura CHAR(6)";
-        final String OP4 = "nom_curt CHAR(30)";
-        final String OP5 = "nom_llarg CHAR(30)";
+        final String OP4 = "nom_curt VARCHAR(50)";
+        final String OP5 = "nom_llarg VARCHAR(150)";
         final String OP6 = "codi_candidatura_provincia CHAR(6)";
         final String OP7 = "codi_candidatura_ca CHAR(6)";
         final String OP8 = "codi_candidatura_nacional CHAR(6)";
@@ -100,13 +74,19 @@ public class ControllerCandidatura extends Controller {
             case 6 -> resposta = "codi_acumulacio_provincia";
             case 7 -> resposta = "codi_acumulacio_ca";
             case 8 -> resposta = "codi_acumulacio_nacional";
-
         }
 
         // Retornem el camp escollit
         return resposta;
     }
 
+    /**
+     * Demana a l'usuari el valor del camp sobre el qual vol realitzar l'acció
+     * passada per paràmetres fins que aquest valor sigui vàlid.
+     * @param camp Camp sobre el qual es vol realitzar l'acció
+     * @param accio Acció que es vol realitzar
+     * @return Resposta vàlida de l'usuari
+     */
     private static String obtenirValorDelCamp(String camp, String accio) {
 
         String resposta;
@@ -123,50 +103,41 @@ public class ControllerCandidatura extends Controller {
 
             String errorMsg = "El " + camp + " ha de ";
 
-            // Construïm el missatge d'error
-            // i comprovem que el valor sigui vàlid
-            // depenent del camp
+            // Construïm el missatge d'error i comprovem
+            // que el valor sigui vàlid depenent del camp
             //TODO: el missatge d'error ha de ser específic de cada camp i extret de la classe MissatgesCandidatura
             switch (camp) {
-                //TODO: isId está bien porque como es un atributo que tienen todas las tablas lo hemos puesto en DataValidator (la clase de validación común)
                 case "candidatura_id" -> {
-                    condicio = isId(resposta);
-                    errorMsg = ID_CONDITION;
+                    condicio = isCandidaturaId(resposta);
+                    errorMsg = CANDIDATURA_ID_CONDITION;
                 }
-                //TODO: esto tiene que ser isId
                 case "eleccio_id" -> {
-                    condicio = isLong(resposta);
-                    errorMsg += ID_CONDITION;
+                    condicio = isEleccioId(resposta);
+                    errorMsg += ELECCIO_ID_CONDITION;
                 }
-                //TODO: esto tiene que ser isCodiCandidatura
                 case "codi_candidatura" -> {
-                    condicio = isChar6(resposta);
-                    errorMsg += ID_CONDITION;
+                    condicio = isCodiCandidatura(resposta);
+                    errorMsg += CODI_CANDIDATURA_CONDITION;
                 }
-                //TODO: esto tiene que ser isNomCurt
                 case "nom_curt" -> {
                     condicio = isNomCurt(resposta);
-                    errorMsg += NOM_CONDITION2;
+                    errorMsg += NOM_CURT_CONDITION;
                 }
-                //TODO: esto tiene que ser isNomLlarg
                 case "nom_llarg" -> {
                     condicio = isNomLlarg(resposta);
-                    errorMsg += NOM_CONDITION2;
+                    errorMsg += NOM_LLARG_CONDITION;
                 }
-                //TODO: esto tiene que ser isCodiAcumulacioProvincia
                 case "codi_acumulacio_provincia" -> {
-                    condicio = isChar6(resposta);
-                    errorMsg += ID_CONDITION;
+                    condicio = isCodiAcProv(resposta);
+                    errorMsg += CODIAC_PROV_CONDITON;
                 }
-                //TODO: esto tiene que ser isCodiAcumulacioCA
                 case "codi_acumulacio_ca" -> {
-                    condicio = isChar6(resposta);
-                    errorMsg += ID_CONDITION;
+                    condicio = isCodiAcCA(resposta);
+                    errorMsg += CODIAC_CA_CONDITON;
                 }
-                //TODO: esto tiene que ser isCodiAcumulacioNacional
                 case "codi_acumulacio_nacional" -> {
-                    condicio = isChar6(resposta);
-                    errorMsg += ID_CONDITION;
+                    condicio = isCodiAcNacional(resposta);
+                    errorMsg += CODIAC_NACIONAL_CONDITON;
                 }
             }
 
@@ -180,59 +151,13 @@ public class ControllerCandidatura extends Controller {
         return resposta;
     }
 
-    static void inserir() {
-
-        //TODO: aquí teben ir los campos obligatorios que se pediran al principio de la inserción,
-        // en el caso de candidatures, son el id y la eleccio id, pero el id se añade automaticamente, así que no cal,
-        // y yo pondría aunque pueda ser null en la tabla, el nom curt, porque ya que es identificatorio de cada registro
-        // (igual hasta cambiaría el DDL de la tabla para hacerlo not null)
-
-        // Camps obligatoris
-        String dni;
-
-        // HashMap amb els camps i valors que s'introduiran a la BD
-        HashMap<String, String> campsInserits = new HashMap<>();
-
-        // TODO: Primer introduïm els camps obligatoris
-
-        // Demanem si vol inserir els camps opcionals o modificar els que ha introduït
-        if (obtenirRespostaSN("Vols inserir algun camp més o modificar els que has introduït? (S/N): ")) {
-
-            // Demanem la resta de camps
-            HashMap<String, String> campsExtra = obtenirCampsIValors("inserir o modificar");
-
-            // Si hi ha camps a inserir, els afegim al HashMap
-            if (campsExtra != null) campsInserits.putAll(campsExtra);
-        }
-
-        // Mostrem les dades introduïdes a l'usuari
-        println("Les dades introduïdes són les següents:");
-        for (String camp : campsInserits.keySet()) {
-            print(camp + ": " + campsInserits.get(camp));
-        }
-        print("");
-
-        // Preguntem a l'usuari si vol inserir la persona
-        if (obtenirRespostaSN("ESTÀS SEGUR que vols inserir una candidatura amb les dades introduïdes? (S/N): ")) {
-
-            // Construïm l'objecte persona amb les dades introduïdes
-            Candidatura c = new Candidatura(
-                    Long.parseLong(campsInserits.get("eleccio_id")),
-                    campsInserits.get("codi_candidatura"),
-                    campsInserits.get("nom_curt"),
-                    campsInserits.get("nom_llarg"),
-                    campsInserits.get("codi_acumulacio_provincia"),
-                    campsInserits.get("codi_acumulacio_ca"),
-                    campsInserits.get("codi_acumulacio_nacional"));
-
-            // Inserim la persona a la base de dades
-            if (new CandidaturaDAO().create(c)) println("Candidatura afegida amb èxit!");
-            else println("No s'ha pogut afegir la Candidatura.");
-        }
-    }
-
-    //TODO: hay que agrupar todos los métodos auxiliares, que quede el codigo ordenado y limpio
-    //TODO: tambien parece que este método es común a todos las tablas, así que igual lo podemos hacer común
+    /**
+     * Executa el procés per demanar a l'usuari els camps i els valors d'aquests
+     * sobre els que vol realitzar l'acció passada per paràmetres.
+     * @param accio Acció que es vol realitzar
+     * @return HashMap amb els camps a modificar com a key i els nous valors com a value
+     * o null si no hi ha camps a modificar.
+     */
     private static HashMap<String, String> obtenirCampsIValors(String accio) {
 
         HashMap<String, String> camps = new HashMap<>();
@@ -257,14 +182,121 @@ public class ControllerCandidatura extends Controller {
         return camps.size() > 0 ? camps : null;
     }
 
+    // MÈTODES CRUD
+
+    /**
+     * Executa el procés de cerca de la taula candidatures.
+     * @return Llista de candidatures trobades amb la cerca.
+     */
+    static List<Candidatura> cercar() {
+
+        List<Candidatura> resultat;
+
+        do {
+            // Demanem el camp sobre el qual es vol cercar
+            String camp = obtenirCamp("cercar");
+            if (camp == null) return null;
+
+            // Demanem el valor del camp
+            String resposta = obtenirValorDelCamp(camp, "cercar");
+            if (resposta == null) return null;
+
+            // Cerquem les candidatures amb el camp i valor especificats
+            resultat = new CandidaturaDAO().search(camp, resposta);
+
+            // Mostrem el resultat de la cerca
+            if (resultat != null) {
+
+                // Mostrem les candidatures trobades
+                for (Candidatura c : resultat) println(">> " + c);
+
+                // Mostrem el recompte de candidatures trobades
+                println("S'han trobat " + resultat.size() + " candidatures amb aquest " + camp + ".");
+            }
+
+            // Si no s'ha trobat cap candidatura, informem a l'usuari
+            else println("No s'ha trobat cap candidatura amb aquest " + camp + ".");
+
+            // Preguntem a l'usuari si vol cercar unes altres candidatures
+        } while (obtenirRespostaSN("Vols CERCAR unes altres candidatures? (S/N): "));
+
+        // Retornem el resultat de la cerca
+        // (per quan es cridi des d'altres mètodes que necessitin el resultat)
+        return resultat;
+    }
+
+    /**
+     * Executa el procés d'inserció de candidatures.
+     */
+    static void inserir() {
+
+        //TODO: Yo pondría aunque pueda ser null en la tabla, el nom curt,
+        // porque ya que es identificatorio de cada registro
+        // (igual hasta cambiaría el DDL de la tabla para hacerlo not null)
+
+        // Camps obligatoris
+        String eleccio_id;
+
+        // HashMap amb els camps i valors que s'introduiran a la BD
+        HashMap<String, String> campsInserits = new HashMap<>();
+
+        // Primer introduïm els camps obligatoris
+        println("Primer cal introduïr els camps obligatoris (eleccio_id).");
+        eleccio_id = obtenirValorDelCamp("eleccio_id", "inserir");
+
+        // Si l'usuari no vol introduïr els camps obligatoris, cancelem operació
+        if (eleccio_id == null) return;
+
+        // Afegim els camps obligatoris al HashMap
+        campsInserits.put("eleccio_id", eleccio_id);
+
+        // Demanem si vol inserir els camps opcionals o modificar els que ha introduït
+        if (obtenirRespostaSN("Vols inserir algun camp més o modificar els que has introduït? (S/N): ")) {
+
+            // Demanem la resta de camps
+            HashMap<String, String> campsExtra = obtenirCampsIValors("inserir o modificar");
+
+            // Si hi ha camps a inserir, els afegim al HashMap
+            if (campsExtra != null) campsInserits.putAll(campsExtra);
+        }
+
+        // Mostrem les dades introduïdes a l'usuari
+        println("Les dades introduïdes són les següents:");
+        for (String camp : campsInserits.keySet()) {
+            print(camp + ": " + campsInserits.get(camp));
+        }
+        print("");
+
+        // Preguntem a l'usuari si vol inserir la candidatura
+        if (obtenirRespostaSN("ESTÀS SEGUR que vols inserir una candidatura amb les dades introduïdes? (S/N): ")) {
+
+            // Construïm l'objecte candidatura amb les dades introduïdes
+            Candidatura c = new Candidatura(
+                    Integer.parseInt(campsInserits.get("eleccio_id")),
+                    campsInserits.get("codi_candidatura"),
+                    campsInserits.get("nom_curt"),
+                    campsInserits.get("nom_llarg"),
+                    campsInserits.get("codi_acumulacio_provincia"),
+                    campsInserits.get("codi_acumulacio_ca"),
+                    campsInserits.get("codi_acumulacio_nacional"));
+
+            // Inserim la candidatura a la base de dades
+            if (new CandidaturaDAO().create(c)) println("Candidatura afegida amb èxit!");
+            else println("No s'ha pogut afegir la candidatura.");
+        }
+    }
+
+    /**
+     * Executa el procés de modificació de candidatures.
+     */
     static void modificar() {
 
-        // Cerquem persones a modificar
+        // Cerquem candidatures a modificar
         List<Candidatura> resultatCerca = cercar();
 
         // Comprovem si el resultat està buit
         if (resultatCerca == null) {
-            println("Sense resultat de cerca no es pot actualitzar cap candidatura."); //TODO: se puede hacer mensage común para todas las clases
+            println(MSG_NO_RESULT);
             return;
         }
 
@@ -274,7 +306,7 @@ public class ControllerCandidatura extends Controller {
         // Comprovem si s'ha cancel·lat l'acció
         if (campsModificats == null) return;
 
-        // Modifiquem els camps de les persones trobades amb la cerca
+        // Modifiquem els camps de les candidatures trobades amb la cerca
         for (Candidatura c : resultatCerca) {
 
             for (String camp : campsModificats.keySet()) {
@@ -304,25 +336,28 @@ public class ControllerCandidatura extends Controller {
             // Obtenim els camps a modificar
             String[] campsAfectats = campsModificats.keySet().toArray(new String[0]);
 
-            // Actualitzem les persones a la base de dadesc
+            // Actualitzem les candidatures a la base de dades
             boolean updCorrecte = true;
 
             for (Candidatura c : resultatCerca) {
-                // Si no s'ha pogut actualitzar la persona, mostrem el missatge
+                // Si no s'ha pogut actualitzar la candidatura, mostrem el missatge
                 if (!new CandidaturaDAO().update(c, campsAfectats)) {
                     updCorrecte = false;
-                    println("No s'ha pogut actualitzar la candidatura amb id " + c.getId() + "."); //TODO: potser es pot fer missatge comú per aquests errors a la classe MissatgesCandidatura
+                    println("No s'ha pogut actualitzar la candidatura amb id " + c.getId() + ".");
                 }
             }
 
-            // Si s'han actualitzat correctament totes les persones, mostrem el missatge
-            if (updCorrecte) println("S'han actualitzat correctament totes les candidatures."); //TODO: potser es pot fer missatge comú per a les confirmacions
+            // Si s'han actualitzat correctament totes les candidatures, mostrem el missatge
+            if (updCorrecte) println("S'han actualitzat correctament totes les candidatures.");
         }
     }
 
+    /**
+     * Executa el procés d'eliminació de candidatures
+     */
     static void eliminar() {
 
-        // Demanem les persones a eliminar
+        // Demanem les candidatures a eliminar
         List<Candidatura> resultatCerca = cercar();
 
         // Comprovem si el codi està buit
@@ -331,30 +366,33 @@ public class ControllerCandidatura extends Controller {
             return;
         }
 
-        // Demanem confirmació per eliminar les persones
+        // Demanem confirmació per eliminar les candidatures
         if (obtenirRespostaSN("Estàs segur que vols eliminar la/es candidatura/es trobada/es (S/N)?: ")) {
 
-            // Eliminem persones de la BD
+            // Eliminem candidatures de la BD
             boolean delCorrecte = true;
 
             for (Candidatura c : resultatCerca) {
 
-                // Si no s'ha pogut eliminar la persona, mostrem el missatge
+                // Si no s'ha pogut eliminar la candidatura, mostrem el missatge
                 if (!new CandidaturaDAO().delete(c)) {
                     delCorrecte = false;
                     println("No s'ha pogut eliminar la candidatura amb id " + c.getId() + ".");
                 }
             }
 
-            // Si s'han eliminat correctament totes les persones, mostrem el missatge
+            // Si s'han eliminat correctament totes les candidatures, mostrem el missatge
             if (delCorrecte) println("S'han eliminat correctament les candidatures.");
         }
 
     }
 
+    /**
+     * Executa el procés per llistar els registres de la taula candidatures.
+     */
     static void llistar() {
 
-        // Obtenim totes les persones de la base de dades
+        // Obtenim totes les candidatures de la base de dades
         List<Candidatura> resultat = new CandidaturaDAO().all();
 
         // Si la taula conté registres,
@@ -371,9 +409,12 @@ public class ControllerCandidatura extends Controller {
         else println("No s'ha trobat cap candidatura.");
     }
 
+    /**
+     * Executa el procés per mostrar el recompte de la taula candidatures.
+     */
     static void ferRecompte() {
 
-        // Obtenim el recompte de persones de la base de dades
+        // Obtenim el recompte de candidatures de la base de dades
         long recompte = new CandidaturaDAO().count();
 
         // Mostrem el recompte
