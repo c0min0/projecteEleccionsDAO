@@ -12,6 +12,6 @@ public class MissatgesPersona extends Missatges {
     static final String COG1_CONDITION = VARCHAR30_CONDITION;
     static final String COG2_CONDITION = VARCHAR30_CONDITION;
     static final String SEXE_CONDITION = "ser 'M' o 'F'.";
-    static final String DNI_CONDITION = "tenir 8 caràcters en aquesta base de dades.";
+    static final String DNI_CONDITION = CHAR8_CONDITION;
     static final String DATA_NAIX_CONDITION = DATE_CONDITION;
 }
