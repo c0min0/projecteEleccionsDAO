@@ -4,6 +4,21 @@ package controller;
  * Classe que conté els validadors de dades genèrics.
  */
 public class DataValidator {
+
+    /**
+     * Comprova si un String és un int.
+     * @param str String a comprovar.
+     * @return True si és un int, false si no ho és.
+     */
+    public static boolean isInt(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     /**
      * Comprova si un String és un long.
      * @param str String a comprovar.
@@ -28,12 +43,39 @@ public class DataValidator {
     }
 
     /**
+     * Comprova si un String és un VARCHAR(50).
+     * @param str String a comprovar.
+     * @return True si és un VARCHAR(50), false si no ho és.
+     */
+    public static boolean isVarchar50(String str) {
+        return str.length() <= 50;
+    }
+
+    /**
+     * Comprova si un String és un VARCHAR(150).
+     * @param str String a comprovar.
+     * @return True si és un VARCHAR(150), false si no ho és.
+     */
+    public static boolean isVarchar150(String str) {
+        return str.length() <= 150;
+    }
+
+    /**
      * Comprova si un String és un CHAR(6).
-     * @param str
-     * @return
+     * @param str String a comprovar.
+     * @return True si és un CHAR(6), false si no ho és.
      */
     public static boolean isChar6(String str) {
         return str.length() == 6;
+    }
+
+    /**
+     * Comprova si un String és un CHAR(8).
+     * @param str String a comprovar.
+     * @return True si és un CHAR(8), false si no ho és.
+     */
+    public static boolean isChar8(String str) {
+        return str.length() == 8;
     }
 
     /**

@@ -2,72 +2,73 @@ package controller.candidatura;
 
 import controller.DataValidator;
 
-
+/**
+ * Classe que conté els validadors de dades de la taula candidatures.
+ */
 public class DataValidatorCandidatura extends DataValidator {
 
-    //TODO: tiene que ser un varchar de 50
     /**
-     * //TODO: no és així la descripció
-     * Valida un nom de persona segons la seva longitud.
-     * @param nom Nom a validar.
-     * @return True si el nom té menys de 30 caràcters, false si no.
+     * Comprova si un String és un valor vàlid pel camp eleccio_id de la taula candidatures.
+     * És l'únic id de la base de dades que no és INT UNSIGNED, sinó TINYINT UNSIGNED
+     * @param eleccio_id String a comprovar.
+     * @return True si és un valor vàlid pel camp eleccio_id, false si no ho és.
      */
-    static boolean isNomCurt(String nom) {
-        return DataValidator.isVarchar30(nom);
+    static boolean isEleccioId(String eleccio_id) {
+        return isInt(eleccio_id);
     }
 
     /**
-     * //TODO: No és així la descripció
-     * Valida un nom de persona segons la seva longitud.
-     *
-     * @param nom Nom a validar.
-     * @return True si el nom té menys de 30 caràcters, false si no.
+     * Comprova si un String és un valor vàlid pel camp codi_candidatura de la taula candidatures.
+     * @param codiCandidatura String a comprovar.
+     * @return True si és un valor vàlid pel camp codi_candidatura, false si no ho és.
      */
-    static boolean isNomLlarg(String nom) {
-        return DataValidator.isVarchar30(nom);
+    static boolean isCodiCandidatura(String codiCandidatura) {
+        return isChar6(codiCandidatura);
     }
 
-    //TODO: este método no es para esta clase
     /**
-     * Valida un cognom de persona segons la seva longitud.
-     *
-     * @param cog1 Cognom a validar.
-     * @return True si el cognom té menys de 30 caràcters, false si no.
+     * Comprova si un String és un valor vàlid pel camp nom_curt de la taula candidatures.
+     * @param nomCurt String a comprovar.
+     * @return True si és un valor vàlid pel camp nom_curt, false si no ho és.
      */
-    static boolean isCog1(String cog1) {
-        return DataValidator.isVarchar30(cog1);
+    static boolean isNomCurt(String nomCurt) {
+        return isVarchar50(nomCurt);
     }
 
-    //TODO: la descripción del método es incorrecta y no debería ir aquí, debería ser algo como isAtributoDeCandidatures
     /**
-     * Valida un segon cognom de persona segons la seva longitud.
-     *
-     * @param cog2 Segon cognom a validar.
-     * @return True si el segon cognom té menys de 30 caràcters, false si no.
+     * Comprova si un String és un valor vàlid pel camp nom_llarg de la taula candidatures.
+     * @param nomLlarg String a comprovar.
+     * @return True si el nom llarg és vàlid, false si no.
      */
-    static boolean isChar(String char6) {
-        return DataValidator.isChar6(char6);
+    static boolean isNomLlarg(String nomLlarg) {
+        return isVarchar150(nomLlarg);
     }
 
-    //TODO: este método sobra, no va aquí
     /**
-     * Valida un sexe comprovant que sigui M o F.
-     *
-     * @param sexe Sexe a validar.
-     * @return True si el sexe és M o F, false si no.
+     * Comprova si un String és un valor vàlid pel camp codi_acumulacio_provincia de la taula candidatures.
+     * @param codiAcProvincia String a comprovar.
+     * @return True si és un valor vàlid pel camp codi_acumulacio_provincia, false si no ho és.
      */
-    static boolean isSexe(String sexe) {
-        return sexe.equals("M") || sexe.equals("F") || sexe.equals("m") || sexe.equals("f");
+    static boolean isCodiAcProvincia(String codiAcProvincia) {
+        return isChar6(codiAcProvincia);
     }
 
-    //TODO: este método no va aquí
     /**
-     * Valida un DNI comprovant que tingui 8 caràcters.
-     *
-     * @param dni DNI a validar.
-     * @return True si el DNI té 8 caràcters, false si no.
+     * Comprova si un String és un valor vàlid pel camp codi_acumulacio_ca de la taula candidatures.
+     * @param codiAcCA String a comprovar.
+     * @return True si és un valor vàlid pel camp codi_acumulacio_ca, false si no ho és.
      */
-    static boolean isDNI(String dni) {
-        return dni.length() == 8;
+    static boolean isCodiAcCA(String codiAcCA) {
+        return isChar6(codiAcCA);
     }
+
+    /**
+     * Comprova si un String és un valor vàlid pel camp codi_acumulacio_nacional de la taula candidatures.
+     * @param codiAcNacional String a comprovar.
+     * @return True si és un valor vàlid pel camp codi_acumulacio_nacional, false si no ho és.
+     */
+    static boolean isCodiAcNacional(String codiAcNacional) {
+        return isChar6(codiAcNacional);
+    }
+
 }
