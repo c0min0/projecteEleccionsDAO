@@ -2,3 +2,4 @@
 - Hem modificat les FK de la BD perquè siguin ON DELETE CASCADE.
 - Qualsevol excepció SQL emesa per la BD es captura i es mostra per consola en Java.
 - Hem canviat el DDL de la base de dades de la taula candidats on totes les foreigns keys siguin ON DELETE CASCADE
+- Els camps que tenen dades primitives si són null retornen 0 o false, però en aquesta BD tots el camps que retornen dades primitives són NOT NULL, així que no ens hem de preocupar de saber si abans eren null, ja que quan els llegim de la BD ens tornaran un valor real.

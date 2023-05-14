@@ -9,6 +9,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PersonaDAO implements DAODB<Persona> {
+
+    /**
+     * Insereix una persona a la BD amb els valors de la persona passada per paràmetres.
+     * @param p Persona a inserir.
+     * @return true si s'ha inserit correctament, false si no.
+     */
     @Override
     public boolean create(Persona p) {
         // INSERT SQL
@@ -27,6 +33,13 @@ public class PersonaDAO implements DAODB<Persona> {
         return r > 0;
     }
 
+    /**
+     * Actualitza la persona passada per paràmetres amb
+     * els valors de la persona de la BD amb el mateix id.
+     * @param p Persona a actualitzar.
+     * @return true si s'ha actualitzat correctament,
+     * false si no existeix a la BD.
+     */
     @Override
     public boolean read (Persona p) {
         // Obtenim una candidatura de la BD amb el mateix id que la candidatura passada per paràmetres
@@ -42,6 +55,13 @@ public class PersonaDAO implements DAODB<Persona> {
         return true;
     }
 
+    /**
+     * Retorna un objecte Persona amb els valors delregistre
+     * de la taula persones amb l'id passat per paràmetres.
+     * @param id Id de la persona a obtenir.
+     * @return Persona amb els valors del registre de la taula
+     * persones amb l'id passat per paràmetres o null si no existeix.
+     */
     @Override
     public Persona readById (long id) {
         // SELECT SQL
@@ -66,6 +86,13 @@ public class PersonaDAO implements DAODB<Persona> {
         return new Persona(id, nom, cog1, cog2, sexe, dataNaixement, dni);
     }
 
+
+    /**
+     * Actualitza la persona de la BD amb el mateix id que la persona passada
+     * per paràmetres amb els valors de la persona passada per paràmetres.
+     * @param p Persona a actualitzar.
+     * @return true si s'ha actualitzat correctament, false si no.
+     */
     @Override
     public boolean update(Persona p) {
         // UPDATE SQL
@@ -86,6 +113,14 @@ public class PersonaDAO implements DAODB<Persona> {
         return r > 0;
     }
 
+    /**
+     * Actualitza només els camps passats per paràmetre de la persona
+     * de la BD amb el mateix id que la persona passada per paràmetres
+     * amb els valors de la persona passada per paràmetres.
+     * @param p Persona a actualitzar.
+     * @param camps Camps a actualitzar.
+     * @return true si s'ha actualitzat correctament, false si no.
+     */
     @Override
     public boolean update(Persona p, String... camps) {
         // Creem un array de paràmetres de la mida de la quantitat de camps + 1 (per l'id)
@@ -126,6 +161,11 @@ public class PersonaDAO implements DAODB<Persona> {
         return r > 0;
     }
 
+    /**
+     * Elimina la persona passada per paràmetres de la BD.
+     * @param p Persona a eliminar.
+     * @return true si s'ha eliminat correctament, false si no.
+     */
     @Override
     public boolean delete(Persona p) {
         // DELETE SQL
@@ -138,6 +178,12 @@ public class PersonaDAO implements DAODB<Persona> {
         return r > 0;
     }
 
+    /**
+     * Cerca persones a la BD amb el valor del camp passat per paràmetres.
+     * @param camp camp pel qual es vol cercar.
+     * @param valor valor del camp.
+     * @return llista de persones trobades a la cerca.
+     */
     @Override
     public List<Persona> search(String camp, Object valor) {
         // Creem una llista buida de persones
@@ -171,11 +217,20 @@ public class PersonaDAO implements DAODB<Persona> {
         return l.size() > 0 ? l : null;
     }
 
+    /**
+     * Comprova si una persona existeix a la BD.
+     * @param p Persona a comprovar.
+     * @return true si la persona existeix a la BD, false si no.
+     */
     @Override
     public boolean exists(Persona p) {
         return read(p);
     }
 
+    /**
+     * Fa el recompte de registres a la taula persones.
+     * @return nombre de registres de la taula persones.
+     */
     @Override
     public long count() {
         // Query per comptar el nombre de files de la taula
@@ -192,6 +247,10 @@ public class PersonaDAO implements DAODB<Persona> {
         return (long)o[0];
     }
 
+    /**
+     * Retorna totes les persones de la BD.
+     * @return llista de persones de la BD.
+     */
     @Override
     public List<Persona> all() {
         // Creem una llista buida de persones
