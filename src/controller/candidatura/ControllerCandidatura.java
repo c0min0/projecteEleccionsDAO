@@ -36,8 +36,9 @@ public class ControllerCandidatura extends Controller {
                 }
             }
 
-        } while (obtenirRespostaSN(Missatges.MSG_REPEAT_CANDIDATURES));
+        } while (obtenirRespostaSN(MSG_REPEAT_CANDIDATURES));
     }
+
     static List<Candidatura> cercar() {
 
         List<Candidatura> resultat;
@@ -73,7 +74,8 @@ public class ControllerCandidatura extends Controller {
         // (per quan es cridi des d'altres mètodes que necessitin el resultat)
         return resultat;
     }
-    private static String obtenirCamp (String accio) {
+
+    private static String obtenirCamp(String accio) {
 
         String pregunta, resposta = null;
 
@@ -107,6 +109,7 @@ public class ControllerCandidatura extends Controller {
         // Retornem el camp escollit
         return resposta;
     }
+
     private static String obtenirValorDelCamp(String camp, String accio) {
 
         String resposta;
@@ -155,7 +158,7 @@ public class ControllerCandidatura extends Controller {
                     condicio = isChar6(resposta);
                     errorMsg += ID_CONDITION;
                 }
-                 case "codi_acumulacio_nacional" -> {
+                case "codi_acumulacio_nacional" -> {
                     condicio = isChar6(resposta);
                     errorMsg += ID_CONDITION;
                 }
@@ -172,10 +175,11 @@ public class ControllerCandidatura extends Controller {
         // Retornem el valor del camp
         return resposta;
     }
+
     static void inserir() {
 
         // Camps obligatoris
-        String  dni;
+        String dni;
 
         // HashMap amb els camps i valors que s'introduiran a la BD
         HashMap<String, String> campsInserits = new HashMap<>();
@@ -202,7 +206,7 @@ public class ControllerCandidatura extends Controller {
 
             // Construïm l'objecte persona amb les dades introduïdes
             Candidatura c = new Candidatura(
-                    Long.parseLong(campsInserits.get ("eleccio_id")),
+                    Long.parseLong(campsInserits.get("eleccio_id")),
                     campsInserits.get("codi_candidatura"),
                     campsInserits.get("nom_curt"),
                     campsInserits.get("nom_llarg"),
@@ -215,6 +219,7 @@ public class ControllerCandidatura extends Controller {
             else println("No s'ha pogut afegir la Candidatura.");
         }
     }
+
     private static HashMap<String, String> obtenirCampsIValors(String accio) {
 
         HashMap<String, String> camps = new HashMap<>();
@@ -238,6 +243,7 @@ public class ControllerCandidatura extends Controller {
         // Retornem el HashMap amb els camps a modificar i els nous valors o null si no n'hi han
         return camps.size() > 0 ? camps : null;
     }
+
     static void modificar() {
 
         // Cerquem persones a modificar
@@ -250,7 +256,7 @@ public class ControllerCandidatura extends Controller {
         }
 
         // Demanem quins camps es volen modificar
-        HashMap <String,String> campsModificats = obtenirCampsIValors("modificar");
+        HashMap<String, String> campsModificats = obtenirCampsIValors("modificar");
 
         // Comprovem si s'ha cancel·lat l'acció
         if (campsModificats == null) return;
@@ -300,6 +306,7 @@ public class ControllerCandidatura extends Controller {
             if (updCorrecte) println("S'han actualitzat correctament totes les candidatures.");
         }
     }
+
     static void eliminar() {
 
         // Demanem les persones a eliminar
@@ -331,6 +338,7 @@ public class ControllerCandidatura extends Controller {
         }
 
     }
+
     static void llistar() {
 
         // Obtenim totes les persones de la base de dades
@@ -349,6 +357,7 @@ public class ControllerCandidatura extends Controller {
         // Si la taula està buida, mostrem el missatge
         else println("No s'ha trobat cap candidatura.");
     }
+
     static void ferRecompte() {
 
         // Obtenim el recompte de persones de la base de dades
@@ -358,6 +367,4 @@ public class ControllerCandidatura extends Controller {
         println("Hi ha " + recompte + " candidatures a la base de dades.");
     }
 
-
-public class ControllerCandidatura extends Controller {
 }
