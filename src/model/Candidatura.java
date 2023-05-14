@@ -25,7 +25,8 @@ public class Candidatura {
         this.candidatura_id = candidatura_id;
     }
 
-    public Candidatura(long eleccio_id, String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
+
+    public void set(long eleccio_id,String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
         this.eleccio_id = eleccio_id;
         this.codi_candidatura = codi_candidatura;
         this.nom_curt = nom_curt;
@@ -34,8 +35,7 @@ public class Candidatura {
         this.codi_acumulacio_ca = codi_acumulacio_ca;
         this.codi_acumulacio_nacional = codi_acumulacio_nacional;
     }
-
-    public void set(long eleccio_id,String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
+    public Candidatura(long eleccio_id,String codi_candidatura, String nom_curt, String nom_llarg, String codi_acumulacio_provincia, String codi_acumulacio_ca, String codi_acumulacio_nacional) {
         this.eleccio_id = eleccio_id;
         this.codi_candidatura = codi_candidatura;
         this.nom_curt = nom_curt;

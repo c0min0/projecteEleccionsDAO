@@ -16,6 +16,8 @@ public class Missatges {
 
     // Condicions genèriques
     public static final String VARCHAR30_CONDITION = "ser un text de màxim 30 caràcters.";
+
+    public static final String NOM_CONDITION2 = "ser un text.";
     public static final String ID_CONDITION = "ser un número enter positiu.";
     public static final String DATE_CONDITION = "ser una data amb el format dd/mm/aaaa.";
 

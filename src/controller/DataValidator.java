@@ -26,6 +26,9 @@ public class DataValidator {
     public static boolean isVarchar30(String str) {
         return str.length() <= 30;
     }
+    public static boolean isChar6(String str) {
+        return str.length() <= 6;
+    }
 
     /**
      * Valida una data comprovant que tingui el format dd/mm/aaaa.
