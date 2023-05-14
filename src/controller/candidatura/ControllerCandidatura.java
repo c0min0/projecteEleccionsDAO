@@ -236,7 +236,7 @@ public class ControllerCandidatura extends Controller {
         HashMap<String, String> campsInserits = new HashMap<>();
 
         // Primer introduïm els camps obligatoris
-        println("Primer cal introduïr els camps obligatoris (eleccio_id).");
+        println(MSG_CAMPS_OBLIG + "(eleccio_id).");
         eleccio_id = obtenirValorDelCamp("eleccio_id", "inserir");
 
         // Si l'usuari no vol introduïr els camps obligatoris, cancelem operació
@@ -246,7 +246,7 @@ public class ControllerCandidatura extends Controller {
         campsInserits.put("eleccio_id", eleccio_id);
 
         // Demanem si vol inserir els camps opcionals o modificar els que ha introduït
-        if (obtenirRespostaSN("Vols INSERIR algun camp més o MODIFICAR els que has introduït? (S/N): ")) {
+        if (obtenirRespostaSN(MSG_AFEGIR_CAMPS)) {
 
             // Demanem la resta de camps
             HashMap<String, String> campsExtra = obtenirCampsIValors("inserir o modificar");
@@ -256,7 +256,7 @@ public class ControllerCandidatura extends Controller {
         }
 
         // Mostrem les dades introduïdes a l'usuari
-        println("Les dades introduïdes són les següents:");
+        println(MSG_MOSTRAR_DADES);
         for (String camp : campsInserits.keySet()) {
             print(camp + ": " + campsInserits.get(camp));
         }
@@ -291,7 +291,7 @@ public class ControllerCandidatura extends Controller {
 
         // Comprovem si el resultat està buit
         if (resultatCerca == null) {
-            println(MSG_NO_RESULT);
+            println(MSG_NO_RESULT + "actualitzar cap candidatura.");
             return;
         }
 
@@ -319,7 +319,7 @@ public class ControllerCandidatura extends Controller {
         }
 
         // Mostrem les dades introduïdes a l'usuari
-        println("Les dades introduïdes són les següents:");
+        println(MSG_MOSTRAR_DADES);
         for (String camp : campsModificats.keySet()) {
             print(camp + ": " + campsModificats.get(camp));
         }
@@ -357,7 +357,7 @@ public class ControllerCandidatura extends Controller {
 
         // Comprovem si el codi està buit
         if (resultatCerca == null) {
-            println("Sense resultat de cera no es pot eliminar.");
+            println(MSG_NO_RESULT + "eliminar.");
             return;
         }
 

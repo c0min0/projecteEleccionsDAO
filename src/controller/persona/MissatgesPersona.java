@@ -6,6 +6,8 @@ public class MissatgesPersona extends Missatges {
     // Missatge per tornar a fer acció sobre la taula persones
     static final String MSG_REPEAT_PERSONES = MSG_REPEAT_CRUD + "PERSONES (S/N)?: ";
 
+    // Missatge d'èxit
+
     // Condicions per als camps de la taula persones
     static final String PERSONA_ID_CONDITION = LONG_CONDITION;
     static final String NOM_CONDITION = VARCHAR30_CONDITION;

@@ -14,8 +14,17 @@ public class Missatges {
     public static final String MSG_REPEAT_TAULA = "Vols realitzar alguna tasca més sobre una altra TAULA (S/N)?: ";
     public static final String MSG_REPEAT_CRUD = "Vols realitzar alguna tasca més sobre la taula ";
 
-    //Missatge per avisar qeu sense resultat de cerca no es pot fer l'acció
-    public static final String MSG_NO_RESULT = "Sense resultat de cerca no es pot actualitzar cap persona.";
+    // Missatge per introduïr els camps obligatoris
+    public static final String MSG_CAMPS_OBLIG = "Primer cal introduïr els camps obligatoris ";
+
+    // Missatge per afegir més camps en inserir registres
+    public static final String MSG_AFEGIR_CAMPS = "Vols INSERIR algun camp més o MODIFICAR els que has introduït? (S/N): ";
+
+    // Missatge per mostrar les dades introduïdes
+    public static final String MSG_MOSTRAR_DADES = "Les dades introduïdes són les següents:";
+
+    //Missatge per avisar que sense resultat de cerca no es pot fer l'acció
+    public static final String MSG_NO_RESULT = "Sense resultat de cerca no es pot ";
 
     // Condicions genèriques
     public static final String INT_CONDITION = "ser un número enter positiu.";
