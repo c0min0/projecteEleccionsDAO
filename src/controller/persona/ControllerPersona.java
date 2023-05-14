@@ -5,7 +5,6 @@ import controller.DAO.mySQL.PersonaDAO;
 import controller.DataConverter;
 import model.Persona;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
