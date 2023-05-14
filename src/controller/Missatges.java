@@ -13,8 +13,6 @@ public class Missatges {
     // Missatges per repetir acció
     public static final String MSG_REPEAT_TAULA = "Vols realitzar alguna tasca més sobre una altra TAULA (S/N)?: ";
     public static final String MSG_REPEAT_CRUD = "Vols realitzar alguna tasca més sobre la taula ";
-    public static final String MSG_REPEAT_CANDIDATURES = MSG_REPEAT_CRUD + "CANDIDATURES (S/N)?: ";
-    public static final String MSG_REPEAT_CA = MSG_REPEAT_CRUD + "COMUNITATS AUTÒNOMES (S/N)?: ";
 
     // Condicions genèriques
     public static final String VARCHAR30_CONDITION = "ser un text de màxim 30 caràcters.";
