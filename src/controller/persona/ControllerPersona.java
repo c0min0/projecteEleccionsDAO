@@ -160,7 +160,7 @@ public class ControllerPersona extends Controller {
             String camp = obtenirCamp(accio);
 
             // Si l'usuari no vol modificar cap camp, retornem null
-            if (camp == null) return null;
+            if (camp == null) return camps;
 
             // Demanem el nou valor del camp
             String resposta = obtenirValorDelCamp(camp, accio);
@@ -240,7 +240,7 @@ public class ControllerPersona extends Controller {
         campsInserits.put("dni", dni);
 
         // Demanem si vol inserir els camps opcionals o modificar els que ha introduït
-        if (obtenirRespostaSN("Vols inserir algun camp més o modificar els que has introduït? (S/N): ")) {
+        if (obtenirRespostaSN("Vols INSERIR algun camp més o MODIFICAR els que has introduït? (S/N): ")) {
 
             // Demanem la resta de camps
             HashMap<String, String> campsExtra = obtenirCampsIValors("inserir o modificar");
@@ -317,7 +317,8 @@ public class ControllerPersona extends Controller {
         print("");
 
         // Missatge de confirmació
-        if (obtenirRespostaSN("ESTÀS SEGUR que vols actualitzar aquesta/es persona/es amb les dades introduïdes? (S/N): ")) {
+        if (obtenirRespostaSN("ESTÀS SEGUR que vols actualitzar aquesta/es persona/es amb les dades introduïdes?" +
+                "\nEls candidats poden veure's afectats si canvies el camp persona_id. (S/N): ")) {
 
             // Obtenim els camps a modificar
             String[] campsAfectats = campsModificats.keySet().toArray(new String[0]);
@@ -353,7 +354,8 @@ public class ControllerPersona extends Controller {
         }
 
         // Demanem confirmació per eliminar les persones
-        if (obtenirRespostaSN("Estàs segur que vols eliminar la/es persona/es trobada/es (S/N)?: ")) { //TODO: explicar també que s'eliminaran els candidats associats. Amb els updates també passa?
+        if (obtenirRespostaSN("Estàs segur que vols eliminar la/es persona/es trobada/es? " +
+                "\nEls candiats associats també s'esborraran. (S/N): ")) {
 
             // Eliminem persones de la BD
             boolean delCorrecte = true;

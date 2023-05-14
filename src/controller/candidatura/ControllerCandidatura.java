@@ -105,7 +105,6 @@ public class ControllerCandidatura extends Controller {
 
             // Construïm el missatge d'error i comprovem
             // que el valor sigui vàlid depenent del camp
-            //TODO: el missatge d'error ha de ser específic de cada camp i extret de la classe MissatgesCandidatura
             switch (camp) {
                 case "candidatura_id" -> {
                     condicio = isCandidaturaId(resposta);
@@ -167,7 +166,7 @@ public class ControllerCandidatura extends Controller {
             String camp = obtenirCamp(accio);
 
             // Si l'usuari no vol modificar cap camp, retornem null
-            if (camp == null) return null;
+            if (camp == null) return camps;
 
             // Demanem el nou valor del camp
             String resposta = obtenirValorDelCamp(camp, accio);
@@ -230,10 +229,6 @@ public class ControllerCandidatura extends Controller {
      */
     static void inserir() {
 
-        //TODO: Yo pondría aunque pueda ser null en la tabla, el nom curt,
-        // porque ya que es identificatorio de cada registro
-        // (igual hasta cambiaría el DDL de la tabla para hacerlo not null)
-
         // Camps obligatoris
         String eleccio_id;
 
@@ -251,7 +246,7 @@ public class ControllerCandidatura extends Controller {
         campsInserits.put("eleccio_id", eleccio_id);
 
         // Demanem si vol inserir els camps opcionals o modificar els que ha introduït
-        if (obtenirRespostaSN("Vols inserir algun camp més o modificar els que has introduït? (S/N): ")) {
+        if (obtenirRespostaSN("Vols INSERIR algun camp més o MODIFICAR els que has introduït? (S/N): ")) {
 
             // Demanem la resta de camps
             HashMap<String, String> campsExtra = obtenirCampsIValors("inserir o modificar");
