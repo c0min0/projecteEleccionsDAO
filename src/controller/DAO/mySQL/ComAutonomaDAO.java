@@ -37,16 +37,13 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
     }
 
     @Override
-    public ComAutonoma readById(Object ... id) {
-
-        // Obtenim l'id de la candidatura passada per paràmetres
-        int candidatura_id = (int)id[0];
+    public ComAutonoma readById(Object id) {
 
         // SELECT SQL
         String query = "SELECT nom, codi_ine FROM comunitats_autonomes WHERE comunitat_aut_id=?";
 
         // Llegim de la BD amb l'id de la candidatura passada per paràmetres
-        List<Object[]> r = DBMySQLManager.read(query, candidatura_id);
+        List<Object[]> r = DBMySQLManager.read(query, id);
 
         // Si no existeix, retornem null
         if (r.size() != 1L) return null;
@@ -57,7 +54,7 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
         String nom = (String)row[0];
         String codi_ine = (String)row[1];
 
-        return new ComAutonoma(candidatura_id, nom, codi_ine);
+        return new ComAutonoma((int)id, nom, codi_ine);
 
     }
 

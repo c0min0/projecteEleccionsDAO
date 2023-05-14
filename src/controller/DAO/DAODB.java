@@ -11,7 +11,7 @@ public interface DAODB <T> {
 
     boolean read(T t);
 
-    T readById (Object ... ids); // read by key (id)
+    T readById (Object id); // read by key (id)
 
     boolean update (T t);
 

@@ -42,7 +42,7 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
     @Override
     public boolean read(Candidatura c) {
         // Obtenim una candidatura de la BD amb el mateix id que la candidatura passada per paràmetres
-        Candidatura cdr = readById(c.getId(), c.getEleccioId());
+        Candidatura cdr = readById(c.getId());
 
         // Si no existeix, retornem false
         if (cdr == null) return false;
@@ -57,24 +57,19 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
 
     /**
      * Retorna un objecte Candidatura amb els valors del registre
-     * de la taula candidatures. Per fer-ho utilitza la candidatura_id i
-     * eleccio_id que cal passar per paràmetres en aquest ordre.
-     * @param ids cal passar-li la candidatura_id i l'eleccio_id en aquest ordre.
+     * de la taula candidatures. Per fer-ho utilitza la candidatura_id passada per paràmetres.
+     * @param id cal passar-li la candidatura_id i l'eleccio_id en aquest ordre.
      * @return Candidatura amb els valors del registre de la taula
      * candidatures amb la candidatura_id i l'eleccio_id passats per paràmetres o null si no existeix.
      */
     @Override
-    public Candidatura readById (Object ... ids) {
-
-        // Obtenim els valors de la candidatura_id i eleccio_id passats per paràmetres
-        long candiatura_id = (long)ids[0];
-        int eleccio_id = (int)ids[1];
+    public Candidatura readById (Object id) {
 
         // SELECT SQL
-        String query = "SELECT codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional FROM candidatures WHERE candidatura_id=? AND eleccio_id=?";
+        String query = "SELECT codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional FROM candidatures WHERE candidatura_id=?";
 
         // Llegim de la BD amb l'id de la candidatura passada per paràmetres
-        List<Object[]> r = DBMySQLManager.read(query, candiatura_id, eleccio_id);
+        List<Object[]> r = DBMySQLManager.read(query, id);
 
         // Si no existeix, retornem null
         if (r.size() != 1L) return null;
@@ -89,7 +84,7 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
         String codi_acumulacio_ca = (String)row[5];
         String codi_acumulacio_nacional = (String)row[6];
 
-        return new Candidatura(candiatura_id, eleccio_id, codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional);
+        return new Candidatura((long)id, codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional);
     }
 
     /**
@@ -101,7 +96,7 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
     @Override
     public boolean update(Candidatura c) {
         // UPDATE SQL
-        String query = "UPDATE candidatures SET eleccio_id=?,codi_candidatura=? ,nom_curt=?,nom_llarg=?,codi_acumulacio_provincia=?,codi_acumulacio_ca=?,codi_acumulacio_nacional=? WHERE candidatura_id=? AND eleccio_id=?";
+        String query = "UPDATE candidatures SET eleccio_id=?,codi_candidatura=? ,nom_curt=?,nom_llarg=?,codi_acumulacio_provincia=?,codi_acumulacio_ca=?,codi_acumulacio_nacional=? WHERE candidatura_id=?";
 
         // Actualitzem la BD amb els valors de la candidatura passada per paràmetres
         Long eleccio_id = c.getEleccioId();
@@ -113,7 +108,7 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
         String codi_acumulacio_nacional = c.getCodiAcumulacioNacional();
         long candidatura_id = c.getId();
 
-        int r = DBMySQLManager.write(query, eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional, candidatura_id, eleccio_id);
+        int r = DBMySQLManager.write(query, eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional, candidatura_id);
 
         // Si s'ha modificat alguna fila, retornem true
         return r > 0;
@@ -129,8 +124,8 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
      */
     @Override
     public boolean update(Candidatura c, String... camps) {
-        // Creem un array de paràmetres de la mida de la quantitat de camps + 2 (per la candidatura_id i l'eleccio_id)
-        Object[] params = new Object[camps.length + 2];
+        // Creem un array de paràmetres de la mida de la quantitat de camps + 1 (per la candidatura_id)
+        Object[] params = new Object[camps.length + 1];
 
         // Construïm la query
         StringBuilder query = new StringBuilder("UPDATE candidatures SET ");
@@ -158,9 +153,8 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
         }
 
         // Afegim l'id al final de la query
-        query.append(" WHERE candidatura_id=? AND eleccio_id=?");
-        params[params.length - 2] = c.getId();
-        params[params.length - 1] = c.getEleccioId();
+        query.append(" WHERE candidatura_id=?");
+        params[params.length - 1] = c.getId();
 
         // Executem la query
         int r = DBMySQLManager.write(query.toString(), params);
@@ -177,10 +171,10 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
     @Override
     public boolean delete(Candidatura c) {
         // DELETE SQL
-        String query = "DELETE FROM candidatures WHERE candidatura_id=? AND eleccio_id=?";
+        String query = "DELETE FROM candidatures WHERE candidatura_id=?";
 
         // Eliminem de la BD la candidatura passada per paràmetres
-        int r = DBMySQLManager.write(query, c.getId(), c.getEleccioId());
+        int r = DBMySQLManager.write(query, c.getId());
 
         // Si s'ha eliminat alguna fila, retornem true
         return r > 0;

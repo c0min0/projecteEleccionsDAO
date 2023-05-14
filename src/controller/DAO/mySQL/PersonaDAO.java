@@ -63,16 +63,13 @@ public class PersonaDAO implements DAODB<Persona> {
      * persones amb l'id passat per paràmetres o null si no existeix.
      */
     @Override
-    public Persona readById (Object ... id) {
-
-        // Obtenim l'id de la persona passada per paràmetres
-        long persona_id = (long) id[0];
+    public Persona readById (Object id) {
 
         // SELECT SQL
         String query = "SELECT nom,cog1,cog2,sexe,data_naixement,dni FROM persones WHERE persona_id=?";
 
         // Llegim de la BD amb l'id de la persona passada per paràmetres
-        List<Object[]> r = DBMySQLManager.read(query, persona_id);
+        List<Object[]> r = DBMySQLManager.read(query, id);
 
         // Si no existeix, retornem null
         if (r.size() != 1L) return null;
@@ -87,7 +84,7 @@ public class PersonaDAO implements DAODB<Persona> {
         Date dataNaixement = (Date) row[4];
         String dni = (String)row[5];
 
-        return new Persona(persona_id, nom, cog1, cog2, sexe, dataNaixement, dni);
+        return new Persona((long)id, nom, cog1, cog2, sexe, dataNaixement, dni);
     }
 
 
