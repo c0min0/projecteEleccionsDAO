@@ -30,8 +30,10 @@ public class Missatges {
     public static final String INT_CONDITION = "ser un número enter positiu.";
     public static final String LONG_CONDITION = INT_CONDITION;
     public static final String VARCHAR30_CONDITION = "ser un text de màxim 30 caràcters.";
+    public static final String VARCHAR45_CONDITION = "ser un text de màxim 45 caràcters.";
     public static final String VARCHAR50_CONDITION = "ser un text de màxim 50 caràcters.";
     public static final String VARCHAR150_CONDITION = "ser un text de màxim 150 caràcters.";
+    public static final String CHAR2_CONDITION = "ser un text de 2 caràcters.";
     public static final String CHAR6_CONDITION = "ser un text de 6 caràcters.";
     public static final String CHAR8_CONDITION = "ser un text de 8 caràcters.";
     public static final String DATE_CONDITION = "ser una data amb el format dd/mm/aaaa.";

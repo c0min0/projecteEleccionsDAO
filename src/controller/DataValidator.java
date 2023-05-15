@@ -43,6 +43,15 @@ public class DataValidator {
     }
 
     /**
+     * Comprova si un String és un VARCHAR(45).
+     * @param str String a comprovar.
+     * @return True si és un VARCHAR(45), false si no ho és.
+     */
+    public static boolean isVarchar45(String str) {
+        return str.length() <= 45;
+    }
+
+    /**
      * Comprova si un String és un VARCHAR(50).
      * @param str String a comprovar.
      * @return True si és un VARCHAR(50), false si no ho és.
@@ -58,6 +67,15 @@ public class DataValidator {
      */
     public static boolean isVarchar150(String str) {
         return str.length() <= 150;
+    }
+
+    /**
+     * Comprova si un String és un CHAR(2).
+     * @param str String a comprovar.
+     * @return True si és un CHAR(2), false si no ho és.
+     */
+    public static boolean isChar2(String str) {
+        return str.length() == 2;
     }
 
     /**
