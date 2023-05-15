@@ -3,7 +3,6 @@ package controller;
 import static view.Print.println;
 
 //TODO: Implementar comAutonomaDAO
-//TODO: Fer package controller.comAutonoma
 
 public class Main {
     public static void main(String[] args) {
