@@ -19,7 +19,7 @@ public class DataValidatorComAutonoma extends DataValidator {
      * @param nom String a comprovar.
      * @return True si és un valor vàlid pel camp nom, false si no ho és.
      */
-    static boolean isNom (String nom) {
+    static boolean isNomCA(String nom) {
         return isVarchar45(nom);
     }
 
@@ -29,7 +29,7 @@ public class DataValidatorComAutonoma extends DataValidator {
      * @param codiIne String a comprovar.
      * @return True si és un valor vàlid pel camp codi_ine, false si no ho és.
      */
-    static boolean isCodiIne (String codiIne) {
+    static boolean isCodiIneCA(String codiIne) {
         return isChar2(codiIne);
     }
 }

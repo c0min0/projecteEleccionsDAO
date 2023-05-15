@@ -21,7 +21,7 @@ public class DataValidatorPersona extends DataValidator {
      * @param nom String a comprovar.
      * @return True si és un valor vàlid pel camp nom, false si no ho és.
      */
-    static boolean isNom(String nom) {
+    static boolean isNomPersona(String nom) {
         return isVarchar30(nom);
     }
 

@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ComAutonomaDAO implements DAODB<ComAutonoma> {
 
+    //TODO: Fer tots els mètodes i posar CA
+
     @Override
     public boolean create(ComAutonoma cA) {
         // INSERT SQL
@@ -15,7 +17,7 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
         // Escrivim a la BD amb els valors de la candidatura passada per paràmetres
         int r = DBMySQLManager.write(query,
                 cA.getNom(),
-                cA.getCodi_ine());
+                cA.getCodiIne());
 
         // Si s'ha modificat alguna fila, retornem true
         return r > 0;
@@ -24,13 +26,13 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
     @Override
     public boolean read(ComAutonoma cA) {
         // Obtenim una candidatura de la BD amb el mateix id que la candidatura passada per paràmetres
-        ComAutonoma CAr = readById(cA.getComunitat_aut_id());
+        ComAutonoma CAr = readById(cA.getId());
 
         // Si no existeix, retornem false
         if (CAr == null) return false;
 
         // Si existeix, actualitzem la candidatura passada per paràmetres amb els valors de la candidatura de la BD
-        cA.set(CAr.getNom(),CAr.getCodi_ine());
+        cA.set(CAr.getNom(),CAr.getCodiIne());
 
         // i retornem true
         return true;
@@ -65,8 +67,8 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
 
         // Actualitzem la BD amb els valors de la candidatura passada per paràmetres
         String nom_curt = cA.getNom();
-        String codi_ine = cA.getCodi_ine();
-        long comunitat_aut_id = cA.getComunitat_aut_id();
+        String codi_ine = cA.getCodiIne();
+        long comunitat_aut_id = cA.getId();
 
         int r = DBMySQLManager.write(query, codi_ine, comunitat_aut_id);
 

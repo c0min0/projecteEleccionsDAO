@@ -3,7 +3,6 @@ package controller.persona;
 import controller.Controller;
 import controller.DAO.mySQL.PersonaDAO;
 import controller.DataConverter;
-import controller.Missatges;
 import model.Persona;
 
 import java.util.HashMap;
@@ -110,7 +109,7 @@ public class ControllerPersona extends Controller {
                     errorMsg = PERSONA_ID_CONDITION;
                 }
                 case "nom" -> {
-                    condicio = isNom(resposta);
+                    condicio = isNomPersona(resposta);
                     errorMsg += NOM_CONDITION;
                 }
                 case "cog1" -> {
