@@ -1,9 +1,7 @@
 package controller.comAutonoma;
 
 import controller.Controller;
-import controller.DAO.mySQL.CandidaturaDAO;
 import controller.DAO.mySQL.ComAutonomaDAO;
-import model.Candidatura;
 import model.ComAutonoma;
 
 import java.util.HashMap;
@@ -57,7 +55,7 @@ public class ControllerComAutonoma extends Controller {
         String pregunta, resposta = null;
 
         // Segons l'acció formulem la pregunta diferent
-        if (accio.equals("cercar")) pregunta = "Sobre quin camp vols cercar la o les candidatura/es?";
+        if (accio.equals("cercar")) pregunta = "Sobre quin camp vols cercar la o les comunitat/s autònoma/es?";
         else pregunta = "Quin camp vols " + accio + "?";
 
         final String OP1 = "comunitat_aut_id TINYINT UNSIGNED";
@@ -243,7 +241,10 @@ public class ControllerComAutonoma extends Controller {
         if (obtenirRespostaSN("ESTÀS SEGUR que vols inserir una comunitat autònoma amb les dades introduïdes? (S/N): ")) {
 
             // Construïm l'objecte ComAutonoma amb les dades introduïdes
-            ComAutonoma ca = new ComAutonoma(campsInserits.get("nom"), campsInserits.get("codi_candidatura"));
+            ComAutonoma ca = new ComAutonoma(
+                    Integer.parseInt(campsInserits.get("comunitat_aut_id")),
+                    campsInserits.get("nom"),
+                    campsInserits.get("codi_ine"));
 
             // Inserim la comunitat autònoma a la base de dades
             if (new ComAutonomaDAO().create(ca)) println("Comunitat autònoma afegida amb èxit!");
