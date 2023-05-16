@@ -4,4 +4,5 @@
 - Hem canviat el DDL de la base de dades de la taula candidats on totes les foreigns keys siguin ON DELETE CASCADE
 - Els camps que tenen dades primitives si són null retornen 0 o false, però en aquesta BD tots el camps que retornen dades primitives són NOT NULL, així que no ens hem de preocupar de saber si abans eren null, ja que quan els llegim de la BD ens tornaran un valor real.
 - !!!CAL CANVIAR EL CODI CANDIDATURA PERQUÈ SIGUI UN VALOR NOT NULL
-  - A la classe CandidaturaDAO cal destacar que al mètode readById cal passar-li tant la candidatura_id com l'elecci_id, ja que la clau primària de la taula candidatura és la combinació de les dues. Per aquesta raó el mètode readBy de la interfície CandidaturaDAO té paràmetres variables.
+  - A la classe CandidaturaDAO cal destacar que al mètode readById cal passar-li tant la candidatura_id com l'eleccio_id, ja que la clau primària de la taula candidatura és la combinació de les dues. Per aquesta raó el mètode readBy de la interfície CandidaturaDAO té paràmetres variables.
+- També hem canviat a l'estructura DDL de la clau forana que relaciona a la taula comunitats_autonomes que quan s'actualitzi la comunitat_autonoma, s'actualitzi també la provincia 
