@@ -14,7 +14,7 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
     @Override
     public boolean create(ComAutonoma CA) {
         // INSERT SQL
-        String query = "INSERT INTO candidatures (eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional) VALUES (?,?,?,?,?,?,?)";
+        String query = "INSERT INTO comunitats_autonomes (nom,codi_ine) VALUES (?,?)";
 
         // Escrivim a la BD amb els valors de la candidatura passada per paràmetres
         int r = DBMySQLManager.write(query,
@@ -70,7 +70,7 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
         // Actualitzem la BD amb els valors de la candidatura passada per paràmetres
         String nom_curt = CA.getNom();
         String codi_ine = CA.getCodiIne();
-        long comunitat_aut_id = CA.getId();
+        int comunitat_aut_id = CA.getId();
 
         int r = DBMySQLManager.write(query, codi_ine, comunitat_aut_id);
 
@@ -195,7 +195,7 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
         List<ComAutonoma> l = new LinkedList<>();
 
         // Query per obtenir totes les candidatures
-        String query = "SELECT candidatura_id, eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional FROM candidatures";
+        String query = "SELECT comunitat_aut_id, nom, codi_ine FROM comunitats_autonomes";
 
         // Executem la query
         List<Object[]> r = DBMySQLManager.read(query);

@@ -101,9 +101,9 @@ public class ControllerComAutonoma extends Controller {
             // Construïm el missatge d'error i comprovem
             // que el valor sigui vàlid depenent del camp
             switch (camp) {
-                case "comnitat_aut_id" -> {
+                case "comunitat_aut_id" -> {
                     condicio = isComAutonomaId(resposta);
-                    errorMsg = CA_ID_CONDITION;
+                    errorMsg += CA_ID_CONDITION;
                 }
                 case "nom" -> {
                     condicio = isNomCA(resposta);

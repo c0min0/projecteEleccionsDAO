@@ -1,6 +1,7 @@
 package controller;
 
 import controller.candidatura.ControllerCandidatura;
+import controller.comAutonoma.ControllerComAutonoma;
 import controller.persona.ControllerPersona;
 import view.Print;
 
@@ -120,7 +121,7 @@ public class Controller {
             switch (obtenirOpMenuInicial()) {
                 case 1 -> ControllerPersona.menuCRUD();
                 case 2 -> ControllerCandidatura.menuCRUD();
-                //TODO: case 3 -> menuCRUDComunitatsAutonomes();
+                case 3 -> ControllerComAutonoma.menuCRUD();
                 case 0 -> {
                     println("Fins la propera!");
                     return;
