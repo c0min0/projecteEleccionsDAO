@@ -1,5 +1,5 @@
 
-# Consideracions:
+## Consideracions
 > - Com vam parlar implementem només les classes DAO de les taules que es poden utilitzar al menú.
 > - Pels candidats, hem modificat la constraint d'FK perquè quan eliminem una persona s'elimini el candidat relacionat. En canvi, no es permet eliminar una comunitat autònoma sense que aquesta estigui buida de províncies. En aquest cas, saltarà un missatge d'error SQL de la base de dades per informar a l'usuari de que no es pot eliminar la comunitat autònoma.
 > - També hem modificat les FK perquè quan actualitzem els registres s'actualitzin en cascada a la resta de taules.
