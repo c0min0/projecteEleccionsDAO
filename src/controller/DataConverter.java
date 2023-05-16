@@ -17,6 +17,8 @@ public class DataConverter {
         int dia = Integer.parseInt(parts[0]);
         int mes = Integer.parseInt(parts[1]);
         int any = Integer.parseInt(parts[2]);
+
+        // Cal restar 1900 a l'any i 1 al mes perquè Date comença a comptar des de 1900 i el mes 0.
         return new Date(any - 1900, mes - 1, dia);
     }
 
