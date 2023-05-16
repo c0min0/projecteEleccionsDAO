@@ -10,29 +10,29 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
     //TODO: Fer tots els mètodes i posar CA
 
     @Override
-    public boolean create(ComAutonoma cA) {
+    public boolean create(ComAutonoma CA) {
         // INSERT SQL
         String query = "INSERT INTO candidatures (eleccio_id,codi_candidatura,nom_curt,nom_llarg,codi_acumulacio_provincia,codi_acumulacio_ca,codi_acumulacio_nacional) VALUES (?,?,?,?,?,?,?)";
 
         // Escrivim a la BD amb els valors de la candidatura passada per paràmetres
         int r = DBMySQLManager.write(query,
-                cA.getNom(),
-                cA.getCodiIne());
+                CA.getNom(),
+                CA.getCodiIne());
 
         // Si s'ha modificat alguna fila, retornem true
         return r > 0;
     }
 
     @Override
-    public boolean read(ComAutonoma cA) {
+    public boolean read(ComAutonoma CA) {
         // Obtenim una candidatura de la BD amb el mateix id que la candidatura passada per paràmetres
-        ComAutonoma CAr = readById(cA.getId());
+        ComAutonoma CAr = readById(CA.getId());
 
         // Si no existeix, retornem false
         if (CAr == null) return false;
 
         // Si existeix, actualitzem la candidatura passada per paràmetres amb els valors de la candidatura de la BD
-        cA.set(CAr.getNom(),CAr.getCodiIne());
+        CA.set(CAr.getNom(),CAr.getCodiIne());
 
         // i retornem true
         return true;
@@ -61,14 +61,14 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
     }
 
     @Override
-    public boolean update(ComAutonoma cA) {
+    public boolean update(ComAutonoma CA) {
         // UPDATE SQL
         String query = "UPDATE comunitats_autonomes SET nom=?,codi_ine=? WHERE comunitat_aut_id=?";
 
         // Actualitzem la BD amb els valors de la candidatura passada per paràmetres
-        String nom_curt = cA.getNom();
-        String codi_ine = cA.getCodiIne();
-        long comunitat_aut_id = cA.getId();
+        String nom_curt = CA.getNom();
+        String codi_ine = CA.getCodiIne();
+        long comunitat_aut_id = CA.getId();
 
         int r = DBMySQLManager.write(query, codi_ine, comunitat_aut_id);
 
