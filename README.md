@@ -41,7 +41,7 @@ Al controllador trobem:
 - El package **candidatura**, que conté el menú i les accions sobre la taula candidatura.
 - El package **comunitat_autonoma**, que conté el menú i les accions sobre la taula comunitat_autonoma.
 
-### DAO
+### Package DAO
 Dins trobem la interfície **DAO**, on s'especifiquen els métodes que han de tenir les classes DAO i el package **mySQL**, on s'allotgen les classesDAO implementades (_PersonaDAO_, _CandidaturaDAO_, _ComAutonoma_), i el gestor de connexions **DBMySQLManager**, amb els mètodes per gestionar les conexions i automatitzar les peticions de lectura i escriptura de la base de dades.
 
 Aquests mètodes són:
