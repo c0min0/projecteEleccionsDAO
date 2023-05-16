@@ -7,11 +7,7 @@ import model.ComAutonoma;
 import java.util.HashMap;
 import java.util.List;
 
-import static controller.Missatges.MSG_AFEGIR_CAMPS;
-import static controller.Missatges.MSG_CAMPS_OBLIG;
-import static controller.Missatges.MSG_MOSTRAR_DADES;
-import static controller.Missatges.MSG_NO_RESULT;
-import static controller.candidatura.MissatgesCandidatura.*;
+import static controller.Missatges.*;
 import static controller.comAutonoma.DataValidatorComAutonoma.*;
 import static controller.comAutonoma.MissatgesComAutonoma.*;
 import static view.Print.print;
@@ -40,7 +36,7 @@ public class ControllerComAutonoma extends Controller {
                 }
             }
 
-        } while (obtenirRespostaSN(MSG_REPEAT_CANDIDATURES));
+        } while (obtenirRespostaSN(MSG_REPEAT_CA));
     }
 
     // MÈTODES AUXILIARS
@@ -159,8 +155,8 @@ public class ControllerComAutonoma extends Controller {
     // MÈTODES CRUD
 
     /**
-     * Executa el procés de cerca de la taula candidatures.
-     * @return Llista de candidatures trobades amb la cerca.
+     * Executa el procés de cerca de la taula comunitats_autonomes.
+     * @return Llista de comunitats_autonomes trobades amb la cerca.
      */
     static List<ComAutonoma> cercar() {
 
@@ -181,7 +177,7 @@ public class ControllerComAutonoma extends Controller {
             // Mostrem el resultat de la cerca
             if (resultat != null) {
 
-                // Mostrem les candidatures trobades
+                // Mostrem les comunitats_autonomes trobades
                 for (ComAutonoma c : resultat) println(">> " + c);
 
                 // Mostrem el recompte de CAs trobades
@@ -200,7 +196,7 @@ public class ControllerComAutonoma extends Controller {
     }
 
     /**
-     * Executa el procés d'inserció de candidatures.
+     * Executa el procés d'inserció de comunitats_autonomes.
      */
     static void inserir() {
 
@@ -319,7 +315,7 @@ public class ControllerComAutonoma extends Controller {
      */
     static void eliminar() {
 
-        // Demanem les candidatures a eliminar
+        // Demanem les comunitats_autonomes a eliminar
         List<ComAutonoma> resultatCerca = cercar();
 
         // Comprovem si el codi està buit
