@@ -1,8 +1,10 @@
 package controller.DAO.mySQL;
 
 import controller.DAO.DAODB;
+import model.Candidatura;
 import model.ComAutonoma;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ComAutonomaDAO implements DAODB<ComAutonoma> {
@@ -77,32 +79,140 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
     }
 
     @Override
-    public boolean update(ComAutonoma comAutonoma, String... camps) {
-        return false;
+    public boolean update(ComAutonoma CA, String... camps) {
+        // Creem un array de paràmetres de la mida de la quantitat de camps + 1 (per la candidatura_id)
+        Object[] params = new Object[camps.length + 1];
+
+        // Construïm la query
+        StringBuilder query = new StringBuilder("UPDATE comunitats_autonomes SET ");
+
+        // Per cada camp,
+        for (int i = 0; i < camps.length; i++) {
+
+            // afegim el camp a la query
+            query.append(camps[i]).append("=?");
+
+            // i una coma si no és l'últim camp
+            if (i < camps.length - 1) query.append(",");
+
+            // També afegim el valor del camp a l'array de paràmetres
+            switch (camps[i]) {
+                case "comunitat_aut_id" -> params[i] = CA.getId();
+                case "nom" -> params[i] = CA.getNom();
+                case "codi_ine" -> params[i] = CA.getCodiIne();
+                default -> throw new IllegalArgumentException("El camp " + camps[i] + " no existeix");
+            }
+        }
+
+        // Afegim l'id al final de la query
+        query.append(" WHERE comunitat_aut_id=?");
+        params[params.length - 1] = CA.getId();
+
+        // Executem la query
+        int r = DBMySQLManager.write(query.toString(), params);
+
+        // Si s'ha modificat alguna fila, retornem true
+        return r > 0;
     }
 
     @Override
-    public boolean delete(ComAutonoma comAutonoma) {
-        return false;
-    }
+    public boolean delete(ComAutonoma CA) {
+        // DELETE SQL
+        String query = "DELETE FROM comunitats_autonomes WHERE comunitat_aut_id=?";
+
+        // Eliminem de la BD la candidatura passada per paràmetres
+        int r = DBMySQLManager.write(query, CA.getId());
+
+        // Si s'ha eliminat alguna fila, retornem true
+        return r > 0;    }
 
     @Override
     public List<ComAutonoma> search(String camp, Object valor) {
-        return null;
+        // Creem una llista buida de Candidatures
+        List<ComAutonoma> l = new LinkedList<>();
+
+        // Query per obtenir totes les candidatures amb el valor del camp passat per paràmetres
+        String query = "SELECT * FROM comunitats_autonomes WHERE " + camp + "=?";
+
+        // Executem la query
+        List<Object[]> r = DBMySQLManager.read(query, valor);
+
+        // Per cada registre
+        for (Object[] row : r) {
+
+            // Obtenim les dades de la candidatura
+            int comunitat_aut_id = (int) row[0];
+            String nom = (String) row[1];
+            String codi_ine = (String) row[2];
+
+            // Afegim la candidatura a la llista
+            l.add(new ComAutonoma(comunitat_aut_id, nom, codi_ine));
+
+        }
+
+        // Retornem la llista
+        return l;
     }
+    /**
+     * Comprova si una candidatura existeix a la BD.
+     * @param CA Candidatura a comprovar.
+     * @return true si la candidatura existeix a la BD, false si no.
+     */
 
     @Override
-    public boolean exists(ComAutonoma comAutonoma) {
-        return false;
+    public boolean exists(ComAutonoma CA) {
+        return read(CA);
     }
+
+    /**
+     * Fa el recompte de registres a la taula candidatures.
+     * @return nombre de registres de la taula candidatures.
+     */
 
     @Override
     public long count() {
-        return 0;
+        // Query per comptar el nombre de files de la taula
+        String query = "SELECT COUNT(*) FROM comunitats_autonomes";
+
+        // Executem la query
+        List<Object[]> r = DBMySQLManager.read(query);
+
+        // Si la llista no te un sol element, retornem -1 (s'ha produit un error)
+        if (r.size() != 1) return -1;
+
+        // Retornem el nombre de files de la taula
+        Object[] o = r.iterator().next();
+        return (long)o[0];
     }
 
+    /**
+     * Retorna totes les comunitats_autonomes de la BD.
+     * @return llista de comunitats_autonomes de la BD.
+     */
     @Override
     public List<ComAutonoma> all() {
-        return null;
+        // Creem una llista buida de persones
+        List<ComAutonoma> l = new LinkedList<>();
+
+        // Query per obtenir totes les candidatures
+        String query = "SELECT candidatura_id, eleccio_id, codi_candidatura, nom_curt, nom_llarg, codi_acumulacio_provincia, codi_acumulacio_ca, codi_acumulacio_nacional FROM candidatures";
+
+        // Executem la query
+        List<Object[]> r = DBMySQLManager.read(query);
+
+        // Per cada registre
+        for (Object[] row : r) {
+
+            // Obtenim les dades de la candidatura
+            int comunitat_aut_id = (int) row[0];
+            String nom = (String) row[1];
+            String codi_ine = (String) row[2];
+
+            // Afegim la candidatura a la llista
+            l.add(new ComAutonoma(comunitat_aut_id, nom,codi_ine));
+        }
+
+        // Retornem la llista
+        return l;
     }
 }
