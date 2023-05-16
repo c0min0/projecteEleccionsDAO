@@ -1,17 +1,17 @@
 package model;
 
 public class ComAutonoma {
-    long comunitat_aut_id;
+    int comunitat_aut_id;
     String nom = null;
     String codi_ine;
 
-    public ComAutonoma(long comunitat_aut_id, String nom, String codi_ine) {
+    public ComAutonoma(int comunitat_aut_id, String nom, String codi_ine) {
         this.comunitat_aut_id = comunitat_aut_id;
         this.nom = nom;
         this.codi_ine = codi_ine;
     }
 
-    public ComAutonoma(long comunitat_aut_id) {
+    public ComAutonoma(int comunitat_aut_id) {
         this.comunitat_aut_id = comunitat_aut_id;
     }
 
@@ -25,11 +25,11 @@ public class ComAutonoma {
         this.codi_ine = codi_ine;
     }
 
-    public long getId() {
+    public int getId() {
         return comunitat_aut_id;
     }
 
-    public void setId(long comunitat_aut_id) {
+    public void setId(int comunitat_aut_id) {
         this.comunitat_aut_id = comunitat_aut_id;
     }
 
