@@ -106,7 +106,7 @@ public class ControllerPersona extends Controller {
             switch (camp) {
                 case "persona_id" -> {
                     condicio = isPersonaId(resposta);
-                    errorMsg = PERSONA_ID_CONDITION;
+                    errorMsg += PERSONA_ID_CONDITION;
                 }
                 case "nom" -> {
                     condicio = isNomPersona(resposta);
