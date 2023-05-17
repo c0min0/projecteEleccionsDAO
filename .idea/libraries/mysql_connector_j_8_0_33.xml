@@ -1,9 +1,10 @@
 <component name="libraryTable">
   <library name="mysql-connector-j-8.0.33">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../../../../Program Files/Java/Llibreries/Driver MySQL/mysql-connector-j-8.0.33/mysql-connector-j-8.0.33.jar!/" />
+      <root url="file://$USER_HOME$/Downloads/BD_Elecciones_grupo3-master/BD_Elecciones_grupo3-master/src/Llibreries" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$USER_HOME$/Downloads/BD_Elecciones_grupo3-master/BD_Elecciones_grupo3-master/src/Llibreries" recursive="false" />
   </library>
 </component>
