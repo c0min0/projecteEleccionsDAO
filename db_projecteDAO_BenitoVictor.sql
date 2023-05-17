@@ -185,7 +185,7 @@ CREATE TABLE `provincies` (
   PRIMARY KEY (`provincia_id`),
   UNIQUE KEY `uk_provincies_codi_ine` (`codi_ine`),
   KEY `idx_fk_provincies_comunitats_autonomes` (`comunitat_aut_id`),
-  CONSTRAINT `fk_provincies_comunitats_autonomes` FOREIGN KEY (`comunitat_aut_id`) REFERENCES `comunitats_autonomes` (`comunitat_aut_id`)
+  CONSTRAINT `fk_provincies_comunitats_autonomes` FOREIGN KEY (`comunitat_aut_id`) REFERENCES `comunitats_autonomes` (`comunitat_aut_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -208,4 +208,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-16 14:18:23
+-- Dump completed on 2023-05-17 10:17:43
