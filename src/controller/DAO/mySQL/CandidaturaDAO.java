@@ -215,7 +215,7 @@ public class CandidaturaDAO implements DAODB<Candidatura> {
         }
 
         // Retornem la llista
-        return l;
+        return l.size() > 0 ? l : null;
     }
 
     /**

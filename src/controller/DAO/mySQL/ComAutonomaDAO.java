@@ -8,8 +8,6 @@ import java.util.List;
 
 public class ComAutonomaDAO implements DAODB<ComAutonoma> {
 
-    //TODO: Fer tots els mètodes i posar CA
-
     @Override
     public boolean create(ComAutonoma CA) {
         // INSERT SQL
@@ -123,7 +121,8 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
         int r = DBMySQLManager.write(query, CA.getId());
 
         // Si s'ha eliminat alguna fila, retornem true
-        return r > 0;    }
+        return r > 0;
+    }
 
     @Override
     public List<ComAutonoma> search(String camp, Object valor) {
@@ -150,7 +149,7 @@ public class ComAutonomaDAO implements DAODB<ComAutonoma> {
         }
 
         // Retornem la llista
-        return l;
+        return l.size() > 0 ? l : null;
     }
     /**
      * Comprova si una comunitat_autonoma existeix a la BD.
