@@ -1,15 +1,15 @@
 
 ## Consideracions
 > - Per conectar la base de dades amb l'aplicatiu, cal modificar el fitxer **DBMySQLManager.java** i posar les dades de la vostra base de dades.
-> - L'arxiu **db_ProjecteDao_BenitoVictor.sql** conté la base de dades sutilitzada pel projecte (tant estructura com dades).
+> - L'arxiu **db_ProjecteDao_BenitoVictor.sql** conté la base de dades utilitzada pel projecte (tant estructura com dades).
 > - Com vam parlar implementem només les classes DAO de les taules que es poden utilitzar al menú.
-> - Pels candidats, hem modificat la constraint d'FK perquè quan eliminem una persona s'elimini el candidat relacionat. En canvi, no es permet eliminar una comunitat autònoma sense que aquesta estigui buida de províncies. En aquest cas, saltarà un missatge d'error SQL de la base de dades per informar a l'usuari de que no es pot eliminar la comunitat autònoma.
+> - Pels candidats, hem modificat la constraint d'FK perquè quan eliminem una persona o una candidatura s'elimini el candidat relacionat. En canvi, no es permet eliminar una comunitat autònoma sense que aquesta estigui buida de províncies. En aquest cas, saltarà un missatge d'error SQL de la base de dades per informar a l'usuari de que no es pot eliminar la comunitat autònoma.
 > - També hem modificat les FK perquè quan actualitzem els registres s'actualitzin en cascada a la resta de taules.
 > - Qualsevol excepció SQL emesa per la BD es captura i es mostra printa per pantalla per informar a l'usuari.
 
 
 # Projecte programació DAO
-Aquest projecte pretent a través d'un menú per consola, accedir i efectuar operacions CRUD a una base de dades de les eleccions gnerals. Només estan implementades les accions sobre les taules _persones_, _candidatures_ i _comunitats_autonomes_. El nostre projecte està estructurat en model, vista i controlador.
+Aquest projecte pretent a través d'un menú per consola, accedir i efectuar operacions CRUD a una base de dades de les eleccions generals. Només estan implementades les accions sobre les taules _persones_, _candidatures_ i _comunitats_autonomes_. El nostre projecte està estructurat en model, vista i controlador.
 ## Model
 El model està format per les classes que representen les taules de la base de dades. Aquestes classes són:
 - ComAutonoma
@@ -44,7 +44,7 @@ Al controllador trobem:
 - El package **comunitat_autonoma**, que conté el menú i les accions sobre la taula comunitat_autonoma.
 
 ### Package DAO
-Dins trobem la interfície **DAO**, on s'especifiquen els métodes que han de tenir les classes DAO i el package **mySQL**, on s'allotgen les classesDAO implementades (_PersonaDAO_, _CandidaturaDAO_, _ComAutonoma_), i el gestor de connexions **DBMySQLManager**, amb els mètodes per gestionar les conexions i automatitzar les peticions de lectura i escriptura de la base de dades.
+Dins trobem la interfície **DAO**, on s'especifiquen els métodes que han de tenir les classes DAO i el package **mySQL**, on s'allotgen les classesDAO implementades (_PersonaDAO_, _CandidaturaDAO_, _ComAutonomaDAO_), i el gestor de connexions **DBMySQLManager**, amb els mètodes per gestionar les conexions i automatitzar les peticions de lectura i escriptura de la base de dades.
 
 Aquests mètodes són:
 - **getConnection()**: retorna una connexió a la base de dades.

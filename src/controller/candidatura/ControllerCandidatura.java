@@ -108,7 +108,7 @@ public class ControllerCandidatura extends Controller {
             switch (camp) {
                 case "candidatura_id" -> {
                     condicio = isCandidaturaId(resposta);
-                    errorMsg = CANDIDATURA_ID_CONDITION;
+                    errorMsg += CANDIDATURA_ID_CONDITION;
                 }
                 case "eleccio_id" -> {
                     condicio = isEleccioId(resposta);
